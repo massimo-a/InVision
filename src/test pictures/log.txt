@@ -1,0 +1,147 @@
+
+date and time - Sun May 19 00:01:37 EDT 2019
+file name - gogo
+run time - 00 : 00 : 01.503
+anti-aliasing - 1
+screen size - (1024, 1024)
+primary rays shot per second - 1048576
+
+date and time - Sun May 19 00:02:54 EDT 2019
+file name - gog
+run time - 00 : 00 : 02.121
+anti-aliasing - 1
+screen size - (1024, 1024)
+primary rays shot per second - 524288
+
+date and time - Sun May 19 00:10:05 EDT 2019
+file name - gogo
+run time - 00 : 00 : 02.035
+anti-aliasing - 1
+screen size - (1024, 1024)
+primary rays shot per second - 524288
+
+date and time - Sun May 19 21:41:07 EDT 2019
+file name - test
+run time - 00 : 00 : 21.786
+anti-aliasing - 1
+screen size - (1024, 1024)
+primary rays shot per second - 49932
+
+date and time - Sun May 19 21:43:31 EDT 2019
+file name - test
+run time - 00 : 00 : 21.970
+anti-aliasing - 1
+screen size - (1024, 1024)
+primary rays shot per second - 49932
+
+date and time - Sun May 19 21:46:46 EDT 2019
+file name - test
+run time - 00 : 00 : 21.130
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 47619
+
+date and time - Sun May 19 21:48:48 EDT 2019
+file name - test
+run time - 00 : 00 : 21.170
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 47619
+
+date and time - Sun May 19 21:49:45 EDT 2019
+file name - test
+run time - 00 : 00 : 18.642
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 55555
+
+date and time - Sun May 19 21:57:50 EDT 2019
+file name - test
+run time - 00 : 07 : 36.676
+anti-aliasing - 5
+screen size - (1000, 1000)
+primary rays shot per second - 54824
+
+date and time - Sun May 19 21:59:10 EDT 2019
+file name - test
+run time - 00 : 00 : 21.089
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 47619
+
+date and time - Sun May 19 22:00:55 EDT 2019
+file name - test
+run time - 00 : 00 : 20.624
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 50000
+
+date and time - Sun May 19 22:01:55 EDT 2019
+file name - test
+run time - 00 : 00 : 22.083
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 45454
+
+date and time - Sun May 19 22:03:36 EDT 2019
+file name - test
+run time - 00 : 00 : 24.990
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 41666
+
+date and time - Sun May 19 22:14:16 EDT 2019
+file name - test
+run time - 00 : 09 : 37.569
+anti-aliasing - 5
+screen size - (1000, 1000)
+primary rays shot per second - 43327
+
+date and time - Sun May 19 22:16:53 EDT 2019
+file name - test
+run time - 00 : 00 : 20.343
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 50000
+
+date and time - Sun May 19 22:20:14 EDT 2019
+file name - test
+run time - 00 : 00 : 19.873
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 52631
+
+date and time - Sun May 19 22:21:09 EDT 2019
+file name - test
+run time - 00 : 00 : 20.613
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 50000
+
+date and time - Sun May 19 22:22:28 EDT 2019
+file name - test
+run time - 00 : 00 : 20.279
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 50000
+
+date and time - Sun May 19 22:23:51 EDT 2019
+file name - test
+run time - 00 : 00 : 20.940
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 50000
+
+date and time - Sun May 19 22:26:03 EDT 2019
+file name - test
+run time - 00 : 00 : 24.701
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 41666
+
+date and time - Sun May 19 22:54:55 EDT 2019
+file name - test
+run time - 00 : 27 : 44.514
+anti-aliasing - 8
+screen size - (1000, 1000)
+primary rays shot per second - 38461
