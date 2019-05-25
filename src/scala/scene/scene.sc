@@ -64,7 +64,6 @@ case class Scene(
 		if(objHit._1 == null || ~(lightP - pt) < ~(objHit._2 - pt)) return true
 		return false;
 	}
-	
 	def trace(ray: Ray): Vec3 = {
 		val closestPoint = getClosestObject(ray);
 		val objHit = closestPoint._1;
