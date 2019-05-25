@@ -8,3 +8,4 @@ Smoke effect (volumetric rendering)
 Look-up table for command execution
 *Noise function (Perlin Noise)
 Implicit surface
+Implement more math (n-dimensional vectors, complex numbers, quaternions)

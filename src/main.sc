@@ -35,13 +35,13 @@ object Program {
 			ImageHandler.saveData(name, scene, timer);
 		}
 	}
-	@tailrec def evaluate(command: String): Boolean = {
-		val commands = command.toLowerCase.split(" ") ++ Array(" ");
+	@tailrec private def evaluate(command: String): Boolean = {
+		val commands = command.toLowerCase.split(" ");
 		val cmd = commands(0)(0).toString
 		if(cmd.equals("q")) return false;
 		if(cmd.equals("r")) {
 			p("Begun rendering " + commands(1));
-			render(commands(1), setup());
+			render(commands(1), Room.setup());
 		} else if(commands(0).equals("progress")) {
 			p(Renderer.getProgress + "% -- " + Renderer.getTimeSinceStart);
 		} else if(cmd.equals("p")) {
@@ -54,7 +54,7 @@ object Program {
 		val nextCommand = scala.io.StdIn.readLine;
 		return evaluate(nextCommand);
 	}
-	def evaluate(): Boolean {
+	def evaluate(): Boolean = {
 		val command = scala.io.StdIn.readLine;
 		return evaluate(command);
 	}
