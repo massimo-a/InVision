@@ -44,6 +44,9 @@ object Renderer {
 			return timer.formatTimeSinceStart
 		} else return ""
 	}
+	def progressToString(): String = {
+		return getProgress + "% -- " + getTimeSinceStart
+	}
 	def rasterize() {
 		//TODO
 	}

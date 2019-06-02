@@ -41,9 +41,9 @@ object Program {
 		if(cmd.equals("q")) return false;
 		if(cmd.equals("r")) {
 			p("Begun rendering " + commands(1));
-			render(commands(1), Room.setup());
+			render(commands(1), Room.test());
 		} else if(commands(0).equals("progress")) {
-			p(Renderer.getProgress + "% -- " + Renderer.getTimeSinceStart);
+			p(Renderer.progressToString);
 		} else if(cmd.equals("p")) {
 			Renderer.paused = true;
 		} else if(cmd.equals("u")) {

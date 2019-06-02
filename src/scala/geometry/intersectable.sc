@@ -78,26 +78,6 @@ trait Bounded {
 		return (tmin, tmax);
 	}
 }
-trait Planar extends Intersectable {
-	val normal: Vec3;
-	val referencePoint: Vec3;
-	def contains(pt: Vec3): Boolean;
-	def intersectDistance(ray: Ray): Double = {
-		val n = -normal;
-		val a = (referencePoint - ray.origin) * n;
-		val d = ray.direction * n;
-		if(d > 0 && a >= 0) {
-			if(contains(ray.origin + (ray.direction*(a/d)))) return a/d;
-		}
-		return -1;
-	}
-	def getNormal(pt: Vec3): Vec3 = {
-		normal;
-	}
-	def getAngleWithNormal(pt: Vec3, d: Vec3): Double = {
-		abs(d*normal);
-	}
-}
 case class Ray(pt1: Vec3, pt2: Vec3) {
 	val direction = (pt2-pt1).normalize();
 	val origin = pt1;

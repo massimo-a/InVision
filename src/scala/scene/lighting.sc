@@ -15,7 +15,7 @@ case class Lighting(
 	z: Double = 0.0,
 	size: Double = 10,
 	falloff: (Double => Double) = _ => 0.9,
-	visibility: Boolean = false
+	visibility: Boolean = true
 ) {
 	val emission = Vec3(redEmission, greenEmission, blueEmission);
 	val intensity = sqrt((redEmission*redEmission + greenEmission*greenEmission + blueEmission*blueEmission)/3)

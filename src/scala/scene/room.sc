@@ -1,4 +1,5 @@
-import raytracing.{geometry,scene,util},geometry._,scene._,util._;
+package raytracing.scene;
+import raytracing.{geometry,util},geometry._,util._;
 
 object Room {
 	def mug(r: Double, h: Double, g: Double): Surface = {
@@ -32,5 +33,11 @@ object Room {
 		++(table(400, 300, 300, 20).translate(500, 150, 700), Diffuse(0.2,0.9,0.9)).
 		++(mug(50,80,10).translate(400,380,700), Gloss(0.7,0.7,0.7,0))
 		return scene;
+	}
+	//yeet
+	def test(): Scene = {
+		val scene = Scene(spp=1).
+		++(Lighting(x=100, y=900, z=100, size=50))
+		return scene
 	}
 }
