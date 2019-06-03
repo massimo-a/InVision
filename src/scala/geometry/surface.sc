@@ -19,7 +19,7 @@ import scala.math.{abs,max,min,cos,sin};
 case class Surface(
 	SDF: Vec3 => Double,
 	OOBB: Array[Vec3]
-) extends Intersectable with Bounded {
+) extends Bounded {
 	private val epsilon = 1;
 	val minimum = Vec3(OOBB.minBy(_.x).x, OOBB.minBy(_.y).y, OOBB.minBy(_.z).z)
 	val maximum = Vec3(OOBB.maxBy(_.x).x, OOBB.maxBy(_.y).y, OOBB.maxBy(_.z).z)
@@ -29,6 +29,15 @@ case class Surface(
 			(v: Vec3) => {SDF(v) + func(v)},
 			OOBB
 		)
+	}
+	/*
+	** intersectPoint returns the actual 3D point, within the world space,
+	** where a ray intersects an object.
+	*/
+	def intersectPoint(ray: Ray): Vec3 = {
+		val d = intersectDistance(ray);
+		if(d == -1) return null;
+		return ray.origin + ray.direction*d;
 	}
 	
 	/*
@@ -153,6 +162,12 @@ case class Surface(
 		val grad_z = (SDF((pt + Vec3(z=epsilon)))-SDF(pt - Vec3(z=epsilon)));
 		return Vec3(grad_x, grad_y, grad_z);
 	}
+	/* 
+	** intersectDistance returns the distance between the closest
+	** intersection point of a geometric object and a ray, and the ray origin.
+	** The intersection point must lie along the ray's path, and not be negative.
+	** A return of -1 indicates no intersection
+	*/
 	def intersectDistance(r: Ray): Double = {
 		if(hitBox(r)) {
 			val pts = intersections(r);

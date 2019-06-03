@@ -1,9 +1,9 @@
 package raytracing.scene;
-import raytracing.{geometry,util},geometry.{Intersectable,Ray},util.{Vec3,Timer};
+import raytracing.{geometry,util},geometry.{Surface,Ray},util.{Vec3,Timer};
 import scala.math.{pow,min,max,random,Pi,floor,tan};
 import annotation.tailrec;
 
-case class SceneObject(shape: Intersectable, material: Shader, next: SceneObject);
+case class SceneObject(shape: Surface, material: Shader, next: SceneObject);
 
 case class Scene(
 	head: SceneObject=null,
@@ -19,7 +19,7 @@ case class Scene(
 	val position = Vec3(x, y, z); //position of lower left corner of screen
 	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)))
 	
-	def ++(i: Intersectable, m: Shader): Scene = {
+	def ++(i: Surface, m: Shader): Scene = {
 		return Scene(SceneObject(i, m, head), lights, length+1, width, height, x, y, z, fieldOfView, spp);
 	}
 	def ++(l: Lighting): Scene = {

@@ -36,13 +36,3 @@ object ImageHandler {
 	
 	// }
 }
-
-object XMLHandler {
-	var xml: Elem = null;
-	def load(name: String) {
-		xml = XML.loadFile(name);
-	}
-	def getAll(obj: String, attr: String): Seq[String] = {
-		return (xml \\ obj).map(x => (x\\("@"+attr)).text);
-	}
-}

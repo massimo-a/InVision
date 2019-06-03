@@ -1,5 +1,5 @@
 /*
-** Author: Massimo Angelillo
+** Author:  Massimo Angelillo
 ** A special thank you to Kevin Sangurima for assisstance in
 ** solving some algorithm issues, naming it and testing it out!
 ** TRAC3R v0.2.7
@@ -41,7 +41,7 @@ object Program {
 		if(cmd.equals("q")) return false;
 		if(cmd.equals("r")) {
 			p("Begun rendering " + commands(1));
-			render(commands(1), Room.test());
+			render(commands(1), Scene()++(Lighting()));
 		} else if(commands(0).equals("progress")) {
 			p(Renderer.progressToString);
 		} else if(cmd.equals("p")) {
