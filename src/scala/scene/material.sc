@@ -32,7 +32,6 @@ case class Diffuse(
 	val color = Vec3(red, green, blue);
 }
 
-
 case class Gloss(
 	red: Double = 1.0,
 	green: Double = 1.0,

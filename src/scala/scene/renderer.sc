@@ -1,5 +1,5 @@
 package raytracing.scene;
-import raytracing.{geometry,util},geometry.{Intersectable,Ray},util.{Timer,ImageHandler};
+import raytracing.{geometry,util},geometry.{Surface,Ray},util.{Timer,ImageHandler};
 import scala.math.floor;
 
 object Renderer {
@@ -43,6 +43,9 @@ object Renderer {
 		if(timer != null) {
 			return timer.formatTimeSinceStart
 		} else return ""
+	}
+	def progressToString(): String = {
+		return getProgress + "% -- " + getTimeSinceStart
 	}
 	def rasterize() {
 		//TODO

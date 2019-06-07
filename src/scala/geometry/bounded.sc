@@ -6,28 +6,6 @@ package raytracing.geometry;
 import raytracing.util.Vec3;
 import scala.math.{abs,min,max};
 
-trait Intersectable {
-	/* 
-	** intersectDistance returns the distance between the closest
-	** intersection point of a geometric object and a ray, and the ray origin.
-	** The intersection point must lie along the ray's path, and not be negative.
-	** A return of -1 indicates no intersection
-	*/
-	def intersectDistance(r: Ray): Double;
-	
-	/*
-	** intersectPoint returns the actual 3D point, within the world space,
-	** where a ray intersects an object.
-	*/
-	def intersectPoint(ray: Ray): Vec3 = {
-		val d = intersectDistance(ray);
-		if(d == -1) return null;
-		return ray.origin + ray.direction*d;
-	}
-	def getNormal(pt: Vec3): Vec3;
-	def getAngleWithNormal(pt: Vec3, d: Vec3): Double;
-}
-
 trait Bounded {
 	val minimum: Vec3;
 	val maximum: Vec3;
@@ -77,29 +55,4 @@ trait Bounded {
 		}
 		return (tmin, tmax);
 	}
-}
-trait Planar extends Intersectable {
-	val normal: Vec3;
-	val referencePoint: Vec3;
-	def contains(pt: Vec3): Boolean;
-	def intersectDistance(ray: Ray): Double = {
-		val n = -normal;
-		val a = (referencePoint - ray.origin) * n;
-		val d = ray.direction * n;
-		if(d > 0 && a >= 0) {
-			if(contains(ray.origin + (ray.direction*(a/d)))) return a/d;
-		}
-		return -1;
-	}
-	def getNormal(pt: Vec3): Vec3 = {
-		normal;
-	}
-	def getAngleWithNormal(pt: Vec3, d: Vec3): Double = {
-		abs(d*normal);
-	}
-}
-case class Ray(pt1: Vec3, pt2: Vec3) {
-	val direction = (pt2-pt1).normalize();
-	val origin = pt1;
-	val equation = (t: Double) => {origin + direction*t}
 }

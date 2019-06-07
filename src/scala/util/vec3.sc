@@ -62,31 +62,6 @@ case class Vec3(x: Double = 0, y: Double = 0, z: Double = 0) {
 	def map(func: (Double) => (Double)): Vec3 = {
 		return Vec3(func(x), func(y), func(z));
 	}
-	
-	// def add(v: Vec3): Vec3 = {
-		// Vec3(x + v.x, y + v.y, z + v.z);
-	// }
-	// def add(a: Double): Vec3 = {
-		// Vec3(x + a, y + a, z + a);
-	// }
-	// def subtract(v: Vec3): Vec3 = {
-		// Vec3(x - v.x, y - v.y, z - v.z);
-	// }
-	// def dot(v: Vec3): Double = {
-		// x*v.x + y*v.y + z*v.z;
-	// }
-	// def hadamard(v: Vec3): Vec3 = {
-		// Vec3(x*v.x, y*v.y, z*v.z);
-	// }
-	// def magSquared(): Double = {
-		// dot(this);
-	// }
-	// def cross(v: Vec3): Vec3 = {
-		// Vec3(y*v.z - z*v.y, z*v.x - x*v.z, x*v.y - y*v.x);
-	// }
-	// def scale(s: Double): Vec3 = {
-		// Vec3(x*s, y*s, z*s);
-	// }
 	/*
 	** The projection and the rejection of this vector onto
 	** a vector v

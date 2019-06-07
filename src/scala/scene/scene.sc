@@ -1,9 +1,9 @@
 package raytracing.scene;
-import raytracing.{geometry,util},geometry.{Intersectable,Ray},util.{Vec3,Timer};
+import raytracing.{geometry,util},geometry.{Surface,Ray},util.{Vec3,Timer};
 import scala.math.{pow,min,max,random,Pi,floor,tan};
 import annotation.tailrec;
 
-case class SceneObject(shape: Intersectable, material: Shader, next: SceneObject);
+case class SceneObject(shape: Surface, material: Shader, next: SceneObject);
 
 case class Scene(
 	head: SceneObject=null,
@@ -14,17 +14,16 @@ case class Scene(
 	x: Int=0, y: Int=0, z: Int=0,
 	fieldOfView: Double=Pi/8,
 	spp: Int=1,
-	showLight: Boolean=true,
 	background: Vec3=Vec3()
 ) {
 	val position = Vec3(x, y, z); //position of lower left corner of screen
 	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)))
 	
-	def ++(i: Intersectable, m: Shader): Scene = {
-		return Scene(SceneObject(i, m, head), lights, length+1, width, height, x, y, z, fieldOfView, spp, showLight);
+	def ++(i: Surface, m: Shader): Scene = {
+		return Scene(SceneObject(i, m, head), lights, length+1, width, height, x, y, z, fieldOfView, spp);
 	}
 	def ++(l: Lighting): Scene = {
-		return Scene(head, lights++l, length+1, width, height, x, y, z, fieldOfView, spp, showLight);
+		return Scene(head, lights++l, length+1, width, height, x, y, z, fieldOfView, spp);
 	}
 	def getPixel(i: Int, j: Int): Vec3 = {
 		return position + Vec3(i, j, 0);
@@ -64,13 +63,12 @@ case class Scene(
 		if(objHit._1 == null || ~(lightP - pt) < ~(objHit._2 - pt)) return true
 		return false;
 	}
-	
 	def trace(ray: Ray): Vec3 = {
 		val closestPoint = getClosestObject(ray);
 		val objHit = closestPoint._1;
 		val intersectPt = closestPoint._2;
 		val hitLight = lights.searchForIntersection(ray);
-		if(hitLight != NoLights && showLight) return hitLight.emission;
+		if(hitLight != NoLights && hitLight.visibility) return hitLight.emission;
 		if(objHit == null) return background;
 		if(random > 0.9) return Vec3();
 		
