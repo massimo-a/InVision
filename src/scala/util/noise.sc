@@ -1,9 +1,8 @@
 package raytracing.util
 
 import javax.imageio.ImageIO;
-import java.{io,util},io.{File,FileWriter},util.Calendar
+import java.io.File
 import java.awt.image.BufferedImage
-import scala.xml.{XML,Elem,NodeSeq};
 
 case class Noise(seed: Double = System.currentTimeMillis%10000) {
 	def sin_rand(x: Double, y: Double): Double = {
