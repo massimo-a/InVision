@@ -1,0 +1,119 @@
+
+date and time - Tue Jun 11 21:40:41 EDT 2019
+file name - a
+run time - 00 : 00 : 02.643
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 500000
+
+date and time - Tue Jun 11 21:42:04 EDT 2019
+file name - test
+run time - 00 : 00 : 02.939
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 500000
+
+date and time - Tue Jun 11 22:01:05 EDT 2019
+file name - a
+run time - 00 : 00 : 02.947
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 500000
+
+date and time - Tue Jun 11 22:02:35 EDT 2019
+file name - a
+run time - 00 : 00 : 06.283
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 166666
+
+date and time - Tue Jun 11 22:05:16 EDT 2019
+file name - a
+run time - 00 : 00 : 02.484
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 500000
+
+date and time - Fri Jun 14 11:51:53 EDT 2019
+file name - t12
+run time - 00 : 00 : 35.480
+anti-aliasing - 3
+screen size - (1000, 1000)
+primary rays shot per second - 257142
+
+date and time - Fri Jun 14 11:57:23 EDT 2019
+file name - ttt
+run time - 00 : 01 : 22.143
+anti-aliasing - 3
+screen size - (1000, 1000)
+primary rays shot per second - 109756
+
+date and time - Fri Jun 14 12:00:24 EDT 2019
+file name - tq
+run time - 00 : 00 : 08.930
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 125000
+
+date and time - Fri Jun 14 12:02:58 EDT 2019
+file name - ttt
+run time - 00 : 00 : 11.349
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 90909
+
+date and time - Fri Jun 14 13:34:17 EDT 2019
+file name - ttt
+run time - 00 : 01 : 06.078
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 15151
+
+date and time - Fri Jun 14 13:36:40 EDT 2019
+file name - ttt
+run time - 00 : 00 : 03.421
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 333333
+
+date and time - Fri Jun 14 13:37:40 EDT 2019
+file name - t12
+run time - 00 : 00 : 03.401
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 333333
+
+date and time - Fri Jun 14 13:38:23 EDT 2019
+file name - z
+run time - 00 : 00 : 03.411
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 333333
+
+date and time - Fri Jun 14 13:48:03 EDT 2019
+file name - t12
+run time - 00 : 00 : 01.156
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 1000000
+
+date and time - Fri Jun 14 14:08:54 EDT 2019
+file name - a
+run time - 00 : 01 : 07.839
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 14925
+
+date and time - Fri Jun 14 14:11:37 EDT 2019
+file name - a
+run time - 00 : 01 : 36.358
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 10416
+
+date and time - Fri Jun 14 14:41:50 EDT 2019
+file name - a
+run time - 00 : 04 : 56.158
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 3378

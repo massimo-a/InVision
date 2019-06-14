@@ -1,5 +1,5 @@
 package raytracing.scene;
-import raytracing.{geometry,util},geometry.{Surface,Ray},util.Vec3;
+import raytracing.{geometry,util},geometry.{BoundedSDF,Ray},util.Vec3;
 import scala.math.{random,sqrt};
 
 object NoLights extends Lighting {
@@ -18,9 +18,8 @@ case class Lighting(
 	visibility: Boolean = true
 ) {
 	val emission = Vec3(redEmission, greenEmission, blueEmission);
-	val intensity = sqrt((redEmission*redEmission + greenEmission*greenEmission + blueEmission*blueEmission)/3)
 	val position = Vec3(x, y, z);
-	val shape = Surface.SPHERE(size).translate(x,y,z);
+	val shape = BoundedSDF.SPHERE(size).translate(x,y,z);
 	private def copy(n: Lighting): Lighting = {
 		return Lighting(n, redEmission, greenEmission, blueEmission, x, y, z, size, falloff);
 	}

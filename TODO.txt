@@ -4,7 +4,10 @@ Octree/KD-Tree data structure
 Marching Cubes (Turning SDF into Triangle Mesh)
 Save and load partially completed scenes
 Smoke effect (volumetric rendering)
-Look-up table for command execution
-Implicit surface
+Worley Noise
+Heat field noise
+Ripple Noise
+Terrain from noise
 Implement more math (n-dimensional vectors, complex numbers, quaternions)
 XML based language for scene generation
+Create a testing class

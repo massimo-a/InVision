@@ -6,9 +6,12 @@
 */
 
 import raytracing.{geometry,scene,util},geometry._,scene._,util._;
-import scala.concurrent.{Future,ExecutionContext},ExecutionContext.Implicits.global;
 import annotation.tailrec;
 
+object Test {
+	val n = Noise().layered_noise(2,0.5);
+	val setup = Scene(spp=1)++(Lighting(x=0,y=1000,z=0,size=20))
+}
 object Program {
 	//metadata
 	private val version = "v0.2.7";
@@ -20,37 +23,22 @@ object Program {
 		println(lineStart + " " + s);
 	}
 	
-	//asynchronously renders an image
-	private def render(name: String, scene: Scene) {
-		val timer = new Timer();
-		val arr: Future[Array[Array[Int]]] = Future {
-			timer.start;
-			Renderer.render(scene);
-		}
-		arr.map { rgbs =>
-			timer.end;
-			ImageHandler.saveImage(scene, rgbs, name);
-			p("Completed " + name);
-			p("Run Time - " + timer.formatTime);
-			ImageHandler.saveData(name, scene, timer);
-		}
-	}
 	@tailrec private def evaluate(command: String): Boolean = {
 		val commands = command.toLowerCase.split(" ");
-		val cmd = commands(0)(0).toString
-		if(cmd.equals("q")) return false;
-		if(cmd.equals("r")) {
-			p("Begun rendering " + commands(1));
-			render(commands(1), Scene()++(Lighting()));
-		} else if(commands(0).equals("progress")) {
-			p(Renderer.progressToString);
-		} else if(cmd.equals("p")) {
-			Renderer.paused = true;
-		} else if(cmd.equals("u")) {
-			Renderer.paused = false;
-		} else if(cmd.equals("s")) {
-			Renderer.save;
-		} else p("invalid command");
+		try {
+			val cmd = commands(0);
+			if(Commands.isQuitCommand(cmd)) return false;
+			if(Commands.isRenderCommand(cmd)) {
+				p("Begun rendering " + commands(1));
+				Commands.render(commands(1), Test.setup);
+			} else {
+				println(Renderer.progressToString);
+			}
+		} catch {
+			case ex: IndexOutOfBoundsException => {
+				p("invalid command");
+			}
+		}
 		val nextCommand = scala.io.StdIn.readLine;
 		return evaluate(nextCommand);
 	}
