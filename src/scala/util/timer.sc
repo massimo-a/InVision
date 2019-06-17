@@ -38,4 +38,7 @@ class Timer() {
 		val stringMilli = if(msec >= 100) msec.toString else if(msec >= 10) "0" + msec.toString else "00" + msec.toString;
 		return stringHour + " : " + stringMin + " : " +  stringSec + "." + stringMilli;
 	}
+	def formatTime(s: Double): String = {
+		return formatTime(s.toLong);
+	}
 }

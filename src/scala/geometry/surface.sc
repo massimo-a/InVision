@@ -38,16 +38,13 @@ trait Surface {
 	}
 }
 
-case class Isosurface(
-	equation: Vec3 => Double
-) extends Surface {
-	private def march(r: Ray, pt: Double, count: Int): Double = {
-		val a = abs(equation(r.equation(pt)))
-		if(count > 25) return -1;
-		if(a < 1) return pt
-		return march(r, pt + a/gradient(r.equation(pt)).magnitude, count+1);
-	}
-	def intersectDistance(r: Ray): Double = {
-		return march(r, 0.0, 0);
-	}
-}
+// case class Isosurface(
+	// equation: Vec3 => Double
+// ) extends Surface {
+	// private def march(r: Ray, pt: Double, count: Int, sgn: Int, stepsize: Double): Double = {
+		
+	// }
+	// def intersectDistance(r: Ray): Double = {
+		
+	// }
+// }

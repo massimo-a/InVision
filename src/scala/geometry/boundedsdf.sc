@@ -3,7 +3,7 @@
 */
 
 package raytracing.geometry;
-import raytracing.util.Vec3;
+import raytracing.util.{Vec3,Noise};
 import scala.math.{abs,max,min,cos,sin};
 
 /* 
@@ -139,9 +139,10 @@ case class BoundedSDF(
 		return BoundedSDF(equation, oobb)
 	}
 	private def findRoot(func: Double => Double, pt: Double, dist: Double): Double = {
+		val f = abs(func(pt))
+		if(f < 5) return pt;
 		if(dist < 0) return -1;
-		if(func(pt) < 1 && func(pt) > -1) return pt;
-		return findRoot(func, pt + abs(func(pt)), dist - abs(func(pt)));
+		return findRoot(func, pt + f, dist - f);
 	}
 	def intersectDistance(r: Ray): Double = {
 		if(hitBox(r)) {
