@@ -15,7 +15,7 @@ ADDING PROGRAM TO PATH (Windows only)
 	5. Find the system variable called PATH
 	6. Click the Edit button, and then the New button
 	7. Add the file path of the 'src' folder to the PATH variable
-	8. Done! Now, when you open your command prompt, you can simply type in compile.ps1 and the program will run
+	8. Done! Now, when you open your command prompt, you can simply type in "compile.ps1" and the program will run
 
 REQUIRED INSTALLS
     1. Java JDK version 1.8._ or later

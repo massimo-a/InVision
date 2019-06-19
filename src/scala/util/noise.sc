@@ -47,7 +47,7 @@ case class Noise(seed: Double = System.currentTimeMillis%10000) {
 		var p = 0.5
 		var maxValue = 0.0
 		for(i <- 0 until octaves) {
-			total = total + perlin_noise(x*l, y*l)*p
+			total = total + perlin(x*l, y*l)*p
 			maxValue = maxValue + p
 			l = l*2
 			p = p*0.5
@@ -65,7 +65,7 @@ case class Noise(seed: Double = System.currentTimeMillis%10000) {
 		val im = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_RGB);
 		for(i <- 0 until 1000) {
 			for(j <- 0 until 1000) {
-				val pn = layeredNoise(i/1000.0,j/1000.0,5);
+				val pn = layered(i/1000.0,j/1000.0,5);
 				val rgb = if(pn < 0.1) {
 					13209
 				} else if(pn < 0.2) {

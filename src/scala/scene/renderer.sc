@@ -45,8 +45,10 @@ object Renderer {
 		} else return ""
 	}
 	def progressToString(): String = {
-		return getProgress + "% -- " + getTimeSinceStart + " -- expected completion in (" +
-			timer.formatTime(timer.getTimeSinceStart*(100-getProgress)/getProgress) + ")"
+		if(timer != null) {
+			return getProgress + "% -- " + getTimeSinceStart + " -- expected completion in (" +
+				timer.formatTime(timer.getTimeSinceStart*(100-getProgress)/getProgress) + ")"
+		} else return ""
 	}
 	def rasterize() {
 		//TODO

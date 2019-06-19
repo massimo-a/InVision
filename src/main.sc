@@ -9,7 +9,7 @@ import raytracing.{geometry,scene,util},geometry._,scene._,util._;
 import annotation.tailrec;
 
 object Test {
-	val setup = Scene(spp=1)++(Lighting(x=0,y=1000,z=0,size=20));
+	val setup = Scene(spp=5)++(Lighting(x=0,y=1000,z=0,size=20))++(Terrain(1000,2000,200),Diffuse(0.2,0.7,0.9));
 }
 object Program {
 	//metadata

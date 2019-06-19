@@ -14,7 +14,7 @@ case class Scene(
 	x: Int=0, y: Int=0, z: Int=0,
 	fieldOfView: Double=Pi/8,
 	spp: Int=1,
-	background: Vec3=Vec3()
+	background: Vec3=Vec3(0,0,0)
 ) {
 	val position = Vec3(x, y, z); //position of lower left corner of screen
 	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)))
