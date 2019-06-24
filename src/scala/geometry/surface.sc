@@ -28,7 +28,7 @@ trait Surface {
 	def intersectPoint(ray: Ray): Vec3 = {
 		val d = intersectDistance(ray);
 		if(d == -1) return null;
-		return ray.origin + ray.direction*d;
+		return ray.equation(d);
 	}
 	def getNormal(pt: Vec3): Vec3 = {
 		return gradient(pt).normalize
@@ -37,14 +37,3 @@ trait Surface {
 		return getNormal(pt)*d;
 	}
 }
-
-// case class Isosurface(
-	// equation: Vec3 => Double
-// ) extends Surface {
-	// private def march(r: Ray, pt: Double, count: Int, sgn: Int, stepsize: Double): Double = {
-		
-	// }
-	// def intersectDistance(r: Ray): Double = {
-		
-	// }
-// }

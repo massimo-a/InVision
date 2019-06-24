@@ -9,7 +9,9 @@ import raytracing.{geometry,scene,util},geometry._,scene._,util._;
 import annotation.tailrec;
 
 object Test {
-	val setup = Scene(spp=5)++(Lighting(x=0,y=1000,z=0,size=20))++(Terrain(1000,2000,200),Diffuse(0.2,0.7,0.9));
+	val noise = Noise()
+	val hm = HeightMap.generate(1000,1000)((i,j) => noise.layered(i/400.0,j/400.0,5)*300)
+	val setup = Scene(spp=1)++(Lighting(x=500,y=1000,z=500,size=50))++(Terrain(hm, 300), Diffuse())
 }
 object Program {
 	//metadata

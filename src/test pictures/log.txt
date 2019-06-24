@@ -1,0 +1,77 @@
+
+date and time - Sun Jun 23 19:59:48 EDT 2019
+file name - qwe
+run time - 00 : 00 : 21.603
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 47619
+
+date and time - Sun Jun 23 20:06:36 EDT 2019
+file name - ajsd
+run time - 00 : 00 : 20.610
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 50000
+
+date and time - Sun Jun 23 20:07:36 EDT 2019
+file name - as
+run time - 00 : 00 : 21.512
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 47619
+
+date and time - Sun Jun 23 20:09:00 EDT 2019
+file name - as
+run time - 00 : 00 : 21.212
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 47619
+
+date and time - Sun Jun 23 20:10:53 EDT 2019
+file name - as
+run time - 00 : 00 : 22.130
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 45454
+
+date and time - Sun Jun 23 20:16:10 EDT 2019
+file name - weter
+run time - 00 : 00 : 22.199
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 45454
+
+date and time - Sun Jun 23 20:17:59 EDT 2019
+file name - weteree
+run time - 00 : 00 : 21.092
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 47619
+
+date and time - Sun Jun 23 20:21:36 EDT 2019
+file name - aiu
+run time - 00 : 00 : 28.703
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 35714
+
+date and time - Sun Jun 23 20:26:26 EDT 2019
+file name - gogog
+run time - 00 : 00 : 22.324
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 45454
+
+date and time - Sun Jun 23 20:27:49 EDT 2019
+file name - seee
+run time - 00 : 00 : 21.958
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 47619
+
+date and time - Sun Jun 23 20:30:12 EDT 2019
+file name - aea
+run time - 00 : 00 : 21.969
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 47619
