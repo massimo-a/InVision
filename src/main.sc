@@ -10,8 +10,8 @@ import annotation.tailrec;
 
 object Test {
 	val noise = Noise()
-	val hm = HeightMap.generate(1000,1000)((i,j) => noise.layered(i/400.0,j/400.0,5)*300)
-	val setup = Scene(spp=1)++(Lighting(x=500,y=1000,z=500,size=50))++(Terrain(hm, 300), Diffuse())
+	val hm = HeightMap.generate(2000,1000)((i,j) => noise.layered(i/400.0,j/400.0,5)*500)
+	val setup = Scene(spp=7)++(Lighting(x=500,y=1000,z=500,size=100))++(Terrain(hm, 500, -500, -500, 300), Diffuse())++(BoundedSDF.SPHERE(100).translate(200,0,600),Gloss(0.8,0.4,0.2,0.1))
 }
 object Program {
 	//metadata

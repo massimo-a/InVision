@@ -3,7 +3,11 @@ import raytracing.{geometry,util},geometry.{Surface,Ray},util.{Vec3,Timer};
 import scala.math.{abs,pow,min,max,random,Pi,floor,tan};
 import annotation.tailrec;
 
-case class SceneObject(shape: Surface, material: Shader, next: SceneObject);
+case class SceneObject(shape: Surface, material: Shader, next: SceneObject) {
+	def color = (v: Vec3) => {
+		return material.color
+	}
+}
 
 case class Scene(
 	head: SceneObject=null,
@@ -13,8 +17,7 @@ case class Scene(
 	height: Int=1000,
 	x: Int=0, y: Int=0, z: Int=0,
 	fieldOfView: Double=Pi/8,
-	spp: Int=1,
-	background: Vec3=Vec3(0,0,0)
+	spp: Int=1
 ) {
 	val position = Vec3(x, y, z); //position of lower left corner of screen
 	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)))
@@ -76,21 +79,23 @@ case class Scene(
 		val hitLight = lights.searchForIntersection(ray);
 		if(hitLight != NoLights && hitLight.visibility) return hitLight.emission;
 		if(objHit == null) {
-			return colorLerp(Vec3(0,0,0), Vec3(1,1,1), (ray.direction*Vec3(0,1,0)+0.5)/2.0);
+			if(~(ray.origin - cameraPosition) < 1) {
+				return colorLerp(Vec3(0,0,0), Vec3(0.35,0.35,1), (ray.direction*Vec3(0,1,0)+0.38268)/1.38268)
+			} else {
+				return Vec3()
+			}
 		}
-		if(random > 0.9) return Vec3();
-		
-		val col = objHit.material.color ** lights.fold(x => {
+		val col = objHit.color ** lights.fold(x => {
 			val lightDir = x.position - intersectPt;
 			if(inLineOfSight(intersectPt, x)) {
 				x.emission * max(0, objHit.shape.getAngleWithNormal(intersectPt, lightDir.normalize)*x.falloff(lightDir.magnitude));
 			} else Vec3();
 		})
+		if(random > 0.9) return col;
 		val scatter = objHit.material.scatterLight(-ray.direction, objHit.shape.getNormal(intersectPt));
 		val brdf = objHit.material.brdf(-ray.direction, scatter, objHit.shape.getNormal(intersectPt))
 		val newRay = Ray(intersectPt + scatter, intersectPt + scatter*3);
 		val incoming = trace(newRay);
-		
-		return (col + incoming*brdf).map(x => x/(x+1));
+		return (col + incoming*brdf).map(x => x/(x+2));
 	}
 }

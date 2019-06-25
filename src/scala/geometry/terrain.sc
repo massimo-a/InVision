@@ -7,7 +7,8 @@ import raytracing.util.Vec3;
 
 case class Terrain(
 	heightmap: Array[Array[Double]],
-	height: Double
+	height: Double,
+	x:Double=0,y:Double=0,z:Double=0
 ) extends Surface with Bounded {
 	val width = heightmap.length;
 	val depth = heightmap(0).length
@@ -17,13 +18,14 @@ case class Terrain(
 		Vec3(-width/2,height/2,-depth/2),Vec3(width/2,height/2,-depth/2),
 		Vec3(width/2,height/2,depth/2),Vec3(-width/2,height/2,depth/2)
 	)
-	val minimum = Vec3(-width,-height,-depth)
-	val maximum = Vec3(width,height,depth)
+	val minimum = Vec3(x,y,z)
+	val maximum = Vec3(x+width,y+height,z+depth)
 
 	val equation = (vec: Vec3) => {
-		val x = ((vec.x.toInt%width + width)%width).toInt
-		val z = ((vec.z.toInt%depth + depth)%depth).toInt
-		vec.y - heightmap(x)(z)
+		val v = vec - minimum
+		val x = ((v.x.toInt%width + width)%width).toInt
+		val z = ((v.z.toInt%depth + depth)%depth).toInt
+		v.y - heightmap(x)(z)
 	}
 	override def gradient(pt: Vec3): Vec3 = {
 		val grad_x = (equation(pt)-equation(pt - Vec3(x=1)));
