@@ -3,11 +3,7 @@ import raytracing.{geometry,util},geometry.{Surface,Ray},util.{Vec3,Timer};
 import scala.math.{abs,pow,min,max,random,Pi,floor,tan};
 import annotation.tailrec;
 
-case class SceneObject(shape: Surface, material: Shader, next: SceneObject) {
-	def color = (v: Vec3) => {
-		return material.color
-	}
-}
+case class SceneObject(shape: Surface, material: Shader, next: SceneObject)
 
 case class Scene(
 	head: SceneObject=null,
@@ -20,14 +16,8 @@ case class Scene(
 	spp: Int=1
 ) {
 	val position = Vec3(x, y, z); //position of lower left corner of screen
-	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)))
+	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)));
 	
-	private def lerp(y0: Double, y1: Double, t: Double): Double = {
-		return y0*(1-t) + y1*t;
-	}
-	private def colorLerp(a: Vec3, b: Vec3, c: Double): Vec3 = {
-		return Vec3(lerp(a.x,b.x,c),lerp(a.y,b.y,c),lerp(a.z,b.z,c))
-	}
 	def ++(i: Surface, m: Shader): Scene = {
 		return Scene(SceneObject(i, m, head), lights, length+1, width, height, x, y, z, fieldOfView, spp);
 	}
@@ -80,15 +70,15 @@ case class Scene(
 		if(hitLight != NoLights && hitLight.visibility) return hitLight.emission;
 		if(objHit == null) {
 			if(~(ray.origin - cameraPosition) < 1) {
-				return colorLerp(Vec3(0,0,0), Vec3(0.35,0.35,1), (ray.direction*Vec3(0,1,0)+0.38268)/1.38268)
+				return Vec3(0,0,0).lerp(Vec3(0.35,0.35,1), (ray.direction*Vec3(0,1,0)+0.38268)/1.38268)
 			} else {
 				return Vec3()
 			}
 		}
-		val col = objHit.color ** lights.fold(x => {
+		val col = objHit.material.color(intersectPt) ** lights.fold(x => {
 			val lightDir = x.position - intersectPt;
 			if(inLineOfSight(intersectPt, x)) {
-				x.emission * max(0, objHit.shape.getAngleWithNormal(intersectPt, lightDir.normalize)*x.falloff(lightDir.magnitude));
+				x.emission * max(0, (objHit.shape.getNormal(intersectPt)*lightDir.normalize)*x.falloff(lightDir.magnitude));
 			} else Vec3();
 		})
 		if(random > 0.9) return col;

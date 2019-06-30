@@ -1,7 +1,0 @@
-
-date and time - Mon Jun 24 22:27:23 EDT 2019
-file name - spp_7
-run time - 00 : 04 : 37.707
-anti-aliasing - 5
-screen size - (1000, 1000)
-primary rays shot per second - 90252

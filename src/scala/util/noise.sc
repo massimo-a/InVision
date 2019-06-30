@@ -1,3 +1,7 @@
+/*
+** Author:  Massimo Angelillo
+*/
+
 package raytracing.util
 
 import javax.imageio.ImageIO;
@@ -12,9 +16,6 @@ case class Noise(seed: Double = System.currentTimeMillis%10000) {
 	}
 	def lerp(y0: Double, y1: Double, t: Double): Double = {
 		return y0*(1-t) + y1*t;
-	}
-	def colorLerp(a: Vec3, b: Vec3, c: Double): Vec3 = {
-		return Vec3(lerp(a.x,b.x,c),lerp(a.y,b.y,c),lerp(a.z,b.z,c))
 	}
 	def smooth(a: Vec3): Vec3 = {
 		return Vec3(a.x*a.x*a.x*(a.x*(a.x*6-15)+10),a.y*a.y*a.y*(a.y*(a.y*6-15)+10),a.z*a.z*a.z*(a.z*(a.z*6-15)+10))

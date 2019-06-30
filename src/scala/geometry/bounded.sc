@@ -32,6 +32,7 @@ trait Bounded {
 			Vec3(_min.x,_max.y,_min.z),Vec3(_max.x,_max.y,_min.z),_max,Vec3(_min.x,_max.y,_max.z)
 		)
 	}
+	
 	def intersections(r: Ray): (Double, Double) = {
 		var tmin = Double.NegativeInfinity;
 		var tmax = Double.PositiveInfinity;

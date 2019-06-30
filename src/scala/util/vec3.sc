@@ -62,6 +62,9 @@ case class Vec3(x: Double = 0, y: Double = 0, z: Double = 0) {
 	def map(func: (Double) => (Double)): Vec3 = {
 		return Vec3(func(x), func(y), func(z));
 	}
+	def lerp(v: Vec3, t: Double): Vec3 = {
+		return Vec3(x*(1-t) + v.x*t, y*(1-t) + v.y*t, z*(1-t) + v.z*t);
+	}
 	/*
 	** The projection and the rejection of this vector onto
 	** a vector v

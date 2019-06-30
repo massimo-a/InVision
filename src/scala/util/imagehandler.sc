@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage
 import scala.xml.{XML,Elem,NodeSeq};
 
 object ImageHandler {
-	private var pictureSaveLocation = "test pictures\\";
+	private val pictureSaveLocation = "test pictures\\";
 	def saveData(name: String, scene: Scene, t: Timer) {
 		val pw = new FileWriter(pictureSaveLocation + "log.txt", new File(pictureSaveLocation + "log.txt").exists);
 		pw.write("\r\ndate and time - " + Calendar.getInstance().getTime() + "\r\n");

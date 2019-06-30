@@ -33,7 +33,4 @@ trait Surface {
 	def getNormal(pt: Vec3): Vec3 = {
 		return gradient(pt).normalize
 	}
-	def getAngleWithNormal(pt: Vec3, d: Vec3): Double = {
-		return getNormal(pt)*d;
-	}
 }
