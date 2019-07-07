@@ -26,13 +26,10 @@ trait Shader {
 case class Diffuse(color: Vec3 => Vec3, albedo: Double = 1.0) extends Shader
 
 case class Gloss(
-	red: Double = 1.0,
-	green: Double = 1.0,
-	blue: Double = 1.0,
+	color: Vec3 => Vec3,
 	roughness: Double = 1.0,
 	albedo: Double = 1.0
 ) extends Shader {
-	val color = (v:Vec3) => {Vec3(red, green, blue)};
 	override def scatterLight(in: Vec3, n: Vec3): Vec3 = {
 		val r = random;
 		val theta = random;
@@ -45,13 +42,10 @@ case class Gloss(
 }
 
 case class Transparency(
-	red: Double = 1.0,
-	green: Double = 1.0,
-	blue: Double = 1.0,
+	color: Vec3 => Vec3,
 	roughness: Double = 1.0,
 	albedo: Double = 1.0
 ) extends Shader {
-	val color = (v:Vec3) => {Vec3(red, green, blue)};
 	override def scatterLight(in: Vec3, n: Vec3): Vec3 = {
 		val r = random;
 		val theta = random;

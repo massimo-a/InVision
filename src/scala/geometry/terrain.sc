@@ -38,7 +38,7 @@ case class Terrain(
 			var inter = intersections(r)
 			var pt = inter._1
 			while(pt < inter._2) {
-				if(Math.abs(equation(r.equation(pt))) < 1) return pt
+				if(Math.abs(equation(r.equation(pt))) < 5) return pt
 				pt = pt + 1/Math.abs(r.direction.z)
 			}
 		}

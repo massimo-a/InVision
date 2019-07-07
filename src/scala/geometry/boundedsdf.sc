@@ -16,9 +16,15 @@ case class BoundedSDF(
 	equation: Vec3 => Double,
 	OOBB: Array[Vec3]
 ) extends Surface with Bounded {
-	private val epsilon = 1;
 	val minimum = Vec3(OOBB.minBy(_.x).x, OOBB.minBy(_.y).y, OOBB.minBy(_.z).z)
 	val maximum = Vec3(OOBB.maxBy(_.x).x, OOBB.maxBy(_.y).y, OOBB.maxBy(_.z).z)
+	
+	private def gradient(f: Vec3 => Double, pt: Vec3): Vec3 = {
+		val grad_x = (f(pt)-f(pt - Vec3(x=0.01)))*100;
+		val grad_y = (f(pt)-f(pt - Vec3(y=0.01)))*100;
+		val grad_z = (f(pt)-f(pt - Vec3(z=0.01)))*100;
+		return Vec3(grad_x, grad_y, grad_z);
+	}
 	
 	def distort(func: (Vec3) => (Double)): BoundedSDF = {
 		return BoundedSDF(
@@ -134,6 +140,12 @@ case class BoundedSDF(
 		val oobb = OOBB.map(x => rotatePoint(x))
 		return BoundedSDF(func, oobb);
 	}
+	def rotate(rad: Vec3): BoundedSDF = {
+		return this.rotateX(rad.x).rotateY(rad.y).rotateZ(rad.z);
+	}
+	def rotate(x: Double, y: Double, z: Double): BoundedSDF = {
+		return this.rotateX(x).rotateY(y).rotateZ(z);
+	}
 	def stretchBoundingBox(v: Vec3): BoundedSDF = {
 		val oobb = getOOBB(minimum - v, maximum + v);
 		return BoundedSDF(equation, oobb)
@@ -157,8 +169,8 @@ object BoundedSDF {
 		return BoundedSDF(
 			(v: Vec3) => {v.magnitude - r},
 			Array(
-				Vec3(-r,-r,-r),Vec3(r,-r,-r),Vec3(r,-r,r),Vec3(-r,-r,r),
-				Vec3(-r,r,-r),Vec3(r,r,-r),Vec3(r,r,r),Vec3(-r,r,r)
+				Vec3(-r-10,-r-10,-r-10),Vec3(r+10,-r-10,-r-10),Vec3(r+10,-r-10,r+10),Vec3(-r-10,-r-10,r+10),
+				Vec3(-r-10,r+10,-r-10),Vec3(r+10,r+10,-r-10),Vec3(r+10,r+10,r+10),Vec3(-r-10,r+10,r+10)
 			)
 		)
 	}

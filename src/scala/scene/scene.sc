@@ -70,7 +70,7 @@ case class Scene(
 		if(hitLight != NoLights && hitLight.visibility) return hitLight.emission;
 		if(objHit == null) {
 			if(~(ray.origin - cameraPosition) < 1) {
-				return Vec3(0,0,0).lerp(Vec3(0.35,0.35,1), (ray.direction*Vec3(0,1,0)+0.38268)/1.38268)
+				return Vec3(0,0,0).lerp(Vec3(0.8,0.8,1.0), (ray.direction*Vec3(0,1,0)+0.38268)/1.38268) //should be fixed
 			} else {
 				return Vec3()
 			}

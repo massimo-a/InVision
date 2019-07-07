@@ -1,5 +1,6 @@
 import raytracing.{geometry,scene,util},geometry._,scene._,util._;
 import scala.concurrent.{Future,ExecutionContext},ExecutionContext.Implicits.global;
+import annotation.tailrec;
 
 object Commands {
 	def isQuitCommand(cmd: String): Boolean = {
@@ -34,5 +35,32 @@ object Commands {
 	}
 	val save = (name: String, scene: Scene) => {
 		//TODO
+	}
+	//pretty println method
+	private def p(s: String) {
+		println("$> " + s);
+	}
+	@tailrec private def evaluate(command: String): Boolean = {
+		val commands = command.toLowerCase.split(" ");
+		try {
+			val cmd = commands(0);
+			if(isQuitCommand(cmd)) return false;
+			if(isRenderCommand(cmd)) {
+				p("Begun rendering " + commands(1));
+				render(commands(1), SceneSetup.scene);
+			} else {
+				println(Renderer.progressToString);
+			}
+		} catch {
+			case ex: IndexOutOfBoundsException => {
+				p("invalid command");
+			}
+		}
+		val nextCommand = scala.io.StdIn.readLine;
+		return evaluate(nextCommand);
+	}
+	def evaluate(): Boolean = {
+		val command = scala.io.StdIn.readLine;
+		return evaluate(command);
 	}
 }
