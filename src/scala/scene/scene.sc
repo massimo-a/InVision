@@ -1,9 +1,13 @@
+/*
+** Author:  Massimo Angelillo
+*/
+
 package raytracing.scene;
-import raytracing.{geometry,util},geometry.{Surface,Ray},util.{Vec3,Timer};
-import scala.math.{pow,min,max,random,Pi,floor,tan};
+import raytracing.{geometry,util},geometry.{SurfaceMarcher,Ray},util.{Vec3,Timer};
+import scala.math.{abs,pow,min,max,random,Pi,floor,tan};
 import annotation.tailrec;
 
-case class SceneObject(shape: Surface, material: Shader, next: SceneObject);
+case class SceneObject(shape: SurfaceMarcher, material: Shader, next: SceneObject)
 
 case class Scene(
 	head: SceneObject=null,
@@ -13,13 +17,12 @@ case class Scene(
 	height: Int=1000,
 	x: Int=0, y: Int=0, z: Int=0,
 	fieldOfView: Double=Pi/8,
-	spp: Int=1,
-	background: Vec3=Vec3()
+	spp: Int=1
 ) {
 	val position = Vec3(x, y, z); //position of lower left corner of screen
-	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)))
+	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)));
 	
-	def ++(i: Surface, m: Shader): Scene = {
+	def ++(i: SurfaceMarcher, m: Shader): Scene = {
 		return Scene(SceneObject(i, m, head), lights, length+1, width, height, x, y, z, fieldOfView, spp);
 	}
 	def ++(l: Lighting): Scene = {
@@ -69,21 +72,24 @@ case class Scene(
 		val intersectPt = closestPoint._2;
 		val hitLight = lights.searchForIntersection(ray);
 		if(hitLight != NoLights && hitLight.visibility) return hitLight.emission;
-		if(objHit == null) return background;
-		if(random > 0.9) return Vec3();
-		
-		val col = objHit.material.color ** lights.fold(x => {
+		if(objHit == null) {
+			if(~(ray.origin - cameraPosition) < 1) {
+				return Vec3(0,0,0).lerp(Vec3(0.8,0.8,1.0), (ray.direction*Vec3(0,1,0)+0.38268)/1.38268) //should be fixed
+			} else {
+				return Vec3()
+			}
+		}
+		val col = objHit.material.color(intersectPt) ** lights.fold(x => {
 			val lightDir = x.position - intersectPt;
 			if(inLineOfSight(intersectPt, x)) {
-				x.emission * max(0, objHit.shape.getAngleWithNormal(intersectPt, lightDir.normalize)*x.falloff(lightDir.magnitude));
+				x.emission * max(0, (objHit.shape.getNormal(intersectPt)*lightDir.normalize)*x.falloff(lightDir.magnitude));
 			} else Vec3();
 		})
-		
+		if(random > 0.9) return col;
 		val scatter = objHit.material.scatterLight(-ray.direction, objHit.shape.getNormal(intersectPt));
 		val brdf = objHit.material.brdf(-ray.direction, scatter, objHit.shape.getNormal(intersectPt))
 		val newRay = Ray(intersectPt + scatter, intersectPt + scatter*3);
 		val incoming = trace(newRay);
-		
-		return (col + incoming*brdf).map(x => x/(x+1));
+		return (col + incoming*brdf).map(x => x/(x+2));
 	}
 }

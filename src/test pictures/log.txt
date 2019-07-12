@@ -1,0 +1,105 @@
+
+date and time - Mon Jul 08 18:24:16 EDT 2019
+file name - yeet
+run time - 00 : 15 : 38.787
+anti-aliasing - 10
+screen size - (1000, 1000)
+primary rays shot per second - 106609
+
+date and time - Mon Jul 08 18:42:59 EDT 2019
+file name - yeet
+run time - 00 : 15 : 39.494
+anti-aliasing - 10
+screen size - (1000, 1000)
+primary rays shot per second - 106496
+
+date and time - Mon Jul 08 19:18:25 EDT 2019
+file name - yeet
+run time - 00 : 00 : 05.639
+anti-aliasing - 2
+screen size - (1000, 1000)
+primary rays shot per second - 800000
+
+date and time - Mon Jul 08 19:20:08 EDT 2019
+file name - yeet2
+run time - 00 : 00 : 34.797
+anti-aliasing - 5
+screen size - (1000, 1000)
+primary rays shot per second - 735294
+
+date and time - Mon Jul 08 19:21:25 EDT 2019
+file name - yeet3
+run time - 00 : 00 : 33.797
+anti-aliasing - 5
+screen size - (1000, 1000)
+primary rays shot per second - 757575
+
+date and time - Mon Jul 08 19:24:38 EDT 2019
+file name - yeet
+run time - 00 : 02 : 11.259
+anti-aliasing - 10
+screen size - (1000, 1000)
+primary rays shot per second - 763358
+
+date and time - Mon Jul 08 19:27:36 EDT 2019
+file name - yeet2
+run time - 00 : 02 : 04.790
+anti-aliasing - 10
+screen size - (1000, 1000)
+primary rays shot per second - 806451
+
+date and time - Mon Jul 08 19:31:26 EDT 2019
+file name - yeet3
+run time - 00 : 03 : 07.055
+anti-aliasing - 10
+screen size - (1000, 1000)
+primary rays shot per second - 534759
+
+date and time - Mon Jul 08 19:35:03 EDT 2019
+file name - yeet4
+run time - 00 : 02 : 41.691
+anti-aliasing - 10
+screen size - (1000, 1000)
+primary rays shot per second - 621118
+
+date and time - Mon Jul 08 19:39:01 EDT 2019
+file name - diffuse_albedo_8
+run time - 00 : 03 : 00.113
+anti-aliasing - 10
+screen size - (1000, 1000)
+primary rays shot per second - 555555
+
+date and time - Mon Jul 08 20:55:17 EDT 2019
+file name - test
+run time - 00 : 00 : 31.240
+anti-aliasing - 5
+screen size - (1000, 1000)
+primary rays shot per second - 806451
+
+date and time - Mon Jul 08 20:59:10 EDT 2019
+file name - test
+run time - 00 : 01 : 45.717
+anti-aliasing - 10
+screen size - (1000, 1000)
+primary rays shot per second - 952380
+
+date and time - Thu Jul 11 18:43:51 EDT 2019
+file name - tt
+run time - 00 : 00 : 01.436
+anti-aliasing - 1
+screen size - (1000, 1000)
+primary rays shot per second - 1000000
+
+date and time - Thu Jul 11 19:01:03 EDT 2019
+file name - tt
+run time - 00 : 00 : 04.586
+anti-aliasing - 2
+screen size - (1000, 1000)
+primary rays shot per second - 1000000
+
+date and time - Thu Jul 11 19:07:11 EDT 2019
+file name - tt
+run time - 00 : 00 : 27.444
+anti-aliasing - 4
+screen size - (1000, 1000)
+primary rays shot per second - 592592

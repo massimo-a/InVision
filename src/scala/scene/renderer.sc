@@ -1,3 +1,7 @@
+/*
+** Author:  Massimo Angelillo
+*/
+
 package raytracing.scene;
 import raytracing.{geometry,util},geometry.{Surface,Ray},util.{Timer,ImageHandler};
 import scala.math.floor;
@@ -45,7 +49,10 @@ object Renderer {
 		} else return ""
 	}
 	def progressToString(): String = {
-		return getProgress + "% -- " + getTimeSinceStart
+		if(timer != null) {
+			return getProgress + "% -- " + getTimeSinceStart + " -- expected completion in (" +
+				timer.formatTime(timer.getTimeSinceStart*(100-getProgress)/getProgress) + ")"
+		} else return ""
 	}
 	def rasterize() {
 		//TODO
