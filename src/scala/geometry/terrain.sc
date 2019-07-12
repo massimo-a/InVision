@@ -9,7 +9,7 @@ case class Terrain(
 	heightmap: Array[Array[Double]],
 	height: Double,
 	x:Double=0,y:Double=0,z:Double=0
-) extends Surface with Bounded {
+) extends SurfaceMarcher with Bounded {
 	val width = heightmap.length;
 	val depth = heightmap(0).length
 	val OOBB = Array(

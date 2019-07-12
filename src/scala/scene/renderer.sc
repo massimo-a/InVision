@@ -1,3 +1,7 @@
+/*
+** Author:  Massimo Angelillo
+*/
+
 package raytracing.scene;
 import raytracing.{geometry,util},geometry.{Surface,Ray},util.{Timer,ImageHandler};
 import scala.math.floor;

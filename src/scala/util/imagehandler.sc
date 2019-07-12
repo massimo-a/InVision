@@ -1,3 +1,10 @@
+/*
+** Author:  Massimo Angelillo
+**
+** A utility class for handling Image I/O
+** operations and certain other impure operations
+*/
+
 package raytracing.util;
 import raytracing.{scene,geometry},scene.{Scene, Shader},geometry._;
 import javax.imageio.ImageIO;

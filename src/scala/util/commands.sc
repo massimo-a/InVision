@@ -1,4 +1,12 @@
-import raytracing.{geometry,scene,util},geometry._,scene._,util._;
+/*
+** Author:  Massimo Angelillo
+**
+** This class will handle parsing and executing commands
+** sent by the user
+*/
+
+package raytracing.util;
+import raytracing.{geometry,scene},geometry._,scene._;
 import scala.concurrent.{Future,ExecutionContext},ExecutionContext.Implicits.global;
 import annotation.tailrec;
 

@@ -1,3 +1,11 @@
+/*
+** Author:  Massimo Angelillo
+**
+** A utility class to handle displaying time
+** and calculating program runtime
+** NOTE: this is a class with mutable states and side effects
+*/
+
 package raytracing.util;
 import scala.math.{floor,ceil};
 
@@ -15,14 +23,15 @@ class Timer() {
 		starttime = 0;
 		endtime = 0;
 	}
+	def getRunTime(): Long = {
+		return (endtime - starttime)/1000.0.toLong;
+	}
+	
 	def getTimeSinceStart(): Long = {
 		return System.currentTimeMillis - starttime;
 	}
 	def formatTimeSinceStart(): String = {
 		return formatTime(getTimeSinceStart);
-	}
-	def getRunTime(): Long = {
-		return (endtime - starttime)/1000.0.toLong;
 	}
 	def formatTime(): String = {
 		return formatTime(endtime - starttime);

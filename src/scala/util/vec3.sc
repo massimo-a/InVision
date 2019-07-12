@@ -1,8 +1,6 @@
 /*
 ** Author : Massimo Angelillo
 **
-** Date : 12/24/2018 1:17 AM
-**
 ** Defines a vector object with all the needed
 ** vector operations. Vec3 is completely immutable - no method
 ** alters the vector or its data, all methods return a new updated
@@ -66,8 +64,8 @@ case class Vec3(x: Double = 0, y: Double = 0, z: Double = 0) {
 		return Vec3(x*(1-t) + v.x*t, y*(1-t) + v.y*t, z*(1-t) + v.z*t);
 	}
 	/*
-	** The projection and the rejection of this vector onto
-	** a vector v
+	** The projection and the rejection of this vector onto a vector v
+	**
 	** The projection is the component of this vector that is
 	** in the same direction as v, the rejection is the component
 	** of this vector that is perpendicular to v.

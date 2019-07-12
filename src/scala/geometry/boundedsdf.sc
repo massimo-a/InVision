@@ -15,7 +15,7 @@ import scala.math.{abs,max,min,cos,sin};
 case class BoundedSDF(
 	equation: Vec3 => Double,
 	OOBB: Array[Vec3]
-) extends Surface with Bounded {
+) extends SurfaceMarcher with Bounded {
 	val minimum = Vec3(OOBB.minBy(_.x).x, OOBB.minBy(_.y).y, OOBB.minBy(_.z).z)
 	val maximum = Vec3(OOBB.maxBy(_.x).x, OOBB.maxBy(_.y).y, OOBB.maxBy(_.z).z)
 	
@@ -24,13 +24,6 @@ case class BoundedSDF(
 		val grad_y = (f(pt)-f(pt - Vec3(y=0.01)))*100;
 		val grad_z = (f(pt)-f(pt - Vec3(z=0.01)))*100;
 		return Vec3(grad_x, grad_y, grad_z);
-	}
-	
-	def distort(func: (Vec3) => (Double)): BoundedSDF = {
-		return BoundedSDF(
-			(v: Vec3) => {equation(v) + func(v)},
-			OOBB
-		)
 	}
 	
 	/*
@@ -73,7 +66,6 @@ case class BoundedSDF(
 		val oobb = getOOBB(bounds._1, bounds._2);
 		return BoundedSDF(func, oobb);
 	}
-	
 	/*
 	** Takes two BoundedSDFs and returns the BoundedSDF
 	** that is contained by the first, but not the second
@@ -157,8 +149,8 @@ case class BoundedSDF(
 		return findRoot(func, pt + f, dist - f);
 	}
 	def intersectDistance(r: Ray): Double = {
-		if(hitBox(r)) {
-			val pts = intersections(r);
+		val pts = intersections(r);
+		if(pts._1 < pts._2) {
 			return findRoot((x: Double) => {equation(r.equation(x))}, pts._1, (pts._2 - pts._1));
 		} else return -1;
 	}

@@ -1,5 +1,6 @@
 /*
 ** Author:  Massimo Angelillo
+**
 ** A special thank you to Kevin Sangurima for assisstance in
 ** solving some algorithm issues, naming it and testing it out!
 ** TRAC3R v0.4.0

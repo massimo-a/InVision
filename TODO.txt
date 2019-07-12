@@ -1,8 +1,0 @@
-1.  Comment classes
-2.  Marching Cubes (Turning SDF into Triangle Mesh)
-3.  Save and load partially completed scenes
-4.  Smoke effect (volumetric rendering)
-5.  Implement more math (n-dimensional vectors, complex numbers, quaternions)
-6.  XML based language for scene generation
-7.  Texture Mapping
-8.  Displacement Mapping

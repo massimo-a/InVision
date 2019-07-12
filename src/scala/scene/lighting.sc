@@ -1,3 +1,7 @@
+/*
+** Author:  Massimo Angelillo
+*/
+
 package raytracing.scene;
 import raytracing.{geometry,util},geometry.{BoundedSDF,Ray},util.Vec3;
 import scala.math.{random,sqrt};

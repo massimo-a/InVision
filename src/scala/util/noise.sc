@@ -1,5 +1,9 @@
 /*
 ** Author:  Massimo Angelillo
+**
+** A class that handles generating noise through
+** the use of noise functions. Included implementations
+** are Perlin noise, value noise, fractal noise and Worley noise
 */
 
 package raytracing.util
