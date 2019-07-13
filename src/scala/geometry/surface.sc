@@ -39,3 +39,7 @@ trait Intersectable {
 	}
 	def getNormal(pt: Vec3): Vec3;
 }
+
+//case class Plane extends Intersectable {
+	
+//}

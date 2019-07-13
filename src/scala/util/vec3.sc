@@ -2,7 +2,7 @@
 ** Author : Massimo Angelillo
 **
 ** Defines a vector object with all the needed
-** vector operations. Vec3 is completely immutable - no method
+** vector operations. Vec3 is completely immutable and pure - no method
 ** alters the vector or its data, all methods return a new updated
 ** version of the vector
 */

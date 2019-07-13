@@ -3,7 +3,7 @@
 */
 
 package raytracing.scene;
-import raytracing.{geometry,util},geometry.{Surface,Ray},util.{Timer,ImageHandler};
+import raytracing.{geometry,util},geometry.{SurfaceMarcher,Ray},util.{Timer,ImageHandler};
 import scala.math.floor;
 
 object Renderer {
