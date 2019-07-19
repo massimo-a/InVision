@@ -31,11 +31,11 @@ case class Texture(filename: String) {
 		val uv = sphereUV(pt, center);
 		return pixelColorAsVector(uv.x, uv.y)
 	}
-	
+	//needs to be tested out
 	def paste(pt: Vec3, corner: Vec3, axis: Vec3, width: Int, height: Int): Vec3 = {
 		val v = pt - corner;
-		val x = v.proj(axis).magnitude%width;
-		val y = v.rej(axis).magnitude%height;
+		val x = Math.abs(v*axis)%width;
+		val y = (v-axis*(v*axis)).magnitude%height;
 		return pixelColorAsVector(x, y);
 	}
 }

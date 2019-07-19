@@ -18,8 +18,8 @@ case class Lighting(
 	y: Double = 0.0,
 	z: Double = 0.0,
 	size: Double = 10,
-	falloff: (Double => Double) = _ => 0.9,
-	visibility: Boolean = true
+	falloff: (Double => Double) = _ => 1.0,
+	visibility: Boolean = false
 ) {
 	val emission = Vec3(redEmission, greenEmission, blueEmission);
 	val position = Vec3(x, y, z);

@@ -1,8 +1,8 @@
 /*
 ** Author:  Massimo Angelillo
 **
-** A utility class for handling Image I/O
-** operations and certain other impure operations
+** A utility class for handling Image I/O operations
+** and certain other impure operations
 */
 
 package raytracing.util;
@@ -10,7 +10,6 @@ import raytracing.{scene,geometry},scene.{Scene, Shader},geometry._;
 import javax.imageio.ImageIO;
 import java.{io,util},io.{File,FileWriter},util.Calendar
 import java.awt.image.BufferedImage
-import scala.xml.{XML,Elem,NodeSeq};
 
 object ImageHandler {
 	private val pictureSaveLocation = "test pictures\\";

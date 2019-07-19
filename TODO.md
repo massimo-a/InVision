@@ -11,3 +11,5 @@
   5.  Move camera around scene
   6.  Re-implement Intersectable trait, and have SurfaceMarcher extend it
   10. Random access list (RAList) with O(logn) access time and update time
+  11. Factory pattern for Material and BoundedSDF
+  12. Lights of different shapes

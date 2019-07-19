@@ -40,6 +40,11 @@ trait Intersectable {
 	def getNormal(pt: Vec3): Vec3;
 }
 
-//case class Plane extends Intersectable {
-	
-//}
+case class Plane(normal: Vec3, point: Vec3) extends Intersectable {
+	def getNormal(pt: Vec3): Vec3 = {return normal}
+	def intersectDistance(r: Ray): Double = {
+		val check = r.direction*normal;
+		if(abs(check) < 1E-6) return -1;
+		return ((point - r.origin)*normal)/check
+	}
+}
