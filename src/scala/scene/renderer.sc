@@ -23,7 +23,6 @@ object Renderer {
 		return arr;
 	}
 	def render(scene: Scene): Array[Array[Int]] = {
-		println(scene.width,scene.height);
 		pixels = Array.ofDim[Int](scene.width, scene.height).map(_.map(x => -1));
 		current = scene;
 		timer = new Timer()

@@ -46,7 +46,9 @@ object Commands {
 				p("Begun rendering " + commands(1));
 				render(commands(1), SceneSetup.scene);
 			}
-			case "prog" => println(Renderer.progressToString);
+			case "prog" => p(
+				if(Renderer.progressToString.equals("")) "Nothing currently rendering" else Renderer.progressToString
+			);
 			case "load" => {
 				p("Begun rendering " + commands(1));
 				load(commands(1), commands(2));

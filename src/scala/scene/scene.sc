@@ -90,6 +90,8 @@ case class Scene(
 		val brdf = objHit.material.brdf(-ray.direction, scatter, objHit.shape.getNormal(intersectPt))
 		val newRay = Ray(intersectPt + scatter, intersectPt + scatter*3);
 		val incoming = trace(newRay);
-		return (col + incoming*brdf).map(x => x/(x+2));
+		return (col + incoming*brdf).map(x => {
+			x/(x+0.75);
+		})
 	}
 }

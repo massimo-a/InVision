@@ -10,6 +10,32 @@
 package raytracing.util;
 import scala.math.{sqrt,cos,sin};
 
+trait VectorSpace[A,B] {
+	def +(vs: A): A;
+	def -(vs: A): A;
+	def unary_-(): A;
+	def *(vs: A): B;
+	def scale(a: B): A;
+}
+
+case class Vec4[A](x:A,y:A,z:A,w:A)(implicit n: Numeric[A]) extends VectorSpace[Vec4[A],A] {
+	def +(vs: Vec4[A]): Vec4[A] = {
+		return Vec4[A](n.plus(x,vs.x), n.plus(y,vs.y), n.plus(z,vs.z), n.plus(w,vs.w));
+	}
+	def -(vs: Vec4[A]): Vec4[A] = {
+		return Vec4[A](n.minus(x,vs.x),n.minus(y,vs.y),n.minus(z,vs.z),n.minus(w,vs.w));
+	}
+	def unary_-(): Vec4[A] = {
+		return Vec4[A](n.negate(x),n.negate(y),n.negate(z),n.negate(w));
+	}
+	def *(vs: Vec4[A]): A = {
+		return n.plus(n.plus(n.plus(n.times(x,vs.x),n.times(y,vs.y)),n.times(z,vs.z)),n.times(w,vs.w));
+	}
+	def scale(sc: A): Vec4[A] = {
+		return Vec4[A](n.times(sc,x),n.times(sc,y),n.times(sc,z),n.times(sc,w));
+	}
+}
+
 case class Vec3(x: Double = 0, y: Double = 0, z: Double = 0) {
 	def +(v: Vec3): Vec3 = {
 		Vec3(x + v.x, y + v.y, z + v.z);
