@@ -11,20 +11,10 @@ import scala.concurrent.{Future,ExecutionContext},ExecutionContext.Implicits.glo
 import annotation.tailrec;
 
 object Commands {
-	def isQuitCommand(cmd: String): Boolean = {
-		return (cmd.equals("q") || cmd.equals("quit"))
-	}
-	def isRenderCommand(cmd: String): Boolean = {
-		return (cmd.equals("r") || cmd.equals("render"))
-	}
-	val pause = (name: String, scene: Scene) => {
-		Renderer.paused = true
-	}
-	val unpause = (name: String, scene: Scene) => {
-		Renderer.paused = false
-	}
-	val load = (name: String, scene: Scene) => {
-		//TODO
+	val load = (filename: String, name: String) => {
+		val handler = new XMLHandler(filename);
+		val scene = handler.load();
+		render(name, scene);
 	}
 	//asynchronously renders an image
 	val render = (name: String, scene: Scene) => {
@@ -50,19 +40,21 @@ object Commands {
 	}
 	@tailrec private def evaluate(command: String): Boolean = {
 		val commands = command.toLowerCase.split(" ");
-		try {
-			val cmd = commands(0);
-			if(isQuitCommand(cmd)) return false;
-			if(isRenderCommand(cmd)) {
+		commands(0) match {
+			case "q" => return false;
+			case "r" => {
 				p("Begun rendering " + commands(1));
 				render(commands(1), SceneSetup.scene);
-			} else {
-				println(Renderer.progressToString);
 			}
-		} catch {
-			case ex: IndexOutOfBoundsException => {
-				p("invalid command");
+			case "prog" => p(
+				if(Renderer.progressToString.equals("")) "Nothing currently rendering" else Renderer.progressToString
+			);
+			case "load" => {
+				p("Begun rendering " + commands(1));
+				load(commands(1), commands(2));
 			}
+			case "help" => p("sorry, in progress");
+			case _ => p("invalid command");
 		}
 		val nextCommand = scala.io.StdIn.readLine;
 		return evaluate(nextCommand);

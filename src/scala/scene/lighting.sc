@@ -3,7 +3,7 @@
 */
 
 package raytracing.scene;
-import raytracing.{geometry,util},geometry.{BoundedSDF,Ray},util.Vec3;
+import raytracing.{geometry,util},geometry.{Intersectable,BoundedSDF,Ray},util.Vec3;
 import scala.math.{random,sqrt};
 
 object NoLights extends Lighting {
@@ -18,7 +18,7 @@ case class Lighting(
 	y: Double = 0.0,
 	z: Double = 0.0,
 	size: Double = 10,
-	falloff: (Double => Double) = _ => 0.9,
+	falloff: (Double => Double) = _ => 1.0,
 	visibility: Boolean = true
 ) {
 	val emission = Vec3(redEmission, greenEmission, blueEmission);
