@@ -7,12 +7,24 @@ import raytracing.{geometry,scene,util},geometry._,scene._,util._;
 
 object SceneSetup {
 	val board = Texture("textures/checkerboard.png");
-	val scene = Scene(spp=4)++(
+	val scene = Scene(spp=6)++(
 		Lighting(x=100,y=970,z=0,size=30,redEmission=0.0,greenEmission=0.0)
 	)++(
 		Lighting(x=500,y=970,z=0,size=30,redEmission=0.0,blueEmission=0.0)
 	)++(
 		Lighting(x=900,y=970,z=0,size=30,greenEmission=0.0,blueEmission=0.0)
+	)++(
+		Lighting(x=100,y=970,z=500,size=30,blueEmission=0.0)
+	)++(
+		Lighting(x=500,y=970,z=500,size=30,greenEmission=0.0)
+	)++(
+		Lighting(x=900,y=970,z=500,size=30,redEmission=0.0)
+	)++(
+		Lighting(x=100,y=970,z=860,size=30,redEmission=0.33,greenEmission=0.33,blueEmission=0.33)
+	)++(
+		Lighting(x=500,y=970,z=860,size=30,redEmission=0.66,greenEmission=0.66,blueEmission=0.66)
+	)++(
+		Lighting(x=900,y=970,z=860,size=30)
 	)++(
 		BoundedSDF.SPHERE(140).translate(800,140,860),
 		Diffuse((v: Vec3) => {board.wrap(v, Vec3(800,140,860))},1.0)
