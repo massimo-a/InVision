@@ -6,9 +6,9 @@ package raytracing.geometry;
 import raytracing.util.Vec3;
 import scala.math.{abs,min,max};
 
-trait Bounded {
-	val minimum: Vec3;
-	val maximum: Vec3;
+case class Bounds(position: Vec3, right: Vec3, up: Vec3, forward: Vec3) {
+	val minimum: Vec3 = getVertices.reduceLeft((a: Vec3, b: Vec3) => Vec3(a.x min b.x, a.y min b.y, a.z min b.z))
+	val maximum: Vec3 = getVertices.reduceLeft((a: Vec3, b: Vec3) => Vec3(a.x max b.x, a.y max b.y, a.z max b.z))
 	
 	def hitBox(r: Ray): Boolean = {
 		val inter = intersections(r);
@@ -18,19 +18,29 @@ trait Bounded {
 	// merges two bounding boxes together
 	// two objects bounded by their respective bounding boxes
 	// will also both be bounded by this larger box
-	def merge(min1: Vec3, max1: Vec3, min2: Vec3, max2: Vec3): (Vec3, Vec3) = {
-		val _min = Vec3(min(min1.x, min2.x), min(min1.y, min2.y), min(min1.z, min2.z));
-		val _max = Vec3(max(max1.x, max2.x), max(max1.y, max2.y), max(max1.z, max2.z));
-		return (_min, _max)
+	def merge(b: Bounds): Bounds = {
+		val _min = Vec3(b.minimum.x min minimum.x, b.minimum.y min minimum.y, b.minimum.z min minimum.z);
+		val _max = Vec3(b.maximum.x max maximum.x, b.maximum.y max maximum.y, b.maximum.z max maximum.z);
+		val diff = _max - _min
+		return Bounds(_min, Vec3(diff.x, 0, 0), Vec3(0, diff.y, 0), Vec3(0, 0, diff.z))
 	}
 	
 	// returns an array of the points that make up the bounding
 	// box defined by _min and _max
-	def getOOBB(_min: Vec3, _max: Vec3): Array[Vec3] = {
+	def getVertices(): Array[Vec3] = {
 		return Array(
-			_min,Vec3(_max.x,_min.y,_min.z),Vec3(_max.x,_min.y,_max.z),Vec3(_min.x,_min.y,_max.z),
-			Vec3(_min.x,_max.y,_min.z),Vec3(_max.x,_max.y,_min.z),_max,Vec3(_min.x,_max.y,_max.z)
+			position, position + right, position + up, position + forward,
+			position + right + up, position + right + forward, position + up + forward,
+			position + right + up + forward
 		)
+	}
+	
+	def translate(x: Double, y: Double, z: Double): Bounds = {
+		return Bounds(position+Vec3(x, y, z), right, up, forward)
+	}
+	
+	def rotateWith(ro: Vec3 => Vec3): Bounds = {
+		return Bounds(position, ro(right), ro(up), ro(forward))
 	}
 	
 	def intersections(r: Ray): (Double, Double) = {

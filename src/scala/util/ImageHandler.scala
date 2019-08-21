@@ -6,7 +6,7 @@
 */
 
 package raytracing.util;
-import raytracing.{scene,geometry},scene.{Scene, Shader},geometry._;
+import raytracing.{scene,geometry},scene.{Scene, Material},geometry._;
 import javax.imageio.ImageIO;
 import java.{io,util},io.{File,FileWriter},util.Calendar
 import java.awt.image.BufferedImage

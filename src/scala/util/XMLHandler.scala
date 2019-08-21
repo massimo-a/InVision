@@ -36,10 +36,9 @@ class XMLHandler(filename: String) {
 			val z = getAttrOrElse(sphere, "z", 0);
 			val color = (sphere\\"color")
 			scene = scene++(
-				BoundedSDF.SPHERE(radius).translate(x, y, z),
-				Diffuse(v => {
-					Vec3(getAttrOrElse(color,"red",1.0),getAttrOrElse(color,"green",1.0),getAttrOrElse(color,"blue",1.0))
-				})
+				BoundedSDF.Sphere(radius).translate(x, y, z),
+				Diffuse(),
+				v => Vec3(getAttrOrElse(color,"red",1.0),getAttrOrElse(color,"green",1.0),getAttrOrElse(color,"blue",1.0))
 			)
 		})
 	}
@@ -54,10 +53,9 @@ class XMLHandler(filename: String) {
 			val z = getAttrOrElse(box, "z", 0);
 			val color = (box\"color")
 			scene = scene++(
-				BoundedSDF.BOX(w, h, d).translate(x, y, z),
-				Diffuse(v => {
-					Vec3(getAttrOrElse(color,"red",1.0),getAttrOrElse(color,"green",1.0),getAttrOrElse(color,"blue",1.0))
-				})
+				BoundedSDF.Box(w, h, d).translate(x, y, z),
+				Diffuse(),
+				v => Vec3(getAttrOrElse(color,"red",1.0),getAttrOrElse(color,"green",1.0),getAttrOrElse(color,"blue",1.0))
 			)
 		})
 	}
@@ -91,9 +89,8 @@ class XMLHandler(filename: String) {
 			val color = (p\"color")
 			scene = scene++(
 				Plane(Vec3(_nx, _ny, _nz).normalize, Vec3(_x, _y, _z)),
-				Diffuse(v => {
-					Vec3(getAttrOrElse(color,"red",1.0),getAttrOrElse(color,"green",1.0),getAttrOrElse(color,"blue",1.0))
-				})
+				Diffuse(),
+				v => Vec3(getAttrOrElse(color,"red",1.0),getAttrOrElse(color,"green",1.0),getAttrOrElse(color,"blue",1.0))
 			)
 		})
 	}

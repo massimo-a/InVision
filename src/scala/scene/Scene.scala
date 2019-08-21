@@ -7,7 +7,7 @@ import raytracing.{geometry,util},geometry.{Intersectable,Ray},util.{Vec3,Timer}
 import scala.math.{abs,pow,min,max,random,Pi,floor,tan};
 import annotation.tailrec;
 
-case class SceneObject(shape: Intersectable, material: Shader, next: SceneObject)
+case class SceneObject(shape: Intersectable, material: Material, color: Vec3=>Vec3, next: SceneObject)
 
 case class Scene(
 	head: SceneObject=null,
@@ -22,8 +22,8 @@ case class Scene(
 	val position = Vec3(x, y, z); //position of lower left corner of screen
 	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)));
 	
-	def ++(i: Intersectable, m: Shader): Scene = {
-		return Scene(SceneObject(i, m, head), lights, length+1, width, height, x, y, z, fieldOfView, spp);
+	def ++(i: Intersectable, m: Material, col: Vec3=>Vec3): Scene = {
+		return Scene(SceneObject(i, m, col, head), lights, length+1, width, height, x, y, z, fieldOfView, spp);
 	}
 	def ++(l: Lighting): Scene = {
 		return Scene(head, lights++l, length+1, width, height, x, y, z, fieldOfView, spp);
@@ -79,15 +79,15 @@ case class Scene(
 				return Vec3()
 			}
 		}
-		val col = objHit.material.color(intersectPt) ** lights.fold(x => {
+		val col = objHit.color(intersectPt) ** lights.fold(x => {
 			val lightDir = x.position - intersectPt;
 			if(inLineOfSight(intersectPt, x)) {
 				x.emission * max(0, (objHit.shape.getNormal(intersectPt)*lightDir.normalize)*x.falloff(lightDir.magnitude));
 			} else Vec3();
 		})
 		if(random > 0.9) return col;
-		val scatter = objHit.material.scatterLight(-ray.direction, objHit.shape.getNormal(intersectPt));
-		val brdf = objHit.material.brdf(-ray.direction, scatter, objHit.shape.getNormal(intersectPt))
+		val scatter = Material.scatter(objHit.material, -ray.direction, objHit.shape.getNormal(intersectPt));
+		val brdf = Material.brdf(objHit.material, intersectPt, objHit.shape.getNormal(intersectPt));
 		val newRay = Ray(intersectPt + scatter, intersectPt + scatter*3);
 		val incoming = trace(newRay);
 		return (col + incoming*brdf).map(x => {

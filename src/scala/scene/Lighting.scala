@@ -23,7 +23,7 @@ case class Lighting(
 ) {
 	val emission = Vec3(redEmission, greenEmission, blueEmission);
 	val position = Vec3(x, y, z);
-	val shape = BoundedSDF.SPHERE(size).translate(x,y,z);
+	val shape = BoundedSDF.Sphere(size).translate(x,y,z);
 	private def copy(n: Lighting): Lighting = {
 		return Lighting(n, redEmission, greenEmission, blueEmission, x, y, z, size, falloff);
 	}
