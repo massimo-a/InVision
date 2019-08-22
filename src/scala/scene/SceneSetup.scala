@@ -15,8 +15,8 @@ object SceneSetup {
 		(v: Vec3) => {text.paste(v, Vec3(0, 0, 0), Vec3(1, 0, 0))}
 	)++(
 		BoundedSDF.Sphere(200).translate(300, 500, 700)
-			.subtract(BoundedSDF.Cylinder(260, 15).rotateZ(Math.PI/4).translate(300, 500, 700))
-			.subtract(BoundedSDF.Cylinder(260, 15).rotateZ(3*Math.PI/4).translate(300, 500, 700)),
+			.subtract(BoundedSDF.Cylinder(260, 50).rotateZ(Math.PI/4).translate(300, 500, 700))
+			.subtract(BoundedSDF.Cylinder(260, 50).rotateZ(3*Math.PI/4).translate(300, 500, 700)),
 		Diffuse(),
 		(v: Vec3) => {
 			val t = (v.x - 100)/400

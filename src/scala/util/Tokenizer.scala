@@ -5,6 +5,8 @@ case class KeywordToken(value: String, next: Token) extends Token
 case class StringToken(value: String, next: Token) extends Token
 case class OpToken(value: String, next: Token) extends Token
 case class ErrToken(value: String, message: String, next: Token) extends Token
+case class BracketToken(value: String, bracketType: Int, next: Token) extends Token
+case class CommentToken(value: String, comment: String, next: Token) extends Token
 case class EOF() extends Token
 
 object Token {
@@ -30,6 +32,15 @@ object Token {
 		def isOp(): Boolean = {
 			"-+*/=%^".contains(current)
 		}
+		def isLeftBracket(): Boolean = {
+			"({[".contains(current)
+		}
+		def isRightBracket(): Boolean = {
+			"]})".contains(current)
+		}
+		def commentStart(): Boolean = {
+			"#".contains(current)
+		}
 		private def readWhile(cond: StringIterator => Boolean, accu: String): String = {
 			if(!isEnd && cond(this)) {
 				return StringIterator(position+1, string).readWhile(cond, accu+current())
@@ -47,6 +58,8 @@ object Token {
 			case KeywordToken(v: String, next: Token) => reverse(next, KeywordToken(v, accu))
 			case StringToken(v: String, next: Token) => reverse(next, StringToken(v, accu))
 			case OpToken(v: String, next: Token) => reverse(next, OpToken(v, accu))
+			case BracketToken(v: String, t: Int, next: Token) => reverse(next, BracketToken(v, t, accu))
+			case CommentToken(v: String, c: String, next: Token) => reverse(next, CommentToken(v, c, accu))
 			case ErrToken(v: String, msg: String, next: Token) => reverse(next, ErrToken(v, msg, accu))
 		}
 	}
@@ -76,6 +89,15 @@ object Token {
 		} else if(stream.isOp) {
 			val op = stream.readWhile(_.isOp)
 			return tokenize(StringIterator(pos+op.length, str), OpToken(op, accu))
+		} else if(stream.isLeftBracket || stream.isRightBracket) {
+			if(stream.isLeftBracket) {
+				return tokenize(StringIterator(pos+1, str), BracketToken(stream.current, 0, accu))
+			} else {
+				return tokenize(StringIterator(pos+1, str), BracketToken(stream.current, 1, accu))
+			}
+		} else if(stream.commentStart) {
+			val comment = StringIterator(pos+1, str).readWhile(s => !"\n".contains(s.current))
+			return tokenize(StringIterator(pos+comment.length+1, str), CommentToken("#", comment, accu))
 		} else {
 			return tokenize(StringIterator(pos+1, str), ErrToken(stream.current(), "Unrecognized symbol", accu))
 		}
@@ -91,13 +113,21 @@ object Token {
 			case KeywordToken(v: String, next: Token) => "('" + v + "', Keyword) \n" + toString(next)
 			case StringToken(v: String, next: Token) => "('" + v + "', String) \n" + toString(next)
 			case OpToken(v: String, next: Token) => "('" + v + "', Operation) \n" + toString(next)
-			case ErrToken(v: String, msg: String, next: Token) => "('" + v + "', Error : " + msg + ") \n" + toString(next)
+			case BracketToken(v: String, t: Int, next: Token) => {
+				if(t == 0) "('" + v + "', Left Bracket) \n" + toString(next)
+				else "('" + v + "', Right Bracket) \n" + toString(next)
+			}
+			case CommentToken(v: String, c: String, next: Token) => "('" + v + "', Comment : '" + c + "') \n" + toString(next)
+			case ErrToken(v: String, msg: String, next: Token) => "('" + v + "', Error : '" + msg + "') \n" + toString(next)
 		}
+	}
+	def tokenizeFile(filename: String): Token {
+		return null
 	}
 }
 
 object Main {
 	def main(args: Array[String]): Unit = {
-		println(Token.toString(Token.tokenize("this symbol { is not recognized, but + is. 12 is an int and 12.5 is a decimal 12..5 is a typo")))
+		println(Token.toString(Token.tokenize("")))
 	}
 }

@@ -38,7 +38,4 @@ object ImageHandler {
 		pw.write(str)
 		pw.close
 	}
-	// def loadState(): Array[Array[Int]] = {
-	
-	// }
 }
