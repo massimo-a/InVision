@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Terrain.scala:19:13: recursive value v needs type[0m
-[0m[[0m[31merror[0m] [0m[0m		val x = ((v.x.toInt%width + width)%width).toInt[0m
-[0m[[0m[31merror[0m] [0m[0m		          ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Commands.scala:29:13: not found: type FileNotFoundException[0m
+[0m[[0m[31merror[0m] [0m[0m				case x: FileNotFoundException => { println("File not found") }[0m
+[0m[[0m[31merror[0m] [0m[0m				        ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

@@ -1,0 +1,10 @@
+#This is a comment. You also can have numbers and operators
+It can take up multiple lines #
+
+x = 5*2 #Those numbers are integers# 
+
+y = 3.141 #You can have decimals too#
+
+z = 1.14.1 #If you make a mistake, it will give you an error#
+
+{ 'hello world', "how are you?" } #Strings and brackets are also supported#

@@ -54,15 +54,7 @@ object Renderer {
 				timer.formatTime(timer.getTimeSinceStart*(100-getProgress)/getProgress) + ")"
 		} else return ""
 	}
-	def rasterize() {
-		//TODO
-	}
 	def save() {
 		ImageHandler.saveState(pixels);
 	}
-	//TODO
-	// def load() {
-		// val str = 
-		// str.split("\n\r").map(_.split(",").map(_.toInt))
-	// }
 }

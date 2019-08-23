@@ -9,6 +9,7 @@ package raytracing.util;
 import raytracing.{geometry,scene},geometry._,scene._;
 import scala.concurrent.{Future,ExecutionContext},ExecutionContext.Implicits.global;
 import annotation.tailrec;
+import java.io.FileNotFoundException
 
 object Commands {
 	//asynchronously renders an image
@@ -21,8 +22,6 @@ object Commands {
 		arr.map { rgbs =>
 			timer.end;
 			ImageHandler.saveImage(scene, rgbs, name);
-			println("Completed " + name);
-			println("Run Time - " + timer.formatTime);
 			ImageHandler.saveData(name, scene, timer);
 		}
 	}

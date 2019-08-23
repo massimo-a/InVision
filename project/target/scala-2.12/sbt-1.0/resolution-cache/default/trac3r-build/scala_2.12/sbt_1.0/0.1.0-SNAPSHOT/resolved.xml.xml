@@ -4,7 +4,7 @@
 		module="trac3r-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20190821222937"
+		publication="20190822142651"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>

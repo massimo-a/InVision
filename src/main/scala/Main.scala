@@ -10,7 +10,7 @@ import raytracing.{geometry,scene,util},geometry._,scene._,util._;
 
 object Program {
 	//metadata
-	private val version = "v0.4.0";
+	private val version = "v0.0.5";
 	private val lineStart = "$>";
 	private val programName = "TRAC3R";
 	

@@ -1,13 +1,13 @@
-trait Token
-case class IntToken(value: String, next: Token) extends Token
-case class DecimalToken(value: String, next: Token) extends Token
-case class KeywordToken(value: String, next: Token) extends Token
-case class StringToken(value: String, next: Token) extends Token
-case class OpToken(value: String, next: Token) extends Token
-case class ErrToken(value: String, message: String, next: Token) extends Token
-case class BracketToken(value: String, bracketType: Int, next: Token) extends Token
-case class CommentToken(value: String, comment: String, next: Token) extends Token
-case class EOF() extends Token
+sealed trait Token
+final case class IntToken(value: String, next: Token) extends Token
+final case class DecimalToken(value: String, next: Token) extends Token
+final case class KeywordToken(value: String, next: Token) extends Token
+final case class StringToken(value: String, next: Token) extends Token
+final case class OpToken(value: String, next: Token) extends Token
+final case class ErrToken(value: String, message: String, next: Token) extends Token
+final case class BracketToken(value: String, bracketType: Int, next: Token) extends Token
+final case class CommentToken(value: String, comment: String, next: Token) extends Token
+final case class EOF() extends Token
 
 object Token {
 	private case class StringIterator(position: Int, string: String) {
@@ -96,8 +96,8 @@ object Token {
 				return tokenize(StringIterator(pos+1, str), BracketToken(stream.current, 1, accu))
 			}
 		} else if(stream.commentStart) {
-			val comment = StringIterator(pos+1, str).readWhile(s => !"\n".contains(s.current))
-			return tokenize(StringIterator(pos+comment.length+1, str), CommentToken("#", comment, accu))
+			val comment = StringIterator(pos+1, str).readWhile(s => !"#".contains(s.current))
+			return tokenize(StringIterator(pos+comment.length+2, str), CommentToken("#", comment, accu))
 		} else {
 			return tokenize(StringIterator(pos+1, str), ErrToken(stream.current(), "Unrecognized symbol", accu))
 		}
@@ -122,12 +122,22 @@ object Token {
 		}
 	}
 	def tokenizeFile(filename: String): Token = {
-		return null
+		import scala.io.Source
+		import java.io.FileNotFoundException
+		
+		return try {
+			tokenize(Source.fromFile(filename).getLines.mkString)
+		} catch {
+			case x: FileNotFoundException => {
+				ErrToken(filename, "File was not found. Is the filename spelled correctly? Are you pointing me to the right file path?", EOF())
+			}
+		}
 	}
 }
 
 object TokenMain {
 	def main(args: Array[String]): Unit = {
-		println(Token.toString(Token.tokenize("")))
+		println(Token.toString(Token.tokenizeFile("C:\\Users\\Massimo Due\\Documents\\GitHub\\TRAC3R\\src\\main\\scala\\util\\testTokenizer.txt")))
+		println(Token.toString(Token.tokenizeFile("testTokenizer.txt")))
 	}
 }

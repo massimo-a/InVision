@@ -6,7 +6,7 @@ package raytracing.geometry;
 import raytracing.util.Vec3;
 import scala.math.{abs,min,max};
 
-case class Bounds(position: Vec3, right: Vec3, up: Vec3, forward: Vec3) {
+final case class Bounds(position: Vec3, right: Vec3, up: Vec3, forward: Vec3) {
 	val minimum: Vec3 = getVertices.reduceLeft((a: Vec3, b: Vec3) => Vec3(a.x min b.x, a.y min b.y, a.z min b.z))
 	val maximum: Vec3 = getVertices.reduceLeft((a: Vec3, b: Vec3) => Vec3(a.x max b.x, a.y max b.y, a.z max b.z))
 	
