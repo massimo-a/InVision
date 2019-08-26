@@ -34,7 +34,9 @@ case class Terrain(
 				if(Math.abs(equation(r.equation(pt))) < 5) return pt
 				pt = pt + 1/Math.abs(r.direction.z)
 			}
+			return -1
+		} else {
+			return -1
 		}
-		return -1
 	}
 }
