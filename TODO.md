@@ -1,7 +1,7 @@
 *** LONG TERM ***
   1.  Marching Cubes (Turning SDF into Triangle Mesh)
-  2.  XML Based Scene Description Language
-  3.  Comment Classes
+  2.  Scene Description Language
+  3.  Comment Classes/Documentation
 
 *** SHORT TERM ***
   1.  Save and load partially completed scenes

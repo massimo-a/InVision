@@ -12,7 +12,7 @@ case class Terrain(
 ) extends SurfaceMarcher {
 	val width = heightmap.length;
 	val depth = heightmap(0).length
-	val boundingBox = Bounds(Vec3(x,y,z), Vec3(width, 0, 0), Vec3(0, height, 0), Vec3(0, 0, depth))
+	val boundingBox = Bounds(Vec3(-x/2,-y/2,-z/2), Vec3(width, 0, 0), Vec3(0, height, 0), Vec3(0, 0, depth))
 
 	val equation = (vec: Vec3) => {
 		val v = vec - Vec3(x, y, z)
@@ -34,9 +34,7 @@ case class Terrain(
 				if(Math.abs(equation(r.equation(pt))) < 5) return pt
 				pt = pt + 1/Math.abs(r.direction.z)
 			}
-			return -1
-		} else {
-			return -1
 		}
+		return -1
 	}
 }

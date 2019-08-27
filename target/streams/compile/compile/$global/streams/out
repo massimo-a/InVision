@@ -1,4 +1,7 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Commands.scala:29:13: not found: type FileNotFoundException[0m
-[0m[[0m[31merror[0m] [0m[0m				case x: FileNotFoundException => { println("File not found") }[0m
-[0m[[0m[31merror[0m] [0m[0m				        ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\scene\SceneSetup.scala:18:5: return outside method definition[0m
+[0m[[0m[31merror[0m] [0m[0m				return Vec3(0, 0, 1)[0m
+[0m[[0m[31merror[0m] [0m[0m				^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\scene\SceneSetup.scala:20:5: return outside method definition[0m
+[0m[[0m[31merror[0m] [0m[0m				return Vec3(1, 0, 0.5)*t + Vec3(0, 1, 1)*(1-t)[0m
+[0m[[0m[31merror[0m] [0m[0m				^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m

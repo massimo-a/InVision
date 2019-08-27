@@ -1,3 +1,5 @@
+package raytracing.util
+
 sealed trait Token
 final case class IntToken(value: String, next: Token) extends Token
 final case class DecimalToken(value: String, next: Token) extends Token
