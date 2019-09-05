@@ -1,7 +1,5 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\scene\SceneSetup.scala:18:5: return outside method definition[0m
-[0m[[0m[31merror[0m] [0m[0m				return Vec3(0, 0, 1)[0m
-[0m[[0m[31merror[0m] [0m[0m				^[0m
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\scene\SceneSetup.scala:20:5: return outside method definition[0m
-[0m[[0m[31merror[0m] [0m[0m				return Vec3(1, 0, 0.5)*t + Vec3(0, 1, 1)*(1-t)[0m
-[0m[[0m[31merror[0m] [0m[0m				^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Bounded.scala:18:18: class BoundingBox needs to be abstract, since method merge in trait Bounded of type (b: raytracing.geometry.Bounded)raytracing.geometry.Bounded is not defined[0m
+[0m[[0m[31merror[0m] [0m[0m(Note that raytracing.geometry.Bounded does not match raytracing.geometry.BoundingBox: class BoundingBox in package geometry is a subclass of trait Bounded in package geometry, but method parameter types must match exactly.)[0m
+[0m[[0m[31merror[0m] [0m[0mfinal case class BoundingBox(position: Vec3, right: Vec3, up: Vec3, forward: Vec3) extends Bounded {[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

@@ -12,17 +12,10 @@ import scala.math.{abs,max,min,cos,sin};
 ** because it returns positive distance when the point is outside the
 ** SDF and negative when inside the SDF.
 */
-case class BoundedSDF(
+final case class BoundedSdf(
 	equation: Vec3 => Double,
-	boundingBox: Bounds
+	boundingBox: Bounded
 ) extends SurfaceMarcher {
-	private def gradient(f: Vec3 => Double, pt: Vec3): Vec3 = {
-		val grad_x = (f(pt)-f(pt - Vec3(x=0.01)))*100;
-		val grad_y = (f(pt)-f(pt - Vec3(y=0.01)))*100;
-		val grad_z = (f(pt)-f(pt - Vec3(z=0.01)))*100;
-		return Vec3(grad_x, grad_y, grad_z);
-	}
-	
 	/*
 	** union merges two BoundedSDFs together. Visually there is no
 	** difference between keeping the BoundedSDFs separate or unioning
@@ -30,12 +23,12 @@ case class BoundedSDF(
 	** BoundedSDFs as one, and therefore runs faster --
 	** (so long as they are relatively close to each other).
 	*/
-	def union(surf: BoundedSDF): BoundedSDF = {
+	def union(surf: BoundedSdf): BoundedSdf = {
 		val func = (v: Vec3) => {
 			min(equation(v), surf.equation(v));
 		}
 		val bounds = boundingBox.merge(surf.boundingBox);
-		return BoundedSDF(func, bounds);
+		return BoundedSdf(func, bounds);
 	}
 	
 	/*
@@ -43,53 +36,53 @@ case class BoundedSDF(
 	** the two BoundedSDFs has a smooth transition, determined by k.
 	** The higher the value of k, the 'smoother' the transition
 	*/
-	def smoothUnion(surf: BoundedSDF, k: Double): BoundedSDF = {
+	def smoothUnion(surf: BoundedSdf, k: Double): BoundedSdf = {
 		val func = (v: Vec3) => {
 			val h = max(k - abs(equation(v) - surf.equation(v)), 0.0)/k;
 			min(equation(v), surf.equation(v)) - h*h*k*0.25;
 		}
 		val bounds = boundingBox.merge(surf.boundingBox);
-		return BoundedSDF(func, bounds);
+		return BoundedSdf(func, bounds);
 	}
 	
-	// Takes two BoundedSDFs and returns the BoundedSDF that is contained by both
-	def intersect(surf: BoundedSDF): BoundedSDF = {
+	// Takes two BoundedSDFs and returns the BoundedSdf that is contained by both
+	def intersect(surf: BoundedSdf): BoundedSdf = {
 		val func = (v: Vec3) => {
 			max(equation(v), surf.equation(v));
 		}
 		val bounds = boundingBox.merge(surf.boundingBox);
-		return BoundedSDF(func, bounds);
+		return BoundedSdf(func, bounds);
 	}
 	/*
-	** Takes two BoundedSDFs and returns the BoundedSDF
+	** Takes two BoundedSDFs and returns the BoundedSdf
 	** that is contained by the first, but not the second
 	** NOTE: This function is not commutative,
 	** i.e a.subtract(b) =/= b.subtract(a)
 	*/
-	def subtract(surf: BoundedSDF): BoundedSDF = {
+	def subtract(surf: BoundedSdf): BoundedSdf = {
 		val func = (v: Vec3) => {
 			max(equation(v), -surf.equation(v));
 		}
 		val bounds = boundingBox.merge(surf.boundingBox);
-		return BoundedSDF(func, bounds);
+		return BoundedSdf(func, bounds);
 	}
 	
 	/*
 	** These methods allow translating and rotating
-	** a BoundedSDF in 3D space. The rotating methods take
+	** a BoundedSdf in 3D space. The rotating methods take
 	** the angle as a radian, not a degree.
 	** When the shape is rotated, it is rotated about the axis
 	** according to the right-hand rule
 	*/
-	def translate(x: Double, y: Double, z: Double): BoundedSDF = {
-		return BoundedSDF(v => (equation(v - Vec3(x, y, z))), boundingBox.translate(x, y, z))
+	def translate(x: Double, y: Double, z: Double): BoundedSdf = {
+		return BoundedSdf(v => (equation(v - Vec3(x, y, z))), boundingBox.translate(x, y, z))
 	}
 	
 	/*
 	** The rotate functions should always be called BEFORE
 	** the translate function, for it to work the way you think it will
 	*/
-	def rotateX(rad: Double): BoundedSDF = {
+	def rotateX(rad: Double): BoundedSdf = {
 		val c = cos(rad);
 		val s = sin(rad);
 		val rotatePoint = (v: Vec3) => {
@@ -98,9 +91,9 @@ case class BoundedSDF(
 		val func = (v: Vec3) => {
 			equation(rotatePoint(v));
 		}
-		return BoundedSDF(func, boundingBox.rotateWith(rotatePoint));
+		return BoundedSdf(func, boundingBox.rotateWith(rotatePoint));
 	}
-	def rotateY(rad: Double): BoundedSDF = {
+	def rotateY(rad: Double): BoundedSdf = {
 		val c = cos(rad);
 		val s = sin(rad);
 		val rotatePoint = (v: Vec3) => {
@@ -109,9 +102,9 @@ case class BoundedSDF(
 		val func = (v: Vec3) => {
 			equation(rotatePoint(v));
 		}
-		return BoundedSDF(func, boundingBox.rotateWith(rotatePoint));
+		return BoundedSdf(func, boundingBox.rotateWith(rotatePoint));
 	}
-	def rotateZ(rad: Double): BoundedSDF = {
+	def rotateZ(rad: Double): BoundedSdf = {
 		val c = cos(rad);
 		val s = sin(rad);
 		val rotatePoint = (v: Vec3) => {
@@ -120,12 +113,12 @@ case class BoundedSDF(
 		val func = (v: Vec3) => {
 			equation(rotatePoint(v));
 		}
-		return BoundedSDF(func, boundingBox.rotateWith(rotatePoint));
+		return BoundedSdf(func, boundingBox.rotateWith(rotatePoint));
 	}
-	def rotate(rad: Vec3): BoundedSDF = {
+	def rotate(rad: Vec3): BoundedSdf = {
 		return this.rotateX(rad.x).rotateY(rad.y).rotateZ(rad.z);
 	}
-	def rotate(x: Double, y: Double, z: Double): BoundedSDF = {
+	def rotate(x: Double, y: Double, z: Double): BoundedSdf = {
 		return this.rotateX(x).rotateY(y).rotateZ(z);
 	}
 	
@@ -143,63 +136,63 @@ case class BoundedSDF(
 	}
 }
 
-object BoundedSDF {
-	def Sphere(r: Double): BoundedSDF = {
-		return BoundedSDF(
+object BoundedSdf {
+	def Sphere(r: Double): BoundedSdf = {
+		return BoundedSdf(
 			(v: Vec3) => {v.magnitude - r},
-			Bounds(Vec3(-r-2, -r-2, -r-2), Vec3(2*r+4, 0, 0), Vec3(0, 2*r+4, 0), Vec3(0, 0, 2*r+4))
+			BoundingBox(Vec3(-r-10, -r-10, -r-10), Vec3(2*r+20, 0, 0), Vec3(0, 2*r+20, 0), Vec3(0, 0, 2*r+20))
 		)
 	}
 	
-	def Box(width: Double, height: Double, depth: Double): BoundedSDF = {
-		return BoundedSDF(
+	def Box(width: Double, height: Double, depth: Double): BoundedSdf = {
+		return BoundedSdf(
 			(v: Vec3) => {
 				val d = (v).map(x => abs(x)) - Vec3(width/2,height/2,depth/2);
 				val a = d.map(x => max(x, 0.0)).magnitude;
 				a + min(max(d.x, max(d.y, d.z)), 0)
 			},
-			Bounds(Vec3(-width/2,-height/2,-depth/2), Vec3(width, 0, 0), Vec3(0, height, 0), Vec3(0, 0, depth))
+			BoundingBox(Vec3(-width/2,-height/2,-depth/2), Vec3(width, 0, 0), Vec3(0, height, 0), Vec3(0, 0, depth))
 		)
 	}
 	
-	def Box(b: Vec3): BoundedSDF = {
+	def Box(b: Vec3): BoundedSdf = {
 		return Box(b.x,b.y,b.z)
 	}
 	
-	def Cylinder(r: Double, h: Double): BoundedSDF = {
+	def Cylinder(r: Double, h: Double): BoundedSdf = {
 		val func = (p: Vec3) => {
 			val d = Vec3(Vec3(p.x, p.z).magnitude - r, abs(p.y) - h);
 			min(max(d.x,d.y),0.0) + d.map(x => max(x, 0)).magnitude
 		}
-		return BoundedSDF(
+		return BoundedSdf(
 			func,
-			Bounds(Vec3(-r,-h/2,-r), Vec3(2*r, 0, 0), Vec3(0, h, 0), Vec3(0, 0, 2*r))
+			BoundingBox(Vec3(-r,-h/2,-r), Vec3(2*r, 0, 0), Vec3(0, h, 0), Vec3(0, 0, 2*r))
 		)
 	}
 	
-	def Torus(r1: Double, r2: Double): BoundedSDF = {
+	def Torus(r1: Double, r2: Double): BoundedSdf = {
 		val func = (p: Vec3) => {
 			val d = Vec3(Vec3(p.x, p.z).magnitude - r1, p.y);
 			d.magnitude - r2;
 		}
-		return BoundedSDF(
+		return BoundedSdf(
 			func,
-			Bounds(Vec3(-r1-r2,-r2,-r1-r2), Vec3(2*(r1+r2), 0, 0), Vec3(0, r2*2, 0), Vec3(0, 0, 2*(r1+r2)))
+			BoundingBox(Vec3(-r1-r2,-r2,-r1-r2), Vec3(2*(r1+r2), 0, 0), Vec3(0, r2*2, 0), Vec3(0, 0, 2*(r1+r2)))
 		)
 	}
 	
-	def Ellipsoid(r: Vec3): BoundedSDF = {
+	def Ellipsoid(r: Vec3): BoundedSdf = {
 		val func = (p: Vec3) => {
 			val k0 = Vec3(p.x/r.x, p.y/r.y, p.z/r.z).magnitude;
 			val k1 = Vec3(p.x/(r.x*r.x), p.y/(r.y*r.y), p.z/(r.z*r.z)).magnitude;
 			k0*(k0-1)/k1;
 		}
-		return BoundedSDF(
+		return BoundedSdf(
 			func,
-			Bounds(-r, Vec3(2*r.x, 0, 0), Vec3(0, 2*r.y, 0), Vec3(0, 0, 2*r.z))
+			BoundingBox(-r, Vec3(2*r.x, 0, 0), Vec3(0, 2*r.y, 0), Vec3(0, 0, 2*r.z))
 		)
 	}
-	def Ellipsoid(a: Double, b: Double, c: Double): BoundedSDF = {
+	def Ellipsoid(a: Double, b: Double, c: Double): BoundedSdf = {
 		return Ellipsoid(Vec3(a,b,c))
 	}
 }

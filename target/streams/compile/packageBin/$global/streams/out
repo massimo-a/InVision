@@ -8,12 +8,16 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\StringToken$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\ErrToken$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\ErrToken$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\ImpSurf$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\ImpSurf$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\KeywordToken$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\KeywordToken$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\Material.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\Material.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Sphere$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Sphere$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\NoBounds$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\NoBounds$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\HeightMap.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\HeightMap.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Sphere.class[0m
@@ -30,6 +34,10 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\SceneSetup$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\StringToken.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\StringToken.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\BoundingBox$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\BoundingBox$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\Value.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\Value.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Plane$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Plane$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\HeightMap$.class[0m
@@ -42,6 +50,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\ErrToken.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\EOF.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\EOF.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\TestNoise.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\TestNoise.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\DecimalToken.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\DecimalToken.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Terrain$.class[0m
@@ -62,16 +72,18 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\TokenMain.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry[0m
-[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Bounds$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Bounds$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\Gloss.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\Gloss.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\Value$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\Value$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\TestNoise$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\TestNoise$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\Transparency.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\Transparency.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\OpToken.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\OpToken.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\BoundedSDF.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\BoundedSDF.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\BoundedSdf.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\BoundedSdf.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Ray$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Ray$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\EOF$.class[0m
@@ -92,12 +104,12 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Plane.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util[0m
-[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Bounds.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Bounds.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\Diffuse$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\Diffuse$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\Texture$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\Texture$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\ImpSurf.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\ImpSurf.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\Renderer$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\Renderer$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\Lighting.class[0m
@@ -110,16 +122,20 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\TokenMain$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\BracketToken$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\BracketToken$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Bounded.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Bounded.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\Scene$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\Scene$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\SceneObject$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\SceneObject$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\BoundingBox.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\BoundingBox.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\CommentToken$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\CommentToken$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\Vec3$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\Vec3$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\BoundedSDF$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\BoundedSDF$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\BoundedSdf$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\BoundedSdf$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\Token$StringIterator.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\Token$StringIterator.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\Vec3.class[0m
@@ -132,6 +148,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\Renderer.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\Gloss$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\Gloss$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\Worley.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\Worley.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Program.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\Program.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\IntToken.class[0m
@@ -142,10 +160,14 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\Commands.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\ImageHandler.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\ImageHandler.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\NoBounds.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\NoBounds.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\CommentToken.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\CommentToken.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\KeywordToken.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\KeywordToken.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\Worley$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\Worley$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\OpToken$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\OpToken$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\SurfaceMarcher.class[0m

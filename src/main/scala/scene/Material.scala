@@ -22,12 +22,7 @@ object Material {
 			case Gloss(a, rough) => (in.reflect(n), rough)
 			case Transparency(a, rough) => (-in, rough)
 		}
-		
-		if(randVec*bounce < 0) {
-			return (bounce - randVec*roughness).normalize;
-		} else {
-			return (bounce + randVec*roughness).normalize;
-		}
+		return (bounce + (randVec*roughness)*Math.signum(randVec*bounce)).normalize;
 	}
 	
 	def brdf(m: Material, pt: Vec3, n: Vec3): Double = m match {
