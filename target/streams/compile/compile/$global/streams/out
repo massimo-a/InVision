@@ -1,5 +1,31 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Bounded.scala:18:18: class BoundingBox needs to be abstract, since method merge in trait Bounded of type (b: raytracing.geometry.Bounded)raytracing.geometry.Bounded is not defined[0m
-[0m[[0m[31merror[0m] [0m[0m(Note that raytracing.geometry.Bounded does not match raytracing.geometry.BoundingBox: class BoundingBox in package geometry is a subclass of trait Bounded in package geometry, but method parameter types must match exactly.)[0m
-[0m[[0m[31merror[0m] [0m[0mfinal case class BoundingBox(position: Vec3, right: Vec3, up: Vec3, forward: Vec3) extends Bounded {[0m
-[0m[[0m[31merror[0m] [0m[0m                 ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:77:22: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
+[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
+[0m[[0m[31merror[0m] [0m[0m		val a = (vertex1 - hitPt) ^ (vertex2 - hitPt)[0m
+[0m[[0m[31merror[0m] [0m[0m		                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:77:42: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
+[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
+[0m[[0m[31merror[0m] [0m[0m		val a = (vertex1 - hitPt) ^ (vertex2 - hitPt)[0m
+[0m[[0m[31merror[0m] [0m[0m		                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:78:22: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
+[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
+[0m[[0m[31merror[0m] [0m[0m		val b = (vertex2 - hitPt) ^ (vertex3 - hitPt)[0m
+[0m[[0m[31merror[0m] [0m[0m		                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:78:42: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
+[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
+[0m[[0m[31merror[0m] [0m[0m		val b = (vertex2 - hitPt) ^ (vertex3 - hitPt)[0m
+[0m[[0m[31merror[0m] [0m[0m		                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:79:22: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
+[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
+[0m[[0m[31merror[0m] [0m[0m		val c = (vertex3 - hitPt) ^ (vertex1 - hitPt)[0m
+[0m[[0m[31merror[0m] [0m[0m		                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:79:42: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
+[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
+[0m[[0m[31merror[0m] [0m[0m		val c = (vertex3 - hitPt) ^ (vertex1 - hitPt)[0m
+[0m[[0m[31merror[0m] [0m[0m		                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m6 errors found[0m

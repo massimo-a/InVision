@@ -44,14 +44,11 @@ case class Scene(
 	}
 	@tailrec private def getClosestObject(ray: Ray, curr: SceneObject, closeObj: SceneObject, closeD: Double): (SceneObject, Vec3) = {
 		if(curr == null) return (closeObj, ray.origin + ray.direction*closeD)
-		var closestObj: SceneObject = closeObj;
-		var closestDist: Double = closeD;
 		val dist = curr.shape.intersectDistance(ray);
-		if(dist > 0) {
-			if(closestDist == -1 || closestDist > dist) {
-				closestObj = curr;
-				closestDist = dist;
-			}
+		val (closestObj, closestDist) = if(dist > 0 && (closeD == -1 || closeD > dist)) {
+			(curr, dist)
+		} else {
+			(closeObj, closeD)
 		}
 		return getClosestObject(ray, curr.next, closestObj, closestDist)
 	}

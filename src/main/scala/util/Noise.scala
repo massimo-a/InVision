@@ -3,7 +3,7 @@
 **
 ** A class that handles generating noise through
 ** the use of noise functions. Included implementations
-** are Perlin noise, value noise, fractal noise and Worley noise
+** are value noise, fractal noise and Worley noise
 */
 
 package raytracing.util
@@ -28,7 +28,7 @@ object Noise {
 		return Vec3(a.x*a.x*a.x*(a.x*(a.x*6-15)+10),a.y*a.y*a.y*(a.y*(a.y*6-15)+10),a.z*a.z*a.z*(a.z*(a.z*6-15)+10))
 	}
 	
-	def noise(n: Noise, x: Double, y: Double): Double = {
+	def get(n: Noise, x: Double, y: Double = 0, z: Double = 0): Double = {
 		return n match {
 			case Value(s) => {
 				val id = Vec3(Math.floor(x),Math.floor(y));
@@ -38,7 +38,7 @@ object Noise {
 				lerp(b, t, lv.y);
 			}
 			case Worley(arr) => {
-				arr.foldLeft(1.1){(prev, curr) => Math.min(prev, (curr - Vec3(x, y)).magnitude)}
+				arr.foldLeft(Double.PositiveInfinity){(prev, curr) => Math.min(prev, (curr - Vec3(x, y, z)).magnitude)}
 			}
 			case _ => 1.0
 		}
@@ -49,7 +49,7 @@ object Noise {
 		var p = 0.5
 		var maxValue = 0.0
 		for(i <- 0 until octaves) {
-			total = total + Noise.noise(n, x*l, y*l)*p
+			total = total + Noise.get(n, x*l, y*l)*p
 			maxValue = maxValue + p
 			l = l*2
 			p = p*0.5
@@ -70,7 +70,7 @@ object TestNoise {
 		val n = Worley(pts)
 		for(i <- 0 until 1000) {
 			for(j <- 0 until 1000) {
-				val pn = Noise.noise(n, i/1000.0, j/1000.0)*1.4142*5;
+				val pn = Noise.get(n, i/1000.0, j/1000.0)*1.4142*5;
 				val col = (Vec3(1,1,1).lerp(Vec3(0,0,0), pn))*255;
 				val rgb = col.x.toInt*256*256 + col.y.toInt*256 + col.z.toInt;
 				im.setRGB(i, j, rgb)
@@ -84,7 +84,7 @@ object TestNoise {
 		val n = Value(14589124)
 		for(i <- 0 until 1000) {
 			for(j <- 0 until 1000) {
-				val pn = Noise.noise(n, i/200.0, j/200.0);
+				val pn = Noise.get(n, i/200.0, j/200.0);
 				val col = (Vec3(1,1,1).lerp(Vec3(0,0,0), pn))*255;
 				val rgb = col.x.toInt*256*256 + col.y.toInt*256 + col.z.toInt;
 				im.setRGB(i, j, rgb)

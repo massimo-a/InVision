@@ -56,6 +56,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\DecimalToken.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Terrain$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Terrain$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Triangle.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Triangle.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Terrain.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Terrain.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\BracketToken.class[0m
@@ -92,6 +94,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\Noise$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\util\Token.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\util\Token.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	raytracing\geometry\Triangle$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\geometry\Triangle$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\NoLights$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Massimo Due\Documents\GitHub\TRAC3R\target\scala-2.12\classes\raytracing\scene\NoLights$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	raytracing\scene\Lighting$.class[0m

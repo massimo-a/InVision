@@ -67,6 +67,28 @@ final case class Sphere(radius: Double, center: Vec3) extends Intersectable {
 	}
 }
 
+final case class Triangle(vertex1: Vec3, vertex2: Vec3, vertex3: Vec3) extends Intersectable {
+	val normal = ((vertex2 - vertex1) ^ (vertex3  - vertex1)).normalize
+	def getNormal(pt: Vec3): Vec3 = {return normal}
+	def intersectDistance(r: Ray): Double = {
+		val check = r.direction*normal
+		if(abs(check) < 1E-6) return -1
+		val hitPtOnRay = ((vertex1 - r.origin)*normal)/check
+		val hitPt3D = (r.direction*hitPtOnRay + r.origin)
+		val a = (vertex1 - hitPt3D) ^ (vertex2 - hitPt3D)
+		val b = (vertex2 - hitPt3D) ^ (vertex3 - hitPt3D)
+		val c = (vertex3 - hitPt3D) ^ (vertex1 - hitPt3D)
+		
+		val d = Math.signum(a*b)
+		val e = Math.signum(b*c)
+		val f = Math.signum(c*a)
+		
+		if(d == e && e == f) {
+			return hitPtOnRay
+		} else return -1
+	}
+}
+
 final case class ImpSurf(
 	equation: Vec3 => Double,
 	position: Vec3,
@@ -107,7 +129,7 @@ final case class Terrain(
 		val v = vec - Vec3(x, y, z)
 		val i = ((v.x.toInt%width + width)%width).toInt
 		val j = ((v.z.toInt%depth + depth)%depth).toInt
-		v.y - heightmap(i)(j)
+		v.y - heightmap(i)(j)*height
 	}
 	override def gradient(pt: Vec3): Vec3 = {
 		val grad_x = (equation(pt)-equation(pt - Vec3(x=1)));
@@ -121,7 +143,7 @@ final case class Terrain(
 			var pt = inter._1
 			while(pt < inter._2) {
 				val v = r.equation(pt)
-				if(Math.abs(equation(v)) < 2) return pt
+				if(equation(v) < 2) return pt
 				pt = pt + 2
 			}
 		}
