@@ -7,12 +7,7 @@ import raytracing.{geometry,util},geometry.{SurfaceMarcher,Ray},util.{Timer,Imag
 import scala.math.floor;
 
 object Renderer {
-	var columnsDone = 0;
-	var paused = false;
-	var current: Scene = null;
-	var timer: Timer = null;
-	var pixels: Array[Array[Int]] = null
-	
+	var current: Scene = null
 	private def render(scene: Scene, column: Int): Array[Int] = {
 		val arr = new Array[Int](scene.width);
 		for(j <- 1 to scene.height) {
@@ -20,41 +15,24 @@ object Renderer {
 			val rgb = (((t.x*255).toInt & 0x0ff) << 16) | (((t.y*255).toInt & 0x0ff) << 8) | ((t.z*255).toInt & 0x0ff);
 			arr(scene.height-j) = rgb;
 		}
+		print("\r" + getProgress(column) + "%")
 		return arr;
 	}
 	def render(scene: Scene): Array[Array[Int]] = {
-		pixels = Array.ofDim[Int](scene.width, scene.height).map(_.map(x => -1));
+		val pixels = Array.ofDim[Int](scene.width, scene.height).map(_.map(x => -1));
 		current = scene;
-		timer = new Timer()
+		val timer = new Timer()
 		timer.start
-		while(columnsDone < scene.width) {
-			if(!paused) {
-				pixels(columnsDone) = render(scene, columnsDone);
-				columnsDone = columnsDone + 1;
-			}
+		for(columnsDone <- 0 until scene.width) {
+			pixels(columnsDone) = render(scene, columnsDone);
 		}
-		columnsDone = 0;
+		println()
 		current = null;
-		timer = null;
 		return pixels;
 	}
-	def getProgress(): Double = {
+	def getProgress(col: Int): Double = {
 		if(current != null) {
-			return floor((columnsDone/current.width.toDouble)*1000)/10.0;
+			return floor((col/current.width.toDouble)*1000)/10.0;
 		} else return 0.0
-	}
-	def getTimeSinceStart(): String = {
-		if(timer != null) {
-			return timer.formatTimeSinceStart
-		} else return ""
-	}
-	def progressToString(): String = {
-		if(timer != null) {
-			return getProgress + "% -- " + getTimeSinceStart + " -- expected completion in (" +
-				timer.formatTime(timer.getTimeSinceStart*(100-getProgress)/getProgress) + ")"
-		} else return ""
-	}
-	def save() {
-		ImageHandler.saveState(pixels);
 	}
 }

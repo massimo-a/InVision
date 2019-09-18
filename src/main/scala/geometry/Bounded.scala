@@ -14,7 +14,7 @@ trait Bounded {
 	def intersections(r: Ray): (Double, Double);
 }
 
-final case class NoBounds() extends Bounded {
+final case object NoBounds extends Bounded {
 	def hit(r: Ray): Boolean = true;
 	def merge(b: Bounded): Bounded = NoBounds();
 	def translate(x: Double, y: Double, z: Double): Bounded = NoBounds();
@@ -44,7 +44,7 @@ final case class BoundingBox(position: Vec3, right: Vec3, up: Vec3, forward: Vec
 				val diff = _max - _min
 				BoundingBox(_min, Vec3(diff.x, 0, 0), Vec3(0, diff.y, 0), Vec3(0, 0, diff.z))
 			}
-			case n: NoBounds => NoBounds()
+			case n: NoBounds => NoBounds
 		}
 	}
 	

@@ -1,31 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:77:22: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
-[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
-[0m[[0m[31merror[0m] [0m[0m		val a = (vertex1 - hitPt) ^ (vertex2 - hitPt)[0m
-[0m[[0m[31merror[0m] [0m[0m		                   ^[0m
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:77:42: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
-[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
-[0m[[0m[31merror[0m] [0m[0m		val a = (vertex1 - hitPt) ^ (vertex2 - hitPt)[0m
-[0m[[0m[31merror[0m] [0m[0m		                                       ^[0m
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:78:22: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
-[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
-[0m[[0m[31merror[0m] [0m[0m		val b = (vertex2 - hitPt) ^ (vertex3 - hitPt)[0m
-[0m[[0m[31merror[0m] [0m[0m		                   ^[0m
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:78:42: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
-[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
-[0m[[0m[31merror[0m] [0m[0m		val b = (vertex2 - hitPt) ^ (vertex3 - hitPt)[0m
-[0m[[0m[31merror[0m] [0m[0m		                                       ^[0m
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:79:22: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
-[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
-[0m[[0m[31merror[0m] [0m[0m		val c = (vertex3 - hitPt) ^ (vertex1 - hitPt)[0m
-[0m[[0m[31merror[0m] [0m[0m		                   ^[0m
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\geometry\Surface.scala:79:42: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Double[0m
-[0m[[0m[31merror[0m] [0m[0m required: raytracing.util.Vec3[0m
-[0m[[0m[31merror[0m] [0m[0m		val c = (vertex3 - hitPt) ^ (vertex1 - hitPt)[0m
-[0m[[0m[31merror[0m] [0m[0m		                                       ^[0m
-[0m[[0m[31merror[0m] [0m[0m6 errors found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Commands.scala:30:33: not found: value rgbs[0m
+[0m[[0m[31merror[0m] [0m[0m		ImageHandler.saveImage(scene, rgbs, name);[0m
+[0m[[0m[31merror[0m] [0m[0m		                              ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

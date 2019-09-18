@@ -7,10 +7,10 @@ import raytracing.{geometry,util},geometry.{Intersectable,Ray},util.{Vec3,Timer}
 import scala.math.{abs,pow,min,max,random,Pi,floor,tan};
 import annotation.tailrec;
 
-case class SceneObject(shape: Intersectable, material: Material, color: Vec3=>Vec3, next: SceneObject)
+case class Renderable(shape: Intersectable, material: Material, color: Vec3=>Vec3, next: Renderable)
 
 case class Scene(
-	head: SceneObject=null,
+	head: Renderable=null,
 	lights: Lighting=NoLights,
 	length: Int=0,
 	width: Int=1000,
@@ -23,7 +23,7 @@ case class Scene(
 	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)));
 	
 	def ++(i: Intersectable, m: Material, col: Vec3=>Vec3): Scene = {
-		return Scene(SceneObject(i, m, col, head), lights, length+1, width, height, x, y, z, fieldOfView, spp);
+		return Scene(Renderable(i, m, col, head), lights, length+1, width, height, x, y, z, fieldOfView, spp);
 	}
 	def ++(l: Lighting): Scene = {
 		return Scene(head, lights++l, length+1, width, height, x, y, z, fieldOfView, spp);
@@ -42,7 +42,7 @@ case class Scene(
 		}
 		return sum*(1.0/(spp*spp));
 	}
-	@tailrec private def getClosestObject(ray: Ray, curr: SceneObject, closeObj: SceneObject, closeD: Double): (SceneObject, Vec3) = {
+	@tailrec private def getClosestObject(ray: Ray, curr: Renderable, closeObj: Renderable, closeD: Double): (Renderable, Vec3) = {
 		if(curr == null) return (closeObj, ray.origin + ray.direction*closeD)
 		val dist = curr.shape.intersectDistance(ray);
 		val (closestObj, closestDist) = if(dist > 0 && (closeD == -1 || closeD > dist)) {
@@ -52,7 +52,7 @@ case class Scene(
 		}
 		return getClosestObject(ray, curr.next, closestObj, closestDist)
 	}
-	private def getClosestObject(ray: Ray): (SceneObject, Vec3) = {
+	private def getClosestObject(ray: Ray): (Renderable, Vec3) = {
 		return getClosestObject(ray, head, null, -1);
 	}
 	private def inLineOfSight(pt: Vec3, l: Lighting): Boolean = {

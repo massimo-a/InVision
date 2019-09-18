@@ -18,12 +18,12 @@ object ImageHandler {
 			val pw = new FileWriter(pictureSaveLocation + "log.txt", new File(pictureSaveLocation + "log.txt").exists);
 			pw.write("\r\ndate and time - " + Calendar.getInstance().getTime() + "\r\n");
 			pw.write("file name - " + name + "\r\n");
-			pw.write("run time - " + t.formatTime + "\r\n");
+			pw.write("run time - " + t.formatRunTime + "\r\n");
 			pw.write("anti-aliasing - " + scene.spp + "\r\n");
 			pw.write("screen size - (" + scene.height + ", " + scene.width + ")\r\n");
 			pw.write("primary rays shot per second - " + scene.height*scene.width*scene.spp*scene.spp/t.getRunTime + "\r\n");
 			pw.close
-			println("Runtime: " + t.formatTime);
+			println("Runtime: " + t.formatRunTime);
 		} catch {
 			case x: FileNotFoundException => { println("could not save data, file path not found") }
 		}

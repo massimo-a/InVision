@@ -108,14 +108,6 @@ final case class ImpSurf(
 	}
 }
 
-object ImpSurf {
-	def Hyperboloid(pos: Vec3, a: Vec3, bb: Vec3): ImpSurf = {
-		return ImpSurf((v: Vec3) => {
-			(v.x-pos.x)*(v.x-pos.x)/a.x+(v.z-pos.z)*(v.z-pos.z)/a.z-(v.y-pos.y)*(v.y-pos.y)/a.y-1
-		}, pos, BoundingBox(pos-(bb*0.5), Vec3(bb.x, 0, 0), Vec3(0, bb.y, 0), Vec3(0, 0, bb.z)))
-	}
-}
-
 final case class Terrain(
 	heightmap: Array[Array[Double]],
 	height: Double,

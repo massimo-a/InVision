@@ -15,7 +15,7 @@ import annotation.tailrec;
 
 trait Noise
 final case class Value(seed: Double) extends Noise
-final case class Worley(arr: Array[Vec3]) extends Noise
+final case class Worley(arr: Array[Vec3], distance: (Vec3, Vec3) => Double = Distance.euclid) extends Noise
 object Noise {
 	private def sin_rand(seed: Double, x: Double, y: Double = 0.0, z: Double = 0.0): Double = {
 		val d = Math.sin(x*1111*1111 + y*1111 + z)*seed;
@@ -25,7 +25,10 @@ object Noise {
 		return y0*(1-t) + y1*t;
 	}
 	private def smooth(a: Vec3): Vec3 = {
-		return Vec3(a.x*a.x*a.x*(a.x*(a.x*6-15)+10),a.y*a.y*a.y*(a.y*(a.y*6-15)+10),a.z*a.z*a.z*(a.z*(a.z*6-15)+10))
+		return a**a**a**(a**(a.map(_*6 - 15)).map(_ + 10))
+	}
+	private def smooth(a: Double): Double = {
+		return a*a*a*(a*(a*6-15)+10)
 	}
 	
 	def get(n: Noise, x: Double, y: Double = 0, z: Double = 0): Double = {
@@ -37,8 +40,8 @@ object Noise {
 				val t = lerp(sin_rand(s, id.x, id.y+1),sin_rand(s, id.x+1, id.y+1),lv.x);
 				lerp(b, t, lv.y);
 			}
-			case Worley(arr) => {
-				arr.foldLeft(Double.PositiveInfinity){(prev, curr) => Math.min(prev, (curr - Vec3(x, y, z)).magnitude)}
+			case Worley(arr, dist) => {
+				arr.foldLeft(1.1){(prev, curr) => Math.min(prev, dist(curr, Vec3(x, y, z)))}
 			}
 			case _ => 1.0
 		}
@@ -55,6 +58,26 @@ object Noise {
 			p = p*0.5
 		}
 		return total/maxValue
+	}
+}
+object Distance {
+	private def smooth(a: Double): Double = {
+		return a*a*a*(a*(a*6-15)+10)
+	}
+	def euclid(v: Vec3, u: Vec3): Double = {
+		(v - u).magnitude
+	}
+	def manhattan(v: Vec3, u: Vec3): Double = {
+		val w = (v - u).map(Math.abs)
+		w.x + w.y + w.z
+	}
+	def pNorm(v: Vec3, u: Vec3, p: Double): Double = {
+		val w = (v - u).map(a => Math.pow(Math.abs(a), p))
+		Math.pow(w.x + w.y + w.z, 1.0/p)
+	}
+	def chebyshev(v: Vec3, u: Vec3): Double = {
+		val w = (v - u).map(Math.abs)
+		Math.max(Math.max(w.x, w.y), w.z)
 	}
 }
 object TestNoise {

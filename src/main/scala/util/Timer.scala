@@ -23,19 +23,27 @@ class Timer() {
 		starttime = 0;
 		endtime = 0;
 	}
+	
 	def getRunTime(): Long = {
 		return (endtime - starttime)/1000.0.toLong;
 	}
-	
 	def getTimeSinceStart(): Long = {
 		return System.currentTimeMillis - starttime;
 	}
+	def getTimeSinceEnd(): Long = {
+		return System.currentTimeMillis - endtime;
+	}
+	
 	def formatTimeSinceStart(): String = {
 		return formatTime(getTimeSinceStart);
 	}
-	def formatTime(): String = {
+	def formatTimeSinceEnd(): String = {
+		return formatTime(getTimeSinceEnd);
+	}
+	def formatRunTime(): String = {
 		return formatTime(endtime - starttime);
 	}
+	
 	def formatTime(s: Long): String = {
 		val hr = floor(s/(60*60*1000)).toInt;
 		val min = (floor(s/(1000*60)).toInt)%60;

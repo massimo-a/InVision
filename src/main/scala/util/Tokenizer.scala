@@ -137,7 +137,7 @@ object Token {
 	}
 }
 
-object TokenMain {
+object TestToken {
 	def main(args: Array[String]): Unit = {
 		println(Token.toString(Token.tokenizeFile("C:\\Users\\Massimo Due\\Documents\\GitHub\\TRAC3R\\src\\main\\scala\\util\\testTokenizer.txt")))
 		println(Token.toString(Token.tokenizeFile("testTokenizer.txt")))

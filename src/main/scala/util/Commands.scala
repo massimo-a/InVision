@@ -12,18 +12,13 @@ import annotation.tailrec;
 import java.io.FileNotFoundException
 
 object Commands {
-	//asynchronously renders an image
 	val render = (name: String, scene: Scene) => {
 		val timer = new Timer();
-		val arr: Future[Array[Array[Int]]] = Future {
-			timer.start;
-			Renderer.render(scene);
-		}
-		arr.map { rgbs =>
-			timer.end;
-			ImageHandler.saveImage(scene, rgbs, name);
-			ImageHandler.saveData(name, scene, timer);
-		}
+		timer.start;
+		val arr: Array[Array[Int]] = Renderer.render(scene);
+		timer.end;
+		ImageHandler.saveImage(scene, arr, name);
+		ImageHandler.saveData(name, scene, timer);
 	}
 	
 	//pretty println method
@@ -31,23 +26,25 @@ object Commands {
 		println("$> " + s);
 	}
 	@tailrec private def evaluate(command: String): Boolean = {
-		val commands = command.toLowerCase.split(" ");
-		commands(0) match {
+		command match {
 			case "q" => return false;
-			case "r" => {
-				p("Begun rendering " + commands(1));
-				render(commands(1), SceneSetup.scene);
+			case "0" => {
+				p("Select sample size")
+				val spp = scala.io.StdIn.readInt;
+				p("Begun rendering empty room preset at " + spp*spp + " samples per pixel");
+				render("empty_room_" + spp, Presets.emptyRoom(spp));
 			}
-			case "prog" => p(
-				if(Renderer.progressToString.equals("")) "Nothing currently rendering" else Renderer.progressToString
-			)
-			case "help" => p("sorry, in progress");
+			case "h" => p("sorry, in progress");
 			case _ => p("invalid command");
 		}
 		val nextCommand = scala.io.StdIn.readLine;
 		return evaluate(nextCommand);
 	}
 	def evaluate(): Boolean = {
+		p("Select a preset scene")
+		p("[0] Empty Room")
+		p("[q] Quit")
+		p("[h] Help")
 		val command = scala.io.StdIn.readLine;
 		return evaluate(command);
 	}
