@@ -1,3 +1,7 @@
+/*
+** Author:  Massimo Angelillo
+*/
+
 package raytracing.util
 
 sealed trait Token

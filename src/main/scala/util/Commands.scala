@@ -7,11 +7,27 @@
 
 package raytracing.util;
 import raytracing.{geometry,scene},geometry._,scene._;
-import scala.concurrent.{Future,ExecutionContext},ExecutionContext.Implicits.global;
 import annotation.tailrec;
 import java.io.FileNotFoundException
 
 object Commands {
+	private object SceneSettings {
+		var spp: Int = 1
+		var width: Int = 1000
+		var height: Int = 1000
+		override def toString(): String = {
+			return "Settings:\n{\n" +
+				"  Samples Per Pixel : " + spp*spp + "\n" +
+				"  Screen Width : " + width + "\n" +
+				"  Screen Height : " + height + "\n" +
+				"}"
+		}
+	}
+	
+	private val HELP = "--------------- HELP MENU --------------- \n" + 
+	"In progress \n" + 
+	"------------- END HELP MENU -------------"
+	
 	val render = (name: String, scene: Scene) => {
 		val timer = new Timer();
 		timer.start;
@@ -29,12 +45,29 @@ object Commands {
 		command match {
 			case "q" => return false;
 			case "0" => {
-				p("Select sample size")
-				val spp = scala.io.StdIn.readInt;
-				p("Begun rendering empty room preset at " + spp*spp + " samples per pixel");
-				render("empty_room_" + spp, Presets.emptyRoom(spp));
+				p("Set samples per pixel")
+				SceneSettings.spp = scala.io.StdIn.readInt
+				p("Set screen width")
+				SceneSettings.width = scala.io.StdIn.readInt
+				p("Set screen height")
+				SceneSettings.height = scala.io.StdIn.readInt
 			}
-			case "h" => p("sorry, in progress");
+			case "1" => {
+				p("Begun rendering empty room preset")
+				println(SceneSettings)
+				render("empty_room_" + SceneSettings.spp, Presets.emptyRoom(SceneSettings.spp, SceneSettings.width, SceneSettings.height));
+			}
+			case "2" => {
+				p("Begun rendering cornell box preset")
+				println(SceneSettings)
+				render("cornell_box_" + SceneSettings.spp, Presets.cornellBox(SceneSettings.spp, SceneSettings.width, SceneSettings.height));
+			}
+			case "3" => {
+				p("Begun rendering small preset")
+				println(SceneSettings)
+				render("small" + SceneSettings.spp, Presets.small(SceneSettings.spp, SceneSettings.width, SceneSettings.height));
+			}
+			case "h" => println(HELP);
 			case _ => p("invalid command");
 		}
 		val nextCommand = scala.io.StdIn.readLine;
@@ -42,7 +75,10 @@ object Commands {
 	}
 	def evaluate(): Boolean = {
 		p("Select a preset scene")
-		p("[0] Empty Room")
+		p("[0] Set Scene Settings")
+		p("[1] Empty Room")
+		p("[2] Cornell Box")
+		p("[3] Small")
 		p("[q] Quit")
 		p("[h] Help")
 		val command = scala.io.StdIn.readLine;

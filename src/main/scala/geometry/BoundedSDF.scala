@@ -177,7 +177,7 @@ object BoundedSdf {
 		}
 		return BoundedSdf(
 			func,
-			BoundingBox(Vec3(-r1-r2,-r2,-r1-r2), Vec3(2*(r1+r2), 0, 0), Vec3(0, r2*2, 0), Vec3(0, 0, 2*(r1+r2)))
+			BoundingBox(Vec3(-r1-2*r2,-r2,-r1-2*r2), Vec3(2*(r1+2*r2), 0, 0), Vec3(0, r2*2, 0), Vec3(0, 0, 2*(r1+2*r2)))
 		)
 	}
 	
@@ -192,6 +192,7 @@ object BoundedSdf {
 			BoundingBox(-r, Vec3(2*r.x, 0, 0), Vec3(0, 2*r.y, 0), Vec3(0, 0, 2*r.z))
 		)
 	}
+	
 	def Ellipsoid(a: Double, b: Double, c: Double): BoundedSdf = {
 		return Ellipsoid(Vec3(a,b,c))
 	}

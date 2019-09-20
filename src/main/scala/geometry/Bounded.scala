@@ -16,9 +16,9 @@ trait Bounded {
 
 final case object NoBounds extends Bounded {
 	def hit(r: Ray): Boolean = true;
-	def merge(b: Bounded): Bounded = NoBounds();
-	def translate(x: Double, y: Double, z: Double): Bounded = NoBounds();
-	def rotateWith(ro: Vec3=>Vec3): Bounded = NoBounds();
+	def merge(b: Bounded): Bounded = NoBounds;
+	def translate(x: Double, y: Double, z: Double): Bounded = NoBounds;
+	def rotateWith(ro: Vec3=>Vec3): Bounded = NoBounds;
 	def intersections(r: Ray): (Double, Double) = (1, 1e12);
 }
 
@@ -44,7 +44,7 @@ final case class BoundingBox(position: Vec3, right: Vec3, up: Vec3, forward: Vec
 				val diff = _max - _min
 				BoundingBox(_min, Vec3(diff.x, 0, 0), Vec3(0, diff.y, 0), Vec3(0, 0, diff.z))
 			}
-			case n: NoBounds => NoBounds
+			case n: Bounded => NoBounds
 		}
 	}
 	
@@ -53,7 +53,7 @@ final case class BoundingBox(position: Vec3, right: Vec3, up: Vec3, forward: Vec
 	}
 	
 	def rotateWith(ro: Vec3 => Vec3): Bounded = {
-		BoundingBox(position, ro(right), ro(up), ro(forward))
+		BoundingBox(ro(position), ro(right), ro(up), ro(forward))
 	}
 	
 	def intersections(r: Ray): (Double, Double) = {

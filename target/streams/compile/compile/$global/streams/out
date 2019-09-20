@@ -1,4 +1,37 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Commands.scala:30:33: not found: value rgbs[0m
-[0m[[0m[31merror[0m] [0m[0m		ImageHandler.saveImage(scene, rgbs, name);[0m
-[0m[[0m[31merror[0m] [0m[0m		                              ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:36:21: value next is not a member of raytracing.util.Token[0m
+[0m[[0m[31merror[0m] [0m[0m				tokens = tokens.next[0m
+[0m[[0m[31merror[0m] [0m[0m				                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:37:5: not found: value createSphere[0m
+[0m[[0m[31merror[0m] [0m[0m				createSphere(tokens.next)[0m
+[0m[[0m[31merror[0m] [0m[0m				^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:37:25: value next is not a member of raytracing.util.Token[0m
+[0m[[0m[31merror[0m] [0m[0m				createSphere(tokens.next)[0m
+[0m[[0m[31merror[0m] [0m[0m				                    ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:40:21: value next is not a member of raytracing.util.Token[0m
+[0m[[0m[31merror[0m] [0m[0m				tokens = tokens.next[0m
+[0m[[0m[31merror[0m] [0m[0m				                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:41:5: not found: value createBox[0m
+[0m[[0m[31merror[0m] [0m[0m				createBox(tokens.next)[0m
+[0m[[0m[31merror[0m] [0m[0m				^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:41:22: value next is not a member of raytracing.util.Token[0m
+[0m[[0m[31merror[0m] [0m[0m				createBox(tokens.next)[0m
+[0m[[0m[31merror[0m] [0m[0m				                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:44:21: value next is not a member of raytracing.util.Token[0m
+[0m[[0m[31merror[0m] [0m[0m				tokens = tokens.next[0m
+[0m[[0m[31merror[0m] [0m[0m				                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:45:5: not found: value createTorus[0m
+[0m[[0m[31merror[0m] [0m[0m				createTorus(tokens.next)[0m
+[0m[[0m[31merror[0m] [0m[0m				^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:45:24: value next is not a member of raytracing.util.Token[0m
+[0m[[0m[31merror[0m] [0m[0m				createTorus(tokens.next)[0m
+[0m[[0m[31merror[0m] [0m[0m				                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:48:21: value next is not a member of raytracing.util.Token[0m
+[0m[[0m[31merror[0m] [0m[0m				tokens = tokens.next[0m
+[0m[[0m[31merror[0m] [0m[0m				                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:49:5: not found: value createCylinder[0m
+[0m[[0m[31merror[0m] [0m[0m				createCylinder(tokens.next)[0m
+[0m[[0m[31merror[0m] [0m[0m				^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\util\Parser.scala:49:27: value next is not a member of raytracing.util.Token[0m
+[0m[[0m[31merror[0m] [0m[0m				createCylinder(tokens.next)[0m
+[0m[[0m[31merror[0m] [0m[0m				                      ^[0m
+[0m[[0m[31merror[0m] [0m[0m12 errors found[0m
