@@ -25,7 +25,7 @@ object Noise {
 		return y0*(1-t) + y1*t;
 	}
 	private def smooth(a: Vec3): Vec3 = {
-		return a**a**a**(a**(a.map(_*6 - 15)).map(_ + 10))
+		return a.map(x => smooth(x))
 	}
 	private def smooth(a: Double): Double = {
 		return a*a*a*(a*(a*6-15)+10)
@@ -35,7 +35,7 @@ object Noise {
 		return n match {
 			case Value(s) => {
 				val id = Vec3(Math.floor(x),Math.floor(y));
-				val lv = smooth(Vec3(x, y) - id);
+				val lv = smooth((Vec3(x, y) - id));
 				val b = lerp(sin_rand(s, id.x, id.y),sin_rand(s, id.x+1, id.y),lv.x);
 				val t = lerp(sin_rand(s, id.x, id.y+1),sin_rand(s, id.x+1, id.y+1),lv.x);
 				lerp(b, t, lv.y);
@@ -46,18 +46,14 @@ object Noise {
 			case _ => 1.0
 		}
 	}
-	def fractalize(n: Noise, octaves: Int, x: Double, y: Double): Double = {
-		var total = 0.0
-		var l = 2.0
-		var p = 0.5
-		var maxValue = 0.0
-		for(i <- 0 until octaves) {
-			total = total + Noise.get(n, x*l, y*l)*p
-			maxValue = maxValue + p
-			l = l*2
-			p = p*0.5
+	@tailrec private def fractalize(n: Noise, octaves: Int, x: Double, y: Double, total: Double, l: Double, p: Double, maxValue: Double): Double = {
+		if(octaves == 0) {
+			return total/(maxValue + p)
 		}
-		return total/maxValue
+		return fractalize(n, octaves-1, x, y, total + Noise.get(n, x*l, y*l)*p, l*2, p*0.5, maxValue + p)
+	}
+	def fractalize(n: Noise, octaves: Int, x: Double, y: Double): Double = {
+		return fractalize(n, octaves, x, y, 0, 2.0, 0.5, 0)
 	}
 }
 object Distance {
@@ -83,6 +79,7 @@ object Distance {
 object TestNoise {
 	def testWorley() {
 		val im = new BufferedImage(1000,1000,BufferedImage.TYPE_INT_RGB);
+		
 		val blocks = 10;
 		val pts = new Array[Vec3](blocks*blocks);
 		for(i <- 0 until blocks) {
@@ -90,16 +87,22 @@ object TestNoise {
 				pts(i + j*blocks) = Vec3((i+Math.random)/blocks, (j+Math.random)/blocks)
 			}
 		}
-		val n = Worley(pts)
-		for(i <- 0 until 1000) {
-			for(j <- 0 until 1000) {
-				val pn = Noise.get(n, i/1000.0, j/1000.0)*1.4142*5;
-				val col = (Vec3(1,1,1).lerp(Vec3(0,0,0), pn))*255;
-				val rgb = col.x.toInt*256*256 + col.y.toInt*256 + col.z.toInt;
-				im.setRGB(i, j, rgb)
+		
+		val n = Array(Worley(pts), Worley(pts, Distance.chebyshev), Worley(pts, Distance.manhattan))
+		for(k <- 0 until n.length) {
+			for(i <- 0 until 1000) {
+				for(j <- 0 until 1000) {
+					val pn = Noise.get(n(k), i/1000.0, j/1000.0)*1.4142*5;
+					
+					val col = (Vec3(1,1,1).lerp(Vec3(0,0,0), pn))*255;
+					
+					val rgb = col.x.toInt*256*256 + col.y.toInt*256 + col.z.toInt;
+					
+					im.setRGB(i, j, rgb)
+				}
 			}
+			ImageIO.write(im, "png", new File("worley_test_" + k + ".png"));
 		}
-		ImageIO.write(im, "png", new File("worley_test.png"));
 	}
 	
 	def testValue() {
@@ -114,27 +117,6 @@ object TestNoise {
 			}
 		}
 		ImageIO.write(im, "png", new File("value_test.png"));
-	}
-	
-	def testFractalWorley() {
-		val im = new BufferedImage(1000,1000,BufferedImage.TYPE_INT_RGB);
-		val blocks = 5;
-		val pts = new Array[Vec3](blocks*blocks);
-		for(i <- 0 until blocks) {
-			for(j <- 0 until blocks) {
-				pts(i + j*blocks) = Vec3(i.toFloat/blocks, j.toFloat/blocks)
-			}
-		}
-		val n = Worley(pts)
-		for(i <- 0 until 1000) {
-			for(j <- 0 until 1000) {
-				val pn = Noise.fractalize(n, 10, i/1000.0, j/1000.0);
-				val col = (Vec3(1,1,1).lerp(Vec3(0,0,0), pn))*255;
-				val rgb = col.x.toInt*256*256 + col.y.toInt*256 + col.z.toInt;
-				im.setRGB(i, j, rgb)
-			}
-		}
-		ImageIO.write(im, "png", new File("fractal_worley_test.png"));
 	}
 	
 	def testValueFractal() {
@@ -155,9 +137,6 @@ object TestNoise {
 		println("started worley test...")
 		testWorley()
 		println("completed worley test")
-		println("started fractal worley test...")
-		testFractalWorley()
-		println("completed fractal worley test")
 		println("started value test...")
 		testValue()
 		println("completed value test")

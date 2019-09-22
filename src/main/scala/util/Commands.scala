@@ -41,16 +41,24 @@ object Commands {
 	private def p(s: String) {
 		println("$> " + s);
 	}
+	
+	private def getIntInput(default: Int): Int = {
+		return try {
+			scala.io.StdIn.readInt
+		} catch {
+			case e: Throwable => default
+		}
+	}
 	@tailrec private def evaluate(command: String): Boolean = {
 		command match {
 			case "q" => return false;
 			case "0" => {
 				p("Set samples per pixel")
-				SceneSettings.spp = scala.io.StdIn.readInt
+				SceneSettings.spp = getIntInput(SceneSettings.spp)
 				p("Set screen width")
-				SceneSettings.width = scala.io.StdIn.readInt
+				SceneSettings.width = getIntInput(SceneSettings.width)
 				p("Set screen height")
-				SceneSettings.height = scala.io.StdIn.readInt
+				SceneSettings.height = getIntInput(SceneSettings.height)
 			}
 			case "1" => {
 				p("Begun rendering empty room preset")
@@ -63,9 +71,9 @@ object Commands {
 				render("cornell_box_" + SceneSettings.spp, Presets.cornellBox(SceneSettings.spp, SceneSettings.width, SceneSettings.height));
 			}
 			case "3" => {
-				p("Begun rendering small preset")
+				p("Begun rendering 'lots of shapes' preset")
 				println(SceneSettings)
-				render("small" + SceneSettings.spp, Presets.small(SceneSettings.spp, SceneSettings.width, SceneSettings.height));
+				render("lots_of_shapes" + SceneSettings.spp, Presets.lotsOfShapes(SceneSettings.spp, SceneSettings.width, SceneSettings.height));
 			}
 			case "h" => println(HELP);
 			case _ => p("invalid command");
@@ -74,11 +82,10 @@ object Commands {
 		return evaluate(nextCommand);
 	}
 	def evaluate(): Boolean = {
-		p("Select a preset scene")
 		p("[0] Set Scene Settings")
 		p("[1] Empty Room")
 		p("[2] Cornell Box")
-		p("[3] Small")
+		p("[3] Lots of Shapes")
 		p("[q] Quit")
 		p("[h] Help")
 		val command = scala.io.StdIn.readLine;
