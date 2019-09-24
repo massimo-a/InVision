@@ -24,12 +24,10 @@ case class Lighting(
 	val emission = Vec3(redEmission, greenEmission, blueEmission);
 	val position = Vec3(x, y, z);
 	val shape = BoundedSdf.Sphere(size).translate(x,y,z);
-	private def copy(n: Lighting): Lighting = {
-		return Lighting(n, redEmission, greenEmission, blueEmission, x, y, z, size, falloff);
-	}
+	
 	def isEmpty(): Boolean = {return false}
 	def ++(l: Lighting): Lighting = {
-		return l.copy(this)
+		return l.copy()
 	}
 	private def fold(func: Lighting => Vec3, accu: Vec3): Vec3 = {
 		if(isEmpty) return accu

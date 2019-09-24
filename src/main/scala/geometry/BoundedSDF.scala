@@ -19,9 +19,7 @@ final case class BoundedSdf(
 	/*
 	** union merges two BoundedSDFs together. Visually there is no
 	** difference between keeping the BoundedSDFs separate or unioning
-	** them, but by unioning the BoundedSDFs the program treats the two
-	** BoundedSDFs as one, and therefore runs faster --
-	** (so long as they are relatively close to each other).
+	** them
 	*/
 	def union(surf: BoundedSdf): BoundedSdf = {
 		val func = (v: Vec3) => {
@@ -53,6 +51,16 @@ final case class BoundedSdf(
 		val bounds = boundingBox.merge(surf.boundingBox);
 		return BoundedSdf(func, bounds);
 	}
+	
+	def smoothIntersect(surf: BoundedSdf, k: Double): BoundedSdf = {
+		val func = (v: Vec3) => {
+			val h = max(k - abs(equation(v) - surf.equation(v)), 0.0)/k;
+			max(equation(v), surf.equation(v)) - h*h*k*0.25;
+		}
+		val bounds = boundingBox.merge(surf.boundingBox);
+		return BoundedSdf(func, bounds);
+	}
+	
 	/*
 	** Takes two BoundedSDFs and returns the BoundedSdf
 	** that is contained by the first, but not the second
@@ -76,6 +84,9 @@ final case class BoundedSdf(
 	*/
 	def translate(x: Double, y: Double, z: Double): BoundedSdf = {
 		return BoundedSdf(v => (equation(v - Vec3(x, y, z))), boundingBox.translate(x, y, z))
+	}
+	def translate(u: Vec3): BoundedSdf = {
+		return BoundedSdf(v => (equation(v - u)), boundingBox.translate(u.x, u.y, u.z))
 	}
 	
 	/*
@@ -161,12 +172,12 @@ object BoundedSdf {
 	
 	def Cylinder(r: Double, h: Double): BoundedSdf = {
 		val func = (p: Vec3) => {
-			val d = Vec3(Vec3(p.x, p.z).magnitude - r, abs(p.y) - h);
+			val d = Vec3(Vec3(p.x, p.z).magnitude - r, abs(p.y) - h/2);
 			min(max(d.x,d.y),0.0) + d.map(x => max(x, 0)).magnitude
 		}
 		return BoundedSdf(
 			func,
-			BoundingBox(Vec3(-r,-h/2,-r), Vec3(2*r, 0, 0), Vec3(0, h, 0), Vec3(0, 0, 2*r))
+			BoundingBox(Vec3(-r-5,-h/2-5,-r-5), Vec3(2*r+10, 0, 0), Vec3(0, h+10, 0), Vec3(0, 0, 2*r+10))
 		)
 	}
 	
@@ -195,5 +206,24 @@ object BoundedSdf {
 	
 	def Ellipsoid(a: Double, b: Double, c: Double): BoundedSdf = {
 		return Ellipsoid(Vec3(a,b,c))
+	}
+	
+	def SolidAngle(r: Double, angle: Double): BoundedSdf = {
+		val clamp = (x: Double, a: Double, b: Double) => {
+			if(x < a) a
+			if(x > b) b
+			x
+		}
+		val func = (p: Vec3) => {
+			val c = Vec3(Math.sin(angle), Math.cos(angle))
+			val q = Vec3(Vec3(p.x, p.z).magnitude, p.y)
+			val l = q.magnitude - r;
+			val m = (q - c*clamp(q*c, 0.0, r)).magnitude;
+			max(l, m*Math.signum(c.y*q.x-c.x*q.y));
+		}
+		return BoundedSdf(
+			func,
+			BoundingBox(Vec3(-r, -r, -r), Vec3(2*r, 0, 0), Vec3(0, 2*r, 0), Vec3(0, 0, 2*r))
+		)
 	}
 }

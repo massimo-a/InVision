@@ -1,3 +1,7 @@
+/*
+** Author:  Massimo Angelillo
+*/
+
 package raytracing.util
 
 trait Tree {
@@ -20,7 +24,7 @@ case object OctLeaf extends Tree {
 }
 
 // Tree Classes
-case class BinaryTree(
+final case class BinaryTree(
 	point:Vec3=Vec3(),
 	left:Tree=BinaryLeaf,
 	right:Tree=BinaryLeaf
@@ -36,7 +40,7 @@ case class BinaryTree(
 	}
 }
 
-case class QuadTree(
+final case class QuadTree(
 	point:Vec3=Vec3(),
 	q1:Tree=QuadLeaf,
 	q2:Tree=QuadLeaf,
@@ -58,7 +62,7 @@ case class QuadTree(
 	}
 }
 
-case class OctTree(
+final case class OctTree(
 	point:Vec3=Vec3(),
 	q1:Tree=OctLeaf,
 	q2:Tree=OctLeaf,
@@ -89,51 +93,5 @@ case class OctTree(
 		else if(pt.x < point.x && pt.y >= point.y && pt.z <= point.z) q6.contains(pt)
 		else if(pt.x < point.x && pt.y < point.y && pt.z <= point.z) q7.contains(pt)
 		else q8.contains(pt)
-	}
-}
-
-object TestTree {
-	def main(args: Array[String]) {
-		var numPts = 1000000
-		var pointsIn =  Array.tabulate(numPts)(x => Vec3(Math.random*500))
-		
-		var tree: Tree = BinaryTree(pointsIn(0));
-		var pass = true;
-		
-		for(i <- 1 until numPts) {
-			tree = tree.add(pointsIn(i))
-		}
-		for(i <- 0 until numPts) {
-			if(!tree.contains(pointsIn(i))) {
-				pass = false
-			}
-		}
-		println("BinaryTree : " + {if(pass) "PASS" else "FAIL"})
-		
-		tree = QuadTree(pointsIn(0));
-		pass = true;
-		
-		for(i <- 1 until numPts) {
-			tree = tree.add(pointsIn(i))
-		}
-		for(i <- 0 until numPts) {
-			if(!tree.contains(pointsIn(i))) {
-				pass = false
-			}
-		}
-		println("QuadTree : " + {if(pass) "PASS" else "FAIL"})
-		
-		tree = QuadTree(pointsIn(0));
-		pass = true;
-		
-		for(i <- 1 until 1000000) {
-			tree = tree.add(pointsIn(i))
-		}
-		for(i <- 0 until 1000000) {
-			if(!tree.contains(pointsIn(i))) {
-				pass = false
-			}
-		}
-		println("OctTree : " + {if(pass) "PASS" else "FAIL"})
 	}
 }

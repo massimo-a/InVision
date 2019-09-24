@@ -4,6 +4,7 @@
 
 package raytracing.scene;
 import raytracing.{geometry,scene,util},geometry._,scene._,util._;
+import scala.math.{Pi,sin,cos,abs}
 
 object Presets {
 	def cornellBox(n: Int, w: Int, h: Int): Scene = {
@@ -95,6 +96,70 @@ object Presets {
 			Plane(Vec3(0, 1, 0), Vec3(0, 0, 0)),
 			Diffuse(),
 			(v: Vec3) => {Vec3(1, 1, 0)}
+		)
+	}
+	
+	def pokeball(n: Int, w: Int, h: Int): Scene = {
+		val pos = Vec3(500, 200, 700)
+		val r = 200
+		val half = BoundedSdf.Sphere(r)
+			.intersect(BoundedSdf.Box(2*r, 2*r - 30, 2*r).translate(0, r, 0))
+			.subtract(BoundedSdf.Sphere(50).translate(0, 0, -r))
+		val center = BoundedSdf.Cylinder(30, 10).rotateX(Math.PI/2)
+		Scene(spp=n, width=w, height=h)++(
+			Lighting(x=500,y=900,z=200,size=30)
+		)++(
+			Plane(Vec3(0, 1, 0), Vec3(0, 0, 0)),
+			Diffuse(),
+			(v: Vec3) => {Vec3(1, 1, 0)}
+		)++(
+			half.translate(pos),
+			Gloss(),
+			(v: Vec3) => {Vec3(1, 0, 0)}
+		)++(
+			center.translate(pos - Vec3(0, 0, r)),
+			Diffuse(),
+			(v: Vec3) => {Vec3(1, 1, 1)}
+		)++(
+			half.rotateX(Math.PI).rotateY(Math.PI).translate(pos),
+			Diffuse(),
+			(v: Vec3) => {Vec3(1, 1, 1)}
+		)++(
+			BoundedSdf.Sphere(r - 5).translate(pos),
+			Diffuse(0.0),
+			(v: Vec3) => {Vec3(0,0,0)}
+		)
+	}
+	
+	def pokeballOpen(n: Int, w: Int, h: Int): Scene = {
+		val pos = Vec3(500, 200, 700)
+		val r = 200
+		val angle = -Pi/8
+		val half = BoundedSdf.Sphere(r)
+			.intersect(BoundedSdf.Box(2*r, 2*r, 2*r).translate(0, r, 0))
+			.subtract(BoundedSdf.Sphere(50).translate(0, 0, -r))
+			.subtract(BoundedSdf.Sphere(r - 5))
+		val center = BoundedSdf.Cylinder(30, 5).rotateX(Pi/2)
+		Scene(spp=n, width=w, height=h)++(
+			Lighting(x=500,y=900,z=200,size=30)
+		)++(
+			Lighting(x=500,y=200,z=700,size=100,visibility=true)
+		)++(
+			Plane(Vec3(0, 1, 0), Vec3(0, 0, 0)),
+			Diffuse(),
+			(v: Vec3) => {Vec3(1, 1, 0)}
+		)++(
+			half.rotateX(angle).translate(pos + Vec3(0, abs(sin(angle))*r + 10, r*(1 - abs(cos(angle))))),
+			Gloss(),
+			(v: Vec3) => {Vec3(1, 0, 0)}
+		)++(
+			center.translate(pos - Vec3(0, 0, r)),
+			Diffuse(),
+			(v: Vec3) => {Vec3(1, 1, 1)}
+		)++(
+			half.rotateX(Pi).rotateY(Pi).translate(pos),
+			Diffuse(),
+			(v: Vec3) => {Vec3(1, 1, 1)}
 		)
 	}
 }

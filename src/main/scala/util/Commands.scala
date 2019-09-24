@@ -17,9 +17,10 @@ object Commands {
 		var height: Int = 1000
 		override def toString(): String = {
 			return "Settings:\n{\n" +
-				"  Samples Per Pixel : " + spp*spp + "\n" +
-				"  Screen Width : " + width + "\n" +
-				"  Screen Height : " + height + "\n" +
+				"  Samples Per Pixel  : " + spp*spp + "\n" +
+				"  Screen Width       : " + width + "\n" +
+				"  Screen Height      : " + height + "\n" +
+				"  Total Rays Shot    : " + spp*spp*width*height + "\n" +
 				"}"
 		}
 	}
@@ -49,17 +50,8 @@ object Commands {
 			case e: Throwable => default
 		}
 	}
-	@tailrec private def evaluate(command: String): Boolean = {
-		command match {
-			case "q" => return false;
-			case "0" => {
-				p("Set samples per pixel")
-				SceneSettings.spp = getIntInput(SceneSettings.spp)
-				p("Set screen width")
-				SceneSettings.width = getIntInput(SceneSettings.width)
-				p("Set screen height")
-				SceneSettings.height = getIntInput(SceneSettings.height)
-			}
+	private def runPreset(i: String) {
+		i match {
 			case "1" => {
 				p("Begun rendering empty room preset")
 				println(SceneSettings)
@@ -75,6 +67,30 @@ object Commands {
 				println(SceneSettings)
 				render("lots_of_shapes" + SceneSettings.spp, Presets.lotsOfShapes(SceneSettings.spp, SceneSettings.width, SceneSettings.height));
 			}
+			case "4" => {
+				p("Begun rendering pokeball preset")
+				println(SceneSettings)
+				render("pokeball" + SceneSettings.spp, Presets.pokeball(SceneSettings.spp, SceneSettings.width, SceneSettings.height));
+			}
+			case "5" => {
+				p("Begun rendering open pokeball preset")
+				println(SceneSettings)
+				render("open_pokeball" + SceneSettings.spp, Presets.pokeballOpen(SceneSettings.spp, SceneSettings.width, SceneSettings.height));
+			}
+		}
+	}
+	@tailrec private def evaluate(command: String): Boolean = {
+		command match {
+			case "q" => return false;
+			case "0" => {
+				p("Set samples per pixel")
+				SceneSettings.spp = getIntInput(SceneSettings.spp)
+				p("Set screen width")
+				SceneSettings.width = getIntInput(SceneSettings.width)
+				p("Set screen height")
+				SceneSettings.height = getIntInput(SceneSettings.height)
+			}
+			case "1"|"2"|"3"|"4"|"5" => {runPreset(command)}
 			case "h" => println(HELP);
 			case _ => p("invalid command");
 		}
@@ -86,6 +102,8 @@ object Commands {
 		p("[1] Empty Room")
 		p("[2] Cornell Box")
 		p("[3] Lots of Shapes")
+		p("[4] A pokeball!")
+		p("[5] An open pokeball!!")
 		p("[q] Quit")
 		p("[h] Help")
 		val command = scala.io.StdIn.readLine;
