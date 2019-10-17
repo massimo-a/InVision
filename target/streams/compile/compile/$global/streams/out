@@ -1,4 +1,0 @@
-[0m[[0m[31merror[0m] [0m[0mC:\Users\Massimo Due\Documents\GitHub\TRAC3R\src\main\scala\scene\Scene.scala:39:16: not found: value Renderable[0m
-[0m[[0m[31merror[0m] [0m[0m		return Scene(Renderable(i, m, col)::head, lights, length+1, width, height, x, y, z, fieldOfView, spp);[0m
-[0m[[0m[31merror[0m] [0m[0m		             ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m

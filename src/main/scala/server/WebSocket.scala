@@ -1,3 +1,5 @@
+package raytracing.server
+
 import java.io.{InputStream, OutputStream}
 import java.net.{ServerSocket,Socket}
 import java.security.MessageDigest;
