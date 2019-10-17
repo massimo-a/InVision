@@ -16,7 +16,7 @@ final case class Worley(arr: Array[Vec3], distance: (Vec3, Vec3) => Double = Dis
 object Noise {
 	private def sin_rand(seed: Double, x: Double, y: Double = 0.0, z: Double = 0.0): Double = {
 		val d = Math.sin(x*1111*1111 + y*1111 + z)*seed;
-		return (d - Math.floor(d));
+		return (d - Math.round(d));
 	}
 	private def lerp(y0: Double, y1: Double, t: Double): Double = {
 		return y0*(1-t) + y1*t;
@@ -47,10 +47,19 @@ object Noise {
 		if(octaves == 0) {
 			return total/(maxValue + p)
 		}
-		return fractalize(n, octaves-1, x, y, total + Noise.get(n, x*l, y*l)*p, l*2, p*0.5, maxValue + p)
+		return fractalize(n, octaves-1, x, y, total + (Noise.get(n, x*l, y*l)+1)*p/2, l*2, p*0.5, maxValue + p)
+	}
+	@tailrec private def fractalizeWith(f: Double=>Double, n: Noise, octaves: Int, x: Double, y: Double, total: Double, l: Double, p: Double, maxValue: Double): Double = {
+		if(octaves == 0) {
+			return total/(maxValue + p)
+		}
+		return fractalizeWith(f, n, octaves-1, x, y, total + f(Noise.get(n, x*l, y*l))*p, l*2, p*0.5, maxValue + p)
 	}
 	def fractalize(n: Noise, octaves: Int, x: Double, y: Double): Double = {
 		return fractalize(n, octaves, x, y, 0, 2.0, 0.5, 0)
+	}
+	def fractalizeWith(f: Double=>Double, n: Noise, octaves: Int, x: Double, y: Double): Double = {
+		return fractalizeWith(f, n, octaves, x, y, 0, 2.0, 0.5, 0)
 	}
 }
 object Distance {

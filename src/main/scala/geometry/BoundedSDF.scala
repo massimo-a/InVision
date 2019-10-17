@@ -151,7 +151,7 @@ object BoundedSdf {
 	def Sphere(r: Double): BoundedSdf = {
 		return BoundedSdf(
 			(v: Vec3) => {v.magnitude - r},
-			BoundingBox(Vec3(-r-10, -r-10, -r-10), Vec3(2*r+20, 0, 0), Vec3(0, 2*r+20, 0), Vec3(0, 0, 2*r+20))
+			BoundingBox(Vec3(-r-5, -r-5, -r-5), Vec3(2*r+10, 0, 0), Vec3(0, 2*r+10, 0), Vec3(0, 0, 2*r+10))
 		)
 	}
 	

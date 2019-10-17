@@ -65,6 +65,20 @@ object TestNoise {
 		ImageIO.write(im, "png", new File("fractal_value_test.png"));
 	}
 	
+	def testValueFractal2() {
+		val im = new BufferedImage(1000,1000,BufferedImage.TYPE_INT_RGB);
+		val n = Value(14589124)
+		for(i <- 0 until 1000) {
+			for(j <- 0 until 1000) {
+				val pn = Noise.fractalizeWith(x => Math.abs(x), n, 10, i/200.0, j/200.0);
+				val col = (Vec3(1,1,1).lerp(Vec3(0,0,0), pn))*255;
+				val rgb = col.x.toInt*256*256 + col.y.toInt*256 + col.z.toInt;
+				im.setRGB(i, j, rgb)
+			}
+		}
+		ImageIO.write(im, "png", new File("fractal_value_test_2.png"));
+	}
+	
 	def main(args: Array[String]): Unit = {
 		println("started worley test...")
 		testWorley()
@@ -74,21 +88,31 @@ object TestNoise {
 		println("completed value test")
 		println("started fractal value test...")
 		testValueFractal()
+		testValueFractal2()
 		println("completed fractal value test")
 		println("completed all tests")
 	}
 }
 
 object TestRaList {
-	var list = RaList[Double](4.2)
+	var list = RaList[Int](3)
+	var sum = 3
 	def main(args: Array[String]): Unit = {
-		for(k <- 1E6 until 1E8 by 1E6) {
-			for(i <- 0 until k.toInt) {
-				val r = Math.random()
-				list = RaList.add(list, r)
-			}
-			val a = RaList.get(list, list.length-1)
+		println("placing in list")
+		for(i <- 0 until 5) {
+			val r = (Math.random()*20).toInt
+			sum += r
+			print(r + ", ")
+			list = RaList.add(list)(r)
 		}
+		println()
+		println("grabbing from list")
+		for(i <- 0 until list.length) {
+			println("INDEX : " + i + ", " + RaList.get(list)(i))
+		}
+		println("folding list")
+		println("RESULT : " + RaList.fold(list)(0)((x, y) => x+y))
+		println("CORRECT RESULT : " + sum)
 	}
 }
 

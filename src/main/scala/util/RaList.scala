@@ -5,7 +5,7 @@
 package raytracing.util
 
 sealed trait List[+A]
-case object Nil extends List[Nothing]
+final case object Nil extends List[Nothing]
 final case class RaList[+A](
 	elem: A,
 	left: List[A]=Nil,
@@ -28,7 +28,7 @@ object RaList {
 		}
 	}
 	
-	def add[A](list: List[A], a: A): RaList[A] = {
+	def add[A](list: List[A])(a: A): RaList[A] = {
 		list match {
 			case Nil => RaList(a)
 			case RaList(e,l,r,len) => {
@@ -39,7 +39,7 @@ object RaList {
 	
 	private def get[A](list: List[A], i: Int, targetTier: Int): A = {
 		list match {
-			case Nil => throw new Exception("Index out of bounds")
+			case Nil => throw new Exception("Index out of bounds: " + i)
 			case RaList(e, l, r, len) => {
 				if(targetTier == 0) return e
 				val m = i % Math.pow(2, targetTier)
@@ -52,11 +52,43 @@ object RaList {
 		}
 	}
 	
-	def get[A](list: List[A], i: Int): A = {
+	def get[A](list: List[A])(i: Int): A = {
 		list match {
-			case Nil => throw new Exception("Index out of bounds")
+			case Nil => throw new Exception("Index out of bounds: " + i)
 			case RaList(e, l, r, len) => {
-				get(list, i+1, Math.floor(Math.log(i)/Math.log(2)).toInt)
+				get(list, i+1, Math.floor(Math.log(i+1)/Math.log(2)).toInt)
+			}
+		}
+	}
+	
+	private def indexedTraversal[A, B](list: List[A], f: A => B, accu: List[B], index: Int): List[B] = {
+		if(index == 0) {
+			return accu
+		}
+		return indexedTraversal(list, f, add(accu)(f(RaList.get(list)(index))), index-1)
+	}
+	
+	def indexedTraversal[A, B](list: List[A])(f: A => B): List[B] = {
+		list match {
+			case Nil => throw new Exception("Unknown problem")
+			case RaList(e, l, r, len) => {
+				indexedTraversal(list, f, Nil, len)
+			}
+		}
+	}
+	
+	private def fold[A, B](list: List[A], f: (B, A) => B, accu: B, index: Int): B = {
+		if(index == 0) {
+			return f(accu, RaList.get(list)(0))
+		}
+		return fold(list, f, f(accu, RaList.get(list)(index)), index-1)
+	}
+	
+	def fold[A, B](list: List[A])(init: B)(f: (B, A) => B): B = {
+		list match {
+			case Nil => init
+			case RaList(e, l, r, len) => {
+				fold(list, f, init, len-1)
 			}
 		}
 	}

@@ -9,7 +9,7 @@ import scala.math.{Pi,sin,cos,abs}
 object Presets {
 	def cornellBox(n: Int, w: Int, h: Int): Scene = {
 		Scene(spp=n, width=w, height=h)++(
-			Lighting(x=500,y=900,z=1000,size=30)
+			BallLight(r=30,x=500,y=900,z=1000)
 		)++(
 			BoundedSdf.Box(250, 800, 250).rotateY(Math.PI/6).translate(300, 400, 1500),
 			Diffuse(),
@@ -48,7 +48,7 @@ object Presets {
 	
 	def emptyRoom(n: Int, w: Int, h: Int): Scene = {
 		Scene(spp=n, width=w, height=h)++(
-			Lighting(x=500,y=600,z=1000,size=30)
+			BallLight(r=30,x=500,y=900,z=1000)
 		)++(
 			// Left wall
 			Plane(Vec3(1, 0, 0), Vec3(0, 0, 0)),
@@ -79,18 +79,18 @@ object Presets {
 	
 	def lotsOfShapes(n: Int, w: Int, h: Int): Scene = {
 		Scene(spp=n, width=w, height=h)++(
-			Lighting(x=1000,y=1000,z=0,size=30)
+			BallLight(r=30,x=500,y=900,z=1000)
 		)++(
 			BoundedSdf.Torus(200, 100).rotateX(Math.PI/4).translate(100, 300, 500),
-			Diffuse(),
+			Diffuse(0),
 			(v: Vec3) => {Vec3(1, 0, 0)}
 		)++(
 			BoundedSdf.Cylinder(50, 250).translate(500, 300, 500),
-			Diffuse(),
+			Diffuse(0),
 			(v: Vec3) => {Vec3(1, 0, 0)}
 		)++(
 			BoundedSdf.Ellipsoid(200, 50, 300).rotateX(Math.PI/4).rotateY(Math.PI/8).translate(1000, 300, 500),
-			Diffuse(),
+			Diffuse(0),
 			(v: Vec3) => {Vec3(1, 0, 0)}
 		)++(
 			Plane(Vec3(0, 1, 0), Vec3(0, 0, 0)),
@@ -107,7 +107,7 @@ object Presets {
 			.subtract(BoundedSdf.Sphere(50).translate(0, 0, -r))
 		val center = BoundedSdf.Cylinder(30, 10).rotateX(Math.PI/2)
 		Scene(spp=n, width=w, height=h)++(
-			Lighting(x=500,y=900,z=200,size=30)
+			BallLight(r=30,x=500,y=900,z=200)
 		)++(
 			Plane(Vec3(0, 1, 0), Vec3(0, 0, 0)),
 			Diffuse(),
@@ -141,9 +141,9 @@ object Presets {
 			.subtract(BoundedSdf.Sphere(r - 5))
 		val center = BoundedSdf.Cylinder(30, 5).rotateX(Pi/2)
 		Scene(spp=n, width=w, height=h)++(
-			Lighting(x=500,y=900,z=200,size=30)
+			BallLight(r=30,x=500,y=900,z=200)
 		)++(
-			Lighting(x=500,y=200,z=700,size=100,visibility=true)
+			BallLight(r=100,x=500,y=200,z=700)
 		)++(
 			Plane(Vec3(0, 1, 0), Vec3(0, 0, 0)),
 			Diffuse(),
