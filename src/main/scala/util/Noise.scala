@@ -11,6 +11,11 @@ import annotation.tailrec;
 
 trait Noise
 final case class Value(seed: Double) extends Noise
+final case object Value {
+	def apply(seed: String): Value = {
+		Value(seed.map(_.toByte).foldLeft("")(_+_).toDouble%1E8)
+	}
+}
 final case class Worley(arr: Array[Vec3], distance: (Vec3, Vec3) => Double = Distance.euclid) extends Noise
 
 object Noise {

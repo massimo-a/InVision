@@ -38,17 +38,19 @@ You need SBT installed, but simply navigating to the root folder and using sbt r
 Path tracing falls under a general umbrella of rendering algorithms known as ray casting.
 It is meant to create a hyperrealistic image based on predefined geometry.
 The general format for any ray casting algorithm is:
-'''
+```
   for all pixels in the image
     shoot ray from camera to pixel (i, j)
       if it intersects any geometry
         do math to get pixel color
       else return background color
-'''
+```
 ## TODO
-1. Fix lighting class
-2. JSON to case class parser
-3. Matrix class
-4. Fix terrain class
-5. Fix surface marcher classes/traits
-6. Work on God rays, smoke and water rendering
+1. JSON to case class parser
+2. Matrix class
+3. Fix terrain class
+4. Fix surface marcher classes/traits
+5. Work on God rays, smoke and water rendering
+6. Add in scala documention
+7. Add in the WebSocket to command line
+8. Improve WebSocket implementation

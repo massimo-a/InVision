@@ -1,63 +1,7 @@
 
-date and time - Sat Oct 12 14:01:28 EDT 2019
-file name - lots_of_shapes1
-run time - 00 : 00 : 03.983
+date and time - Sun Oct 27 15:04:11 EDT 2019
+file name - p0
+run time - 00 : 01 : 05.048
 anti-aliasing - 1
 screen size - (1000, 1000)
-primary rays shot per second - 333333
-
-date and time - Sat Oct 12 14:13:24 EDT 2019
-file name - lots_of_shapes1
-run time - 00 : 00 : 03.412
-anti-aliasing - 1
-screen size - (1000, 1000)
-primary rays shot per second - 333333
-
-date and time - Sat Oct 12 14:15:23 EDT 2019
-file name - lots_of_shapes1
-run time - 00 : 00 : 03.608
-anti-aliasing - 1
-screen size - (1000, 1000)
-primary rays shot per second - 333333
-
-date and time - Sat Oct 12 14:18:40 EDT 2019
-file name - lots_of_shapes1
-run time - 00 : 00 : 08.785
-anti-aliasing - 1
-screen size - (1000, 1000)
-primary rays shot per second - 125000
-
-date and time - Sat Oct 12 14:20:17 EDT 2019
-file name - lots_of_shapes1
-run time - 00 : 00 : 08.558
-anti-aliasing - 1
-screen size - (1000, 1000)
-primary rays shot per second - 125000
-
-date and time - Tue Oct 15 11:14:50 EDT 2019
-file name - lots_of_shapes1
-run time - 00 : 00 : 07.765
-anti-aliasing - 1
-screen size - (1000, 1000)
-primary rays shot per second - 142857
-
-date and time - Tue Oct 15 11:52:34 EDT 2019
-file name - lots_of_shapes1
-run time - 00 : 00 : 07.816
-anti-aliasing - 1
-screen size - (1000, 1000)
-primary rays shot per second - 142857
-
-date and time - Tue Oct 15 12:07:10 EDT 2019
-file name - lots_of_shapes10
-run time - 00 : 14 : 00.517
-anti-aliasing - 10
-screen size - (1000, 1000)
-primary rays shot per second - 119047
-
-date and time - Tue Oct 15 12:21:51 EDT 2019
-file name - lots_of_shapes10
-run time - 00 : 14 : 40.610
-anti-aliasing - 10
-screen size - (1000, 1000)
-primary rays shot per second - 113636
+primary rays shot per second - 15384

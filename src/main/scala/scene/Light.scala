@@ -3,7 +3,7 @@
 */
 
 package raytracing.scene;
-import raytracing.{geometry,util},geometry.{Intersectable,BoundedSdf,Ray},util.Vec3;
+import raytracing.{geometry,util},geometry.{Intersectable,Sphere,Ray},util.Vec3;
 import scala.math.{random,sqrt};
 
 trait Light {
@@ -17,7 +17,7 @@ trait Light {
 
 case class BallLight(r: Double, x: Double, y: Double, z: Double) extends Light {
 	def position = Vec3(x, y, z)
-	def shape = BoundedSdf.Sphere(r).translate(position)
+	def shape = Sphere(r, position)
 	def emission = Vec3(1, 1, 1)
 }
 

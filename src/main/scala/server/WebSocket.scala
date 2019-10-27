@@ -1,9 +1,21 @@
+/*
+** Author:  Massimo Angelillo
+*/
+
 package raytracing.server
 
 import java.io.{InputStream, OutputStream}
 import java.net.{ServerSocket,Socket}
+import java.io.{InputStream, OutputStream}
 import java.security.MessageDigest;
 import java.util.{Base64, Scanner, regex},regex.Matcher,regex.Pattern
+
+trait Message
+case class Command(command: String) extends Message
+case class Response(response: String) extends Message
+case object NoMessage extends Message
+case object Quit extends Message
+case object Render extends Message
 
 object WebSocket {
 	private val PORT = 80
@@ -16,32 +28,33 @@ object WebSocket {
 		}
 		return arr
 	}
-	private def decode(bytes: Array[Byte]): String = {
-		if(bytes.length > 0) {
-			var dataLength = bytes(1) & 127
-			var indexFirstMask = {
-				if (dataLength == 126) {
-					4
-				} else if (dataLength == 127) {
-					10
-				} else {
-					2
-				}
+	
+	def decode(bytes: Array[Byte]): String = {
+		if(bytes.length <= 0) return ""
+		val dataLength = bytes(1) & 127
+		val indexFirstMask = {
+			if (dataLength == 126) {
+				4
+			} else if (dataLength == 127) {
+				10
+			} else {
+				2
 			}
+		}
 
-			var keys = bytes.drop(indexFirstMask).take(4)
-			var indexFirstDataByte = indexFirstMask + 4
+		var keys = bytes.drop(indexFirstMask).take(4)
+		var indexFirstDataByte = indexFirstMask + 4
 
-			var decoded = new Array[Byte](bytes.length - indexFirstDataByte)
-			var j = 0
-			for(i <- indexFirstDataByte until bytes.length) {
-				decoded(j) = (bytes(i) ^ keys(j % 4)).asInstanceOf[Byte]
-				j += 1
-			}
-			return new String(decoded, "UTF-8")
-		} else return ""
+		var decoded = new Array[Byte](bytes.length - indexFirstDataByte)
+		var j = 0
+		for(i <- indexFirstDataByte until bytes.length) {
+			decoded(j) = (bytes(i) ^ keys(j % 4)).asInstanceOf[Byte]
+			j += 1
+		}
+		return new String(decoded, "UTF-8")
     }
-	private def handshake(in: InputStream, out: OutputStream): Unit = {
+	
+	def handshake(in: InputStream, out: OutputStream): Boolean = {
 		val s = new Scanner(in, "UTF-8");
 		val data = s.useDelimiter("\\r\\n\\r\\n").next()
 		val get = Pattern.compile("^GET").matcher(data)
@@ -56,25 +69,53 @@ object WebSocket {
 				+ "258EAFA5-E914-47DA-95CA-C5AB0DC85B11").getBytes("UTF-8")))
 				+ "\r\n\r\n").getBytes("UTF-8")
 			out.write(response, 0, response.length)
+			return true
+		} else {
+			return false
 		}
 	}
-	def getMessage(in: InputStream): Unit = {
-		var message = ""
-		while(message != "quit") {
-			message = decode(read(in))
-			if(message != "") {
-				System.out.println("RECEIVED : " + message)
-			}
+	
+	def getMessage(in: InputStream): Message = {
+		decode(read(in)) match {
+			case "quit" => Quit
+			case "" => NoMessage
+			case w: String => Command(w)
 		}
 	}
-	def main(args: Array[String]): Unit = {
-		val server = new ServerSocket(PORT)
-		System.out.println("Server has started on " + HOST + ":" + PORT)
+	
+	def printMsg(c: Message): Unit = {
+		c match {
+			case Command(str) => println(str)
+			case NoMessage => println("No message was sent")
+			case Quit => println("Goodbye!")
+			case Render => println("Begun rendering!")
+		}
+	}
+	
+	def open(host: String, port: Int): (InputStream, OutputStream) = {
+		val server = new ServerSocket(port)
+		System.out.println("Server has started on " + host + ":" + port)
 		val client = server.accept()
-		val in = client.getInputStream()
-		val out = client.getOutputStream()
-		System.out.println("A client connected.")
-		handshake(in, out);
-		getMessage(in)
+		return (client.getInputStream(), client.getOutputStream())
+	}
+	
+	def loop(in: InputStream, out: OutputStream): Unit = {
+		var a = getMessage(in)
+		while(a != Quit) {
+			while(a == NoMessage) {
+				a = getMessage(in)
+			}
+			printMsg(a)
+			a = if(a == Quit) a else NoMessage
+		}
+	}
+	
+	def run(host: String, port: Int): Unit = {
+		val (in, out) = open(host, port)
+		val connSuccess = handshake(in, out);
+		if(connSuccess) {
+			System.out.println("A client connected.")
+			loop(in, out)
+		}
 	}
 }

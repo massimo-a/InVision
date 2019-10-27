@@ -14,15 +14,20 @@ trait Renderable {
 	def color: Vec3 => Vec3
 }
 
-case object NilRenderable extends Renderable {
+final case object NilRenderable extends Renderable {
 	def shape: Intersectable = null
 	def material: Material = null
 	def color: Vec3 => Vec3 = null
 }
 
-case class SceneObject(shape: Intersectable, material: Material, color: Vec3=>Vec3) extends Renderable
+final case class SceneObject(shape: Intersectable, material: Material, color: Vec3=>Vec3) extends Renderable
+final case object SceneObject {
+	def apply(sh: Intersectable, mat: Material, col: Vec3): SceneObject = {
+		SceneObject(sh, mat, (v: Vec3) => {col})
+	}
+}
 
-case class Scene(
+final case class Scene(
 	head: List[Renderable]=List(),
 	lights: List[Light]=List(),
 	length: Int=0,
@@ -35,10 +40,13 @@ case class Scene(
 	val position = Vec3(x, y, z); //position of lower left corner of screen
 	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)));
 	val toneMap = (x: Double) => {
-		x/(x+0.65)
+		x/(x+0.9)
 	}
 	
 	def ++(i: Intersectable, m: Material, col: Vec3=>Vec3): Scene = {
+		return Scene(SceneObject(i, m, col)::head, lights, length+1, width, height, x, y, z, fieldOfView, spp)
+	}
+	def ++(i: Intersectable, m: Material, col: Vec3): Scene = {
 		return Scene(SceneObject(i, m, col)::head, lights, length+1, width, height, x, y, z, fieldOfView, spp)
 	}
 	def ++(l: Light): Scene = {
