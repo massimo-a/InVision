@@ -3,7 +3,7 @@
 */
 
 package raytracing.scene;
-import raytracing.{geometry,util},geometry.{Intersectable,Ray},util.{Vec3,Timer};
+import raytracing.{geometry,util},geometry.{Intersectable,Ray,Sphere},util.{Vec3,Timer};
 import scala.math.{abs,pow,min,max,random,Pi,floor,tan};
 import scala.collection.immutable.List
 import annotation.tailrec;
@@ -21,9 +21,34 @@ final case object NilRenderable extends Renderable {
 }
 
 final case class SceneObject(shape: Intersectable, material: Material, color: Vec3=>Vec3) extends Renderable
+
 final case object SceneObject {
 	def apply(sh: Intersectable, mat: Material, col: Vec3): SceneObject = {
 		SceneObject(sh, mat, (v: Vec3) => {col})
+	}
+}
+
+trait Light {
+	def shape: Intersectable
+	def position: Vec3
+	def color: Vec3
+	def intersectDistance(ray: Ray): Double = {
+		shape.intersectDistance(ray)
+	}
+}
+
+final case class BallLight(r: Double, x: Double, y: Double, z: Double) extends Light {
+	def position = Vec3(x, y, z)
+	def shape = Sphere(r, position)
+	def color = Vec3(1, 1, 1)
+}
+
+final case object NilLight extends Light {
+	def position = Vec3()
+	def shape = null
+	def color = Vec3(1, 1, 1)
+	override def intersectDistance(ray: Ray): Double = {
+		-1.0;
 	}
 }
 
@@ -33,34 +58,35 @@ final case class Scene(
 	length: Int=0,
 	width: Int=1000,
 	height: Int=1000,
-	x: Int=0, y: Int=0, z: Int=0,
+	position: Vec3 = Vec3(),
+	up: Vec3 = Vec3(0, 1, 0),
+	right: Vec3 = Vec3(1, 0, 0),
 	fieldOfView: Double=Pi/8,
 	spp: Int=1
 ) {
-	val position = Vec3(x, y, z); //position of lower left corner of screen
-	val cameraPosition = Vec3(x + width/2, y + height/2, z - width/(2*tan(fieldOfView)));
+	val forward = (up^right).normalize
+	val cameraPosition = position + right*(width/2) + up*(height/2) - forward*(width/(2*tan(fieldOfView)));
 	val toneMap = (x: Double) => {
 		x/(x+0.9)
 	}
-	
 	def ++(i: Intersectable, m: Material, col: Vec3=>Vec3): Scene = {
-		return Scene(SceneObject(i, m, col)::head, lights, length+1, width, height, x, y, z, fieldOfView, spp)
+		return Scene(SceneObject(i, m, col)::head, lights, length+1, width, height, position, up, right, fieldOfView, spp)
 	}
 	def ++(i: Intersectable, m: Material, col: Vec3): Scene = {
-		return Scene(SceneObject(i, m, col)::head, lights, length+1, width, height, x, y, z, fieldOfView, spp)
+		return Scene(SceneObject(i, m, col)::head, lights, length+1, width, height, position, up, right, fieldOfView, spp)
 	}
 	def ++(l: Light): Scene = {
-		return Scene(head, l::lights, length+1, width, height, x, y, z, fieldOfView, spp)
+		return Scene(head, l::lights, length+1, width, height, position, up, right, fieldOfView, spp)
 	}
 	def getPixel(i: Int, j: Int): Vec3 = {
-		return position + Vec3(i, j, 0);
+		return position + right*i + up*j
 	}
 	def getPixelColor(a: Int, b: Int): Vec3 = {
 		var sum = Vec3();
 		for(i <- 0 until spp) {
 			for(j <- 0 until spp) {
-				val ray = Ray(cameraPosition, getPixel(a, b) + Vec3((random + i)/spp, (random + j)/spp))
-				val t = trace(ray)
+				val ray = Ray(cameraPosition, getPixel(a, b) + right*((random + i)/spp) + up*((random + j)/spp))
+				val t = fastTrace(ray)
 				sum = sum + t
 			}
 		}
@@ -104,7 +130,7 @@ final case class Scene(
 		return obj.color(intersectPt) ** lights.foldLeft(Vec3())((prev, curr) => {
 			if(inLineOfSight(intersectPt, curr)) {
 				val lightDir = curr.position - intersectPt;
-				prev + curr.emission * max(0, (obj.shape.getNormal(intersectPt)*lightDir.normalize))
+				prev + curr.color * max(0, (obj.shape.getNormal(intersectPt)*lightDir.normalize))
 			} else prev;
 		})
 	}
@@ -127,14 +153,8 @@ final case class Scene(
 		val objHit = closestPoint._1
 		val intersectPt = closestPoint._2
 		val hitLight = getClosestLight(ray)
-		if(hitLight != NilLight) return hitLight.emission
-		if(objHit == NilRenderable) {
-			if(~(ray.origin - cameraPosition) < 1) {
-				return Vec3(0,0,0).lerp(Vec3(0.8,0.8,1.0), (ray.direction*Vec3(0,1,0)+0.38268)/1.38268) //should be fixed
-			} else {
-				return Vec3()
-			}
-		}
+		if(hitLight != NilLight) return hitLight.color
+		if(objHit == NilRenderable) return Vec3(0.2, 0.2, 0.2)
 		val col = getColor(objHit, intersectPt)
 		if(random > 0.9) return col
 		val scatter = Material.scatter(objHit.material, -ray.direction, objHit.shape.getNormal(intersectPt))
@@ -142,5 +162,14 @@ final case class Scene(
 		val newRay = Ray(intersectPt + scatter, intersectPt + scatter*3)
 		val incoming = trace(newRay)
 		return (col + incoming*brdf).map(x => toneMap(x))
+	}
+	def fastTrace(ray: Ray): Vec3 = {
+		val closestPoint = getClosestRenderable(ray)
+		val objHit = closestPoint._1
+		val intersectPt = closestPoint._2
+		val hitLight = getClosestLight(ray)
+		if(hitLight != NilLight) return hitLight.color
+		if(objHit == NilRenderable) return Vec3(0.2, 0.2, 0.2)
+		return getColor(objHit, intersectPt)
 	}
 }

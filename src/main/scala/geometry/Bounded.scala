@@ -4,22 +4,24 @@
 
 package raytracing.geometry;
 import raytracing.util.Vec3;
-import scala.math.{abs,min,max};
+import scala.math.{abs,min,max}
 
 trait Bounded {
-	def hit(r: Ray): Boolean;
-	def merge(b: Bounded): Bounded;
-	def translate(x: Double, y: Double, z: Double): Bounded;
-	def rotateWith(ro: Vec3=>Vec3): Bounded;
-	def intersections(r: Ray): (Double, Double);
+	def hit(r: Ray): Boolean
+	def merge(b: Bounded): Bounded
+	def translate(x: Double, y: Double, z: Double): Bounded
+	def rotateWith(ro: Vec3=>Vec3): Bounded
+	def intersections(r: Ray): (Double, Double)
+	def stretch(a: Double, b: Double, c: Double): Bounded
 }
 
 final case object NoBounds extends Bounded {
-	def hit(r: Ray): Boolean = true;
-	def merge(b: Bounded): Bounded = NoBounds;
-	def translate(x: Double, y: Double, z: Double): Bounded = NoBounds;
-	def rotateWith(ro: Vec3=>Vec3): Bounded = NoBounds;
-	def intersections(r: Ray): (Double, Double) = (1, 1e12);
+	def hit(r: Ray): Boolean = true
+	def merge(b: Bounded): Bounded = NoBounds
+	def translate(x: Double, y: Double, z: Double): Bounded = NoBounds
+	def rotateWith(ro: Vec3=>Vec3): Bounded = NoBounds
+	def intersections(r: Ray): (Double, Double) = (1, 1e12)
+	def stretch(a: Double, b: Double, c: Double): Bounded = NoBounds
 }
 
 final case class BoundingBox(position: Vec3, right: Vec3, up: Vec3, forward: Vec3) extends Bounded {
@@ -54,6 +56,10 @@ final case class BoundingBox(position: Vec3, right: Vec3, up: Vec3, forward: Vec
 	
 	def rotateWith(ro: Vec3 => Vec3): Bounded = {
 		BoundingBox(ro(position), ro(right), ro(up), ro(forward))
+	}
+	
+	def stretch(a: Double, b: Double, c: Double): BoundingBox = {
+		BoundingBox(position, right*a, up*b, forward*c)
 	}
 	
 	def intersections(r: Ray): (Double, Double) = {

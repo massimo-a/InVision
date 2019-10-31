@@ -21,7 +21,13 @@ object ImageHandler {
 			pw.write("run time - " + t.formatRunTime + "\r\n");
 			pw.write("anti-aliasing - " + scene.spp + "\r\n");
 			pw.write("screen size - (" + scene.height + ", " + scene.width + ")\r\n");
-			pw.write("primary rays shot per second - " + scene.height*scene.width*scene.spp*scene.spp/t.getRunTime + "\r\n");
+			try {
+				pw.write("primary rays shot per second - " + scene.height*scene.width*scene.spp*scene.spp/(t.getRunTime + 1E-12) + "\r\n");
+			} catch {
+				case e: ArithmeticException => {
+					pw.write("primary rays shot per second - TOO MANY \r\n")
+				}
+			}
 			pw.close
 			println("Runtime: " + t.formatRunTime);
 		} catch {

@@ -13,8 +13,8 @@ import java.io.FileNotFoundException
 object Commands {
 	private object SceneSettings {
 		var spp: Int = 1
-		var width: Int = 1000
-		var height: Int = 1000
+		var width: Int = 500
+		var height: Int = 500
 		override def toString(): String = {
 			return s"""
 				|Settings: {
@@ -25,6 +25,23 @@ object Commands {
 				|}
 			""".stripMargin
 		}
+	}
+	private def test(i: Int): Scene = {
+		val no = Value("helloworld")
+		val b = SurfaceMarcher.Sphere(30)
+			.repeat(Vec3(120.0, 120.0, 120.0), 10)
+			
+		Scene(spp=SceneSettings.spp, width=SceneSettings.width, height=SceneSettings.height, up=Vec3(0, Math.cos((i/150.0)*Math.PI), -Math.sin((i/150.0)*Math.PI)).normalize)++(
+			BallLight(r=30,x=500,y=900,z=200)
+		)++(
+			Plane(Vec3(0,0,-1),Vec3(0,0,1500)),
+			Diffuse(),
+			v => Vec3((((v.x-2000)/4000.0)%1.0 + 1.0)%1.0, (((v.y-2000)/4000.0)%1.0 + 1.0)%1.0, 0.5)
+		)++(
+			b,
+			Diffuse(),
+			Vec3(1, 0, 0)
+		)
 	}
 	private val HELP = """
 		|--------------- HELP MENU ---------------
@@ -46,15 +63,7 @@ object Commands {
 			case e: Throwable => default
 		}
 	}
-	private def runPreset(i: String) {
-		i match {
-			case "1" => {
-				println("Begun rendering")
-				println(SceneSettings)
-				render("test" + SceneSettings.spp, Presets.Test(SceneSettings.spp, SceneSettings.width, SceneSettings.height));
-			}
-		}
-	}
+	
 	@tailrec private def evaluate(command: String): Boolean = {
 		command match {
 			case "q" => return false;
@@ -66,7 +75,13 @@ object Commands {
 				println("Set screen height")
 				SceneSettings.height = getIntInput(SceneSettings.height)
 			}
-			case "1" => {runPreset(command)}
+			case "1" => {
+				println("Begun rendering")
+				println(SceneSettings)
+				for(i <- 0 until 1) {
+					render("test" + i + "" + SceneSettings.spp, test(i));
+				}
+			}
 			case "h" => println(HELP)
 			case _ => println("invalid command")
 		}

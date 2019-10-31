@@ -5,7 +5,7 @@
 package raytracing.server
 
 import java.io.{InputStream, OutputStream}
-import java.net.{ServerSocket,Socket}
+import java.net.{ServerSocket, Socket}
 import java.io.{InputStream, OutputStream}
 import java.security.MessageDigest;
 import java.util.{Base64, Scanner, regex},regex.Matcher,regex.Pattern

@@ -1,7 +1,0 @@
-
-date and time - Sun Oct 27 15:04:11 EDT 2019
-file name - p0
-run time - 00 : 01 : 05.048
-anti-aliasing - 1
-screen size - (1000, 1000)
-primary rays shot per second - 15384

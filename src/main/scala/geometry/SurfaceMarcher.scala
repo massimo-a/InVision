@@ -34,6 +34,16 @@ final case class SurfaceMarcher(
 		return gradient(pt).normalize
 	}
 	
+	def repeat(len: Vec3, c: Double): SurfaceMarcher = {
+		val p = (v: Vec3) => {
+			equation(Vec3(v.x%len.x - len.x/2.0, v.y%len.y - len.y/2.0, v.z%len.z - len.z/2.0))
+		}
+		val q = (v: Vec3) => {
+			stepSize(Vec3(v.x%len.x - len.x/2.0, v.y%len.y - len.y/2.0, v.z%len.z - len.z/2.0))
+		}
+		return SurfaceMarcher(p, q, boundingBox.stretch(c, c, c))
+	}
+	
 	def union(surf: SurfaceMarcher): SurfaceMarcher = {
 		val func = (v: Vec3) => {
 			min(equation(v), surf.equation(v));

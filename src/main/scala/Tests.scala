@@ -103,15 +103,15 @@ object TestRaList {
 			val r = (Math.random()*20).toInt
 			sum += r
 			print(r + ", ")
-			list = RaList.add(list)(r)
+			list = list.insert(r)
 		}
 		println()
 		println("grabbing from list")
 		for(i <- 0 until list.length) {
-			println("INDEX : " + i + ", " + RaList.get(list)(i))
+			println("INDEX : " + i + ", " + list.get(i))
 		}
 		println("folding list")
-		println("RESULT : " + RaList.fold(list)(0)((x, y) => x+y))
+		println("RESULT : " + list.fold(0, (x: Int, y: Int) => x+y))
 		println("CORRECT RESULT : " + sum)
 	}
 }
