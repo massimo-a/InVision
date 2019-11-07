@@ -67,7 +67,7 @@ final case class Scene(
 	val forward = (up^right).normalize
 	val cameraPosition = position + right*(width/2) + up*(height/2) - forward*(width/(2*tan(fieldOfView)));
 	val toneMap = (x: Double) => {
-		x/(x+0.9)
+		Math.max(0, Math.min(1, x))
 	}
 	def ++(i: Intersectable, m: Material, col: Vec3=>Vec3): Scene = {
 		return Scene(SceneObject(i, m, col)::head, lights, length+1, width, height, position, up, right, fieldOfView, spp)
@@ -86,7 +86,7 @@ final case class Scene(
 		for(i <- 0 until spp) {
 			for(j <- 0 until spp) {
 				val ray = Ray(cameraPosition, getPixel(a, b) + right*((random + i)/spp) + up*((random + j)/spp))
-				val t = fastTrace(ray)
+				val t = trace(ray)
 				sum = sum + t
 			}
 		}
@@ -111,13 +111,17 @@ final case class Scene(
 			}
 		})
 	}
-	private def getClosestLight(ray: Ray): Light = {
-		return lights.foldLeft(NilLight: Light)((prev, light) => {
-			val dist = light.intersectDistance(ray)
-			val distPrev = prev.intersectDistance(ray)
+	private def getClosestLight(ray: Ray): (Light, Vec3) = {
+		return lights.foldLeft((NilLight: Light, Vec3()))((prev, light) => {
+			val dist = light.shape.intersectDistance(ray)
+			val distPrev = if(prev._1 != NilLight) {
+				prev._1.shape.intersectDistance(ray)
+			} else {
+				-1
+			}
 			if(dist > 0) {
 				if(dist < distPrev || distPrev < 0) {
-					light
+					(light, ray.origin + ray.direction*dist)
 				} else {
 					prev
 				}
@@ -125,6 +129,20 @@ final case class Scene(
 				prev
 			}
 		})
+		
+		// return lights.foldLeft(NilLight: Light)((prev, light) => {
+			// val dist = light.intersectDistance(ray)
+			// val distPrev = prev.intersectDistance(ray)
+			// if(dist > 0) {
+				// if(dist < distPrev || distPrev < 0) {
+					// light
+				// } else {
+					// prev
+				// }
+			// } else {
+				// prev
+			// }
+		// })
 	}
 	private def getColor(obj: Renderable, intersectPt: Vec3): Vec3 = {
 		return obj.color(intersectPt) ** lights.foldLeft(Vec3())((prev, curr) => {
@@ -153,7 +171,7 @@ final case class Scene(
 		val objHit = closestPoint._1
 		val intersectPt = closestPoint._2
 		val hitLight = getClosestLight(ray)
-		if(hitLight != NilLight) return hitLight.color
+		if(hitLight._1 != NilLight && (objHit == NilRenderable || ~(hitLight._2 - ray.origin) < ~(intersectPt - ray.origin))) return hitLight._1.color
 		if(objHit == NilRenderable) return Vec3(0.2, 0.2, 0.2)
 		val col = getColor(objHit, intersectPt)
 		if(random > 0.9) return col
@@ -168,7 +186,7 @@ final case class Scene(
 		val objHit = closestPoint._1
 		val intersectPt = closestPoint._2
 		val hitLight = getClosestLight(ray)
-		if(hitLight != NilLight) return hitLight.color
+		if(hitLight._1 != NilLight) return hitLight._1.color
 		if(objHit == NilRenderable) return Vec3(0.2, 0.2, 0.2)
 		return getColor(objHit, intersectPt)
 	}

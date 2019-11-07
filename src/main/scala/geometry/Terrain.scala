@@ -17,7 +17,7 @@ final case class Terrain(
 ) extends Intersectable {
 	val width = heightmap.length;
 	val depth = heightmap(0).length
-	val boundingBox = BoundingBox(position, Vec3(width, 0, 0), Vec3(0, height, 0), Vec3(0, 0, depth))
+	val boundingBox = Bounded(position, width, height, depth)
 
 	val equation = (vec: Vec3) => {
 		val v = vec - position

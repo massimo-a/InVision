@@ -6,15 +6,15 @@
 */
 
 package raytracing.util;
-import raytracing.{geometry,scene,server},geometry._,scene._,server.WebSocket
+import raytracing.{geometry,scene},geometry._,scene._
 import annotation.tailrec;
 import java.io.FileNotFoundException
 
 object Commands {
 	private object SceneSettings {
 		var spp: Int = 1
-		var width: Int = 500
-		var height: Int = 500
+		var width: Int = 1500
+		var height: Int = 1000
 		override def toString(): String = {
 			return s"""
 				|Settings: {
@@ -27,20 +27,45 @@ object Commands {
 		}
 	}
 	private def test(i: Int): Scene = {
-		val no = Value("helloworld")
-		val b = SurfaceMarcher.Sphere(30)
-			.repeat(Vec3(120.0, 120.0, 120.0), 10)
-			
-		Scene(spp=SceneSettings.spp, width=SceneSettings.width, height=SceneSettings.height, up=Vec3(0, Math.cos((i/150.0)*Math.PI), -Math.sin((i/150.0)*Math.PI)).normalize)++(
-			BallLight(r=30,x=500,y=900,z=200)
+		
+		val cyl = SurfaceMarcher.Cylinder(100, 600)
+			.subtract(SurfaceMarcher.Sphere(80).translate(0, 0, -100))
+			.translate(700, 300, 1200)
+		
+		Scene(spp=SceneSettings.spp, width=SceneSettings.width, height=SceneSettings.height)++(
+			BallLight(r=20,x=500,y=900,z=200)
 		)++(
-			Plane(Vec3(0,0,-1),Vec3(0,0,1500)),
-			Diffuse(),
-			v => Vec3((((v.x-2000)/4000.0)%1.0 + 1.0)%1.0, (((v.y-2000)/4000.0)%1.0 + 1.0)%1.0, 0.5)
-		)++(
-			b,
-			Diffuse(),
+			Plane(Vec3(0,0,-1),Vec3(0,0,2000)),
+			Gloss(),
 			Vec3(1, 0, 0)
+		)++(
+			Plane(Vec3(1,0,0),Vec3(0,0,0)),
+			Diffuse(0.0),
+			Vec3(0, 1, 0)
+		)++(
+			Plane(Vec3(-1,0,0),Vec3(1500,0,0)),
+			Diffuse(0.0),
+			Vec3(0, 0, 1)
+		)++(
+			Plane(Vec3(0,1,0),Vec3(0,0,0)),
+			Diffuse(0.0),
+			Vec3(1, 0, 1)
+		)++(
+			Plane(Vec3(0,-1,0),Vec3(0,1000,0)),
+			Diffuse(0.0),
+			Vec3(1, 1, 0)
+		)++(
+			SurfaceMarcher.Sphere(300).translate(1200, 300, 1700),
+			Diffuse(5.0),
+			Vec3(0.75, 0.75, 0.75)
+		)++(
+			SurfaceMarcher.Box(200, 600, 200).rotateY(Math.PI/6).translate(400, 300, 1000),
+			Gloss(1.0, 0.5),
+			Vec3(0.75, 0.75, 0.75)
+		)++(
+			cyl,
+			Gloss(1.0, 2.0),
+			Vec3(0.75, 0.75, 0.75)
 		)
 	}
 	private val HELP = """
@@ -63,7 +88,6 @@ object Commands {
 			case e: Throwable => default
 		}
 	}
-	
 	@tailrec private def evaluate(command: String): Boolean = {
 		command match {
 			case "q" => return false;

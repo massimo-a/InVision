@@ -55,4 +55,38 @@ object ImageHandler {
 		pw.write(str)
 		pw.close
 	}
+	def difference(file1: String, file2: String) {
+		var img1: BufferedImage = null;
+		var img2: BufferedImage = null;
+		try {
+			img1 = ImageIO.read(new File(file1))
+			img2 = ImageIO.read(new File(file2))
+		} catch {
+			case _: Throwable => println()
+		}
+		var img: BufferedImage = new BufferedImage(img1.getWidth(), img1.getHeight(), BufferedImage.TYPE_INT_RGB)
+		for(i <- 0 until img.getWidth()) {
+			for(j <- 0 until img.getHeight()) {
+				img.setRGB(i, j, Math.abs(img1.getRGB(i, j) - img2.getRGB(i, j)))
+			}
+		}
+		ImageIO.write(img, "png", new File(pictureSaveLocation + "combined.png"));
+	}
+	def combine(file1: String, file2: String) {
+		var img1: BufferedImage = null;
+		var img2: BufferedImage = null;
+		try {
+			img1 = ImageIO.read(new File(file1))
+			img2 = ImageIO.read(new File(file2))
+		} catch {
+			case _: Throwable => println()
+		}
+		var img: BufferedImage = new BufferedImage(img1.getWidth(), img1.getHeight(), BufferedImage.TYPE_INT_RGB)
+		for(i <- 0 until img.getWidth()) {
+			for(j <- 0 until img.getHeight()) {
+				img.setRGB(i, j, (img1.getRGB(i, j) + img2.getRGB(i, j))/2)
+			}
+		}
+		ImageIO.write(img, "png", new File(pictureSaveLocation + "combined.png"));
+	}
 }

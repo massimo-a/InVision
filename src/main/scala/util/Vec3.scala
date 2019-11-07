@@ -67,7 +67,7 @@ final case class Vec3(x: Double = 0, y: Double = 0, z: Double = 0) {
 		this*this
 	}
 	
-	/** 
+	/** Normalizes the vector so that it has the same direction, but a magnitude of 1
 	 */
 	def normalize(): Vec3 = {
 		val mag = magnitude

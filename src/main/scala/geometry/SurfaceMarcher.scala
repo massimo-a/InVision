@@ -8,7 +8,7 @@ import scala.math.{abs,min,max,sin,cos};
 final case class SurfaceMarcher(
 	equation: Vec3 => Double,
 	stepSize: Vec3 => Double,
-	boundingBox: Bounded, 
+	boundingBox: Bounded
 ) extends Intersectable {
 	def intersectDistance(r: Ray): Double = {
 		if(boundingBox.hit(r)) {
@@ -156,7 +156,7 @@ object SurfaceMarcher {
 		return SurfaceMarcher(
 			(v: Vec3) => {v.magnitude - r},
 			(v: Vec3) => {v.magnitude - r},
-			BoundingBox(Vec3(-r-5, -r-5, -r-5), Vec3(2*r+10, 0, 0), Vec3(0, 2*r+10, 0), Vec3(0, 0, 2*r+10))
+			Bounded(Vec3(-r-2, -r-2, -r-2), 2*r+4, 2*r+4, 2*r+4)
 		)
 	}
 	
@@ -172,7 +172,7 @@ object SurfaceMarcher {
 				val a = d.map(x => max(x, 0.0)).magnitude;
 				a + min(max(d.x, max(d.y, d.z)), 0)
 			},
-			BoundingBox(Vec3(-width/2,-height/2,-depth/2), Vec3(width, 0, 0), Vec3(0, height, 0), Vec3(0, 0, depth))
+			Bounded(Vec3(-width/2,-height/2,-depth/2), width, height, depth)
 		)
 	}
 	
@@ -188,7 +188,7 @@ object SurfaceMarcher {
 		return SurfaceMarcher(
 			func,
 			func,
-			BoundingBox(Vec3(-r-5,-h/2-5,-r-5), Vec3(2*r+10, 0, 0), Vec3(0, h+10, 0), Vec3(0, 0, 2*r+10))
+			Bounded(Vec3(-r-5,-h/2-5,-r-5), 2*r+10, h+10, 2*r+10)
 		)
 	}
 	
@@ -200,7 +200,7 @@ object SurfaceMarcher {
 		return SurfaceMarcher(
 			func,
 			func,
-			BoundingBox(Vec3(-r1-2*r2,-r2,-r1-2*r2), Vec3(2*(r1+2*r2), 0, 0), Vec3(0, r2*2, 0), Vec3(0, 0, 2*(r1+2*r2)))
+			Bounded(Vec3(-r1-2*r2,-r2,-r1-2*r2), 2*(r1+2*r2), r2*2, 2*(r1+2*r2))
 		)
 	}
 }

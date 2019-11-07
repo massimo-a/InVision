@@ -4,7 +4,7 @@
 
 package raytracing.scene;
 import raytracing.util.Vec3;
-import scala.math.{random,abs,Pi,max,log,cos,sin,sqrt};
+import scala.math.{random,Pi,cos,sin,sqrt};
 
 sealed trait Material
 final case class Diffuse(albedo: Double = 0.9) extends Material
@@ -14,7 +14,7 @@ final case class Transparency(albedo: Double = 0.9, roughness: Double = 0.0) ext
 object Material {
 	def scatter(m: Material, in: Vec3, n: Vec3): Vec3 = {
 		val r = random
-		val theta = random
+		val theta = random*2*Pi
 		val randVec = Vec3(r*cos(theta), r*sin(theta), sqrt(1-r*r))
 		
 		val (bounce: Vec3, roughness: Double) = m match {
