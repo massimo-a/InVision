@@ -59,8 +59,8 @@ object ImageHandler {
 		var img1: BufferedImage = null;
 		var img2: BufferedImage = null;
 		try {
-			img1 = ImageIO.read(new File(file1))
-			img2 = ImageIO.read(new File(file2))
+			img1 = ImageIO.read(new File(pictureSaveLocation + file1))
+			img2 = ImageIO.read(new File(pictureSaveLocation + file2))
 		} catch {
 			case _: Throwable => println()
 		}
@@ -70,14 +70,14 @@ object ImageHandler {
 				img.setRGB(i, j, Math.abs(img1.getRGB(i, j) - img2.getRGB(i, j)))
 			}
 		}
-		ImageIO.write(img, "png", new File(pictureSaveLocation + "combined.png"));
+		ImageIO.write(img, "png", new File(pictureSaveLocation + "difference.png"));
 	}
 	def combine(file1: String, file2: String) {
 		var img1: BufferedImage = null;
 		var img2: BufferedImage = null;
 		try {
-			img1 = ImageIO.read(new File(file1))
-			img2 = ImageIO.read(new File(file2))
+			img1 = ImageIO.read(new File(pictureSaveLocation + file1))
+			img2 = ImageIO.read(new File(pictureSaveLocation + file2))
 		} catch {
 			case _: Throwable => println()
 		}
