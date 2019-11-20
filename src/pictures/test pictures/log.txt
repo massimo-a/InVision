@@ -1,0 +1,7 @@
+
+date and time - Thu Nov 14 19:11:30 EST 2019
+file name - test10
+run time - 00 : 22 : 57.490
+anti-aliasing - 10
+screen size - (960, 1280)
+primary rays shot per second - 89237.47276688447

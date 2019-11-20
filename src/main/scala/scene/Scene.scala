@@ -1,13 +1,13 @@
-/*
-** Author:  Massimo Angelillo
-*/
-
-package raytracing.scene;
-import raytracing.{geometry,util},geometry.{Intersectable,Ray,Sphere},util.{Vec3};
-import scala.math.{abs,pow,min,max,random,Pi,floor,tan};
+package raytracing.scene
+import raytracing.{geometry,util},geometry.{Intersectable,Ray,Sphere},util.{Vec3}
+import scala.math.{abs,pow,min,max,random,Pi,floor,tan}
 import scala.collection.immutable.List
-import annotation.tailrec;
+import annotation.tailrec
+import scala.collection.parallel.mutable.ParArray
 
+/** 
+ *  @author Massimo Angelillo
+ */
 trait Renderable {
 	def shape: Intersectable
 	def material: Material
@@ -67,8 +67,7 @@ final case class Scene(
 	val forward = (up^right).normalize
 	val cameraPosition = position + right*(width/2) + up*(height/2) - forward*(width/(2*tan(fieldOfView)));
 	val toneMap = (x: Double) => {
-		Math.max(0, Math.min(1.0, x))
-		//Math.pow(x, 1/2.2)/20.0
+		x/(x+1)
 	}
 	def ++(i: Intersectable, m: Material, col: Vec3=>Vec3): Scene = {
 		return Scene(SceneObject(i, m, col)::head, lights, length+1, width, height, position, up, right, fieldOfView, spp)
@@ -161,13 +160,14 @@ final case class Scene(
 		if(hitLight._1 != NilLight && (objHit == NilRenderable || ~(hitLight._2 - ray.origin) < ~(intersectPt - ray.origin))) return hitLight._1.color
 		if(objHit == NilRenderable) return Vec3(0.2, 0.2, 0.2)
 		val col = getColor(objHit, intersectPt, ray)
-		if(random > 0.8) return col
 		val scatter = objHit.material.scatter(-ray.direction, objHit.shape.getNormal(intersectPt))
 		val newRay = Ray(intersectPt + scatter, intersectPt + scatter*3)
+		val brdf = objHit.material.brdf(-ray.direction, newRay.direction, objHit.shape.getNormal(intersectPt))
+		if(random > brdf*0.9) return col
 		val lightDir = (lights(0).position - intersectPt).normalize
 		val lightRay = Ray(intersectPt + lightDir, intersectPt + lightDir*3)
 		val incoming = trace(newRay)
-		return (col + incoming*objHit.material.albedo).map(x => toneMap(x))
+		return (col + incoming*brdf).map(x => toneMap(x))
 	}
 	def fastTrace(ray: Ray): Vec3 = {
 		val closestPoint = getClosestRenderable(ray)
@@ -178,25 +178,15 @@ final case class Scene(
 		if(objHit == NilRenderable) return Vec3(0.2, 0.2, 0.2)
 		return getColor(objHit, intersectPt, ray)
 	}
-	private def render(column: Int): Array[Int] = {
-		val arr = new Array[Int](width)
-		for(j <- 1 to height) {
-			val t = getPixelColor(column, j-1)
-			val rgb = (((t.x*255).toInt & 0x0ff) << 16) | (((t.y*255).toInt & 0x0ff) << 8) | ((t.z*255).toInt & 0x0ff)
-			arr(height-j) = rgb
-		}
-		print("\r" + getProgress(column) + "%")
-		return arr
-	}
-	def render(): Array[Array[Int]] = {
-		val pixels = Array.ofDim[Int](width, height).map(_.map(x => -1))
-		for(columnsDone <- 0 until width) {
-			pixels(columnsDone) = render(columnsDone)
-		}
-		println()
-		return pixels;
-	}
-	def getProgress(col: Int): Double = {
-		return floor((col/width.toDouble)*1000)/10.0
+	def render(): ParArray[ParArray[Int]] = {
+		return Array.ofDim[Int](width, height).par
+			.map(_.par.map(x => -1)).zipWithIndex
+			.map(a => {
+				new Array[Int](width).par.zipWithIndex.map(b => {
+				val t = getPixelColor(a._2, height - b._2)
+				val rgb = (((t.x*255).toInt & 0x0ff) << 16) | (((t.y*255).toInt & 0x0ff) << 8) | ((t.z*255).toInt & 0x0ff)
+					rgb
+				})
+			})
 	}
 }
