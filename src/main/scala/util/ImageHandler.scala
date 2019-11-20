@@ -1,16 +1,14 @@
-/*
-** Author:  Massimo Angelillo
-**
-** A utility class for handling Image I/O operations
-** and certain other impure operations
-*/
-
 package raytracing.util;
 import raytracing.{scene,geometry},scene.{Scene, Material},geometry._;
 import javax.imageio.ImageIO;
 import java.{io,util},io.{File,FileWriter,FileNotFoundException},util.Calendar
 import java.awt.image.BufferedImage
+import java.awt.Color
+import scala.collection.parallel.mutable.ParArray
 
+/** 
+ *  @author Massimo Angelillo
+ */
 object ImageHandler {
 	private val pictureSaveLocation = "src/pictures/test pictures/";
 	def saveData(name: String, scene: Scene, t: Timer) {
@@ -21,7 +19,13 @@ object ImageHandler {
 			pw.write("run time - " + t.formatRunTime + "\r\n");
 			pw.write("anti-aliasing - " + scene.spp + "\r\n");
 			pw.write("screen size - (" + scene.height + ", " + scene.width + ")\r\n");
-			pw.write("primary rays shot per second - " + scene.height*scene.width*scene.spp*scene.spp/t.getRunTime + "\r\n");
+			try {
+				pw.write("primary rays shot per second - " + scene.height*scene.width*scene.spp*scene.spp/(t.getRunTime + 1E-12) + "\r\n");
+			} catch {
+				case e: ArithmeticException => {
+					pw.write("primary rays shot per second - TOO MANY \r\n")
+				}
+			}
 			pw.close
 			println("Runtime: " + t.formatRunTime);
 		} catch {
@@ -29,7 +33,7 @@ object ImageHandler {
 		}
 		
 	}
-	def saveImage(scene: Scene, rgbs: Array[Array[Int]], name: String) {
+	def saveImage(scene: Scene, rgbs: ParArray[ParArray[Int]], name: String) {
 		val im = new BufferedImage(scene.width, scene.height, BufferedImage.TYPE_INT_RGB);
 		for(i <- 0 until scene.width) {
 			for(j <- 0 until scene.height) {
@@ -43,10 +47,44 @@ object ImageHandler {
 			case x: FileNotFoundException => { println("could not save picture, file path not found") }
 		}
 	}
-	def saveState(arr: Array[Array[Int]]) {
-		var str = arr.map(_.mkString(",")).mkString("\n\r")
-		val pw = new FileWriter(pictureSaveLocation + "saved.txt", new File(pictureSaveLocation + "saved.txt").exists);
-		pw.write(str)
-		pw.close
+	def difference(file1: String, file2: String) {
+		var img1: BufferedImage = null;
+		var img2: BufferedImage = null;
+		try {
+			img1 = ImageIO.read(new File(pictureSaveLocation + file1))
+			img2 = ImageIO.read(new File(pictureSaveLocation + file2))
+		} catch {
+			case _: Throwable => println()
+		}
+		var img: BufferedImage = new BufferedImage(img1.getWidth(), img1.getHeight(), BufferedImage.TYPE_INT_RGB)
+		for(i <- 0 until img.getWidth()) {
+			for(j <- 0 until img.getHeight()) {
+				img.setRGB(i, j, Math.abs(img1.getRGB(i, j) - img2.getRGB(i, j)))
+			}
+		}
+		ImageIO.write(img, "png", new File(pictureSaveLocation + "difference.png"));
+	}
+	def combine(file1: String, file2: String) {
+		var img1: BufferedImage = null;
+		var img2: BufferedImage = null;
+		try {
+			img1 = ImageIO.read(new File(pictureSaveLocation + file1))
+			img2 = ImageIO.read(new File(pictureSaveLocation + file2))
+		} catch {
+			case _: Throwable => println()
+		}
+		var img: BufferedImage = new BufferedImage(img1.getWidth(), img1.getHeight(), BufferedImage.TYPE_INT_RGB)
+		val weight = 0.5
+		for(i <- 0 until img.getWidth()) {
+			for(j <- 0 until img.getHeight()) {
+				val c1 = new Color(img1.getRGB(i, j))
+				val c2 = new Color(img2.getRGB(i, j))
+				val r = c1.getRed()*weight + c2.getRed()*(1-weight)
+				val g = c1.getGreen()*weight + c2.getGreen()*(1-weight)
+				val b = c1.getBlue()*weight + c2.getBlue()*(1-weight)
+				img.setRGB(i, j, ((r.toInt & 0x0ff) << 16) | ((g.toInt & 0x0ff) << 8) | (b.toInt & 0x0ff))
+			}
+		}
+		ImageIO.write(img, "png", new File(pictureSaveLocation + "combined.png"));
 	}
 }

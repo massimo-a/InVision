@@ -1,32 +1,46 @@
-/*
-** Author:  Massimo Angelillo
-*/
-
 package raytracing.geometry;
 import raytracing.util.Vec3;
 import scala.math.{sqrt,abs,max,min,cos,sin};
 
+/** Geometric object that can be intersected by a ray
+ *  
+ *  @author Massimo Angelillo
+ */
 trait Intersectable {
-	/* 
-	** intersectDistance returns the distance between the closest
-	** intersection point of a geometric object and a ray, and the ray origin.
-	** The intersection point must lie along the ray's path, and not be negative.
-	** A return of -1 indicates no intersection
-	*/
+	/** 
+	 *  @return the distance between the ray origin and closest point of intersection,
+	 *  -1 when an intersection does not occur
+	 *  
+	 *  @param ray the ray being checked against for intersection
+	 */
 	def intersectDistance(r: Ray): Double;
 	
-	/*
-	** intersectPoint returns the actual 3D point, within the world space,
-	** where a ray intersects an object.
-	*/
+	/** 
+	 *  @return the 3D point in world space where the ray intersects the object,
+	 *  null when no intersection occurs
+	 *  
+	 *  @param ray the ray being checked against for intersection
+	 */
 	def intersectPoint(ray: Ray): Vec3 = {
 		val d = intersectDistance(ray);
 		if(d == -1) return null;
 		return ray.equation(d);
 	}
+	
+	/** 
+	 *  @return the normal vector to the object at a specific point
+	 *  @param pt the point on the surface
+	 */
 	def getNormal(pt: Vec3): Vec3;
 }
 
+/** An infinite plane defined by a reference point and a normal vector
+ *  
+ *  @author Massimo Angelillo
+ *  @constructor create a new plane
+ *  @param normal the normal vector of the plane
+ *  @param point the reference point of the plane
+ */
 final case class Plane(normal: Vec3, point: Vec3) extends Intersectable {
 	def getNormal(pt: Vec3): Vec3 = {return normal}
 	def intersectDistance(r: Ray): Double = {
@@ -36,6 +50,13 @@ final case class Plane(normal: Vec3, point: Vec3) extends Intersectable {
 	}
 }
 
+/** A sphere defined by a center point in 3D space and a radius
+ *  
+ *  @author Massimo Angelillo
+ *  @constructor create a new sphere with a center and a radius
+ *  @param radius the radius
+ *  @param center the center of the sphere in 3D world space
+ */
 final case class Sphere(radius: Double, center: Vec3) extends Intersectable {
 	def getNormal(pt: Vec3): Vec3 = {return (pt - center).normalize}
 	def intersectDistance(r: Ray): Double = {
@@ -53,6 +74,14 @@ final case class Sphere(radius: Double, center: Vec3) extends Intersectable {
 	}
 }
 
+/** A triangle defined by three colinear vertices
+ *  
+ *  @author Massimo Angelillo
+ *  @constructor create a new triangle with the three points given
+ *  @param vertex1 the first vertex of the triangle
+ *  @param vertex2 the second vertex of the triangle
+ *  @param vertex3 the third vertex of the triangle
+ */
 final case class Triangle(vertex1: Vec3, vertex2: Vec3, vertex3: Vec3) extends Intersectable {
 	val normal = ((vertex2 - vertex1) ^ (vertex3  - vertex1)).normalize
 	def getNormal(pt: Vec3): Vec3 = {return normal}
@@ -75,6 +104,16 @@ final case class Triangle(vertex1: Vec3, vertex2: Vec3, vertex3: Vec3) extends I
 	}
 }
 
+/** A quadrilateral defined by four colinear vertices
+ *  The vertices are required to be colinear
+ *  
+ *  @author Massimo Angelillo
+ *  @constructor create a new quadrilateral with the four points given
+ *  @param vertex1 the first vertex of the quadrilateral
+ *  @param vertex2 the second vertex of the quadrilateral
+ *  @param vertex3 the third vertex of the quadrilateral
+ *  @param vertex4 the fourth vertex of the quadrilateral
+ */
 final case class Square(vertex1: Vec3, vertex2: Vec3, vertex3: Vec3, vertex4: Vec3) extends Intersectable {
 	val normal = ((vertex2 - vertex1) ^ (vertex4  - vertex1)).normalize
 	def getNormal(pt: Vec3): Vec3 = {return normal}
@@ -99,6 +138,13 @@ final case class Square(vertex1: Vec3, vertex2: Vec3, vertex3: Vec3, vertex4: Ve
 	}
 }
 
+/** A convex polygon defined by an array of vertices
+ *  The vertices are required to be colinear and the polygon must be convex
+ *  
+ *  @author Massimo Angelillo
+ *  @constructor create a new convex polygon with the array of points given
+ *  @param vertices an array of all the vertex points that make up the convex polygon
+ */
 final case class Polygon(vertices: Array[Vec3]) extends Intersectable {
 	private val firstVertex = vertices(0)
 	private val lastVertex = vertices(vertices.length - 1)

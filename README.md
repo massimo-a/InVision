@@ -19,7 +19,7 @@ You need SBT installed, but simply navigating to the root folder and using sbt r
         e. Texture mapping
 
     2. Geometric Features
-        a. Shapes bounded by volumes
+        a. Shapes not bounded by volumes
           i.   Plane
           ii.  Sphere
           iii. Triangle
@@ -37,3 +37,18 @@ You need SBT installed, but simply navigating to the root folder and using sbt r
 ## PATH TRACING ALGORITHM
 Path tracing falls under a general umbrella of rendering algorithms known as ray casting.
 It is meant to create a hyperrealistic image based on predefined geometry.
+The general format for any ray casting algorithm is:
+```
+  for all pixels in the image {
+    shoot ray from camera to pixel (i, j)
+    if it intersects any geometry {
+      do math to get pixel color
+    } else return background color
+  }
+```
+## TODO
+    1. Matrix class
+    2. Work on God rays, smoke and water rendering
+    3. Add in scala documention
+    4. Add in the WebSocket to command line
+    5. Improve WebSocket implementation
