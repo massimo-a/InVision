@@ -20,18 +20,18 @@ final case class SurfaceMarcher(
 				pt = pt + stepSize(v)
 			}
 		}
-		return -1
+		-1
 	}
 	
 	def gradient(pt: Vec3): Vec3 = {
 		val grad_x = (equation(pt)-equation(pt - Vec3(x=0.001)))*1000;
 		val grad_y = (equation(pt)-equation(pt - Vec3(y=0.001)))*1000;
 		val grad_z = (equation(pt)-equation(pt - Vec3(z=0.001)))*1000;
-		return Vec3(grad_x, grad_y, grad_z);
+		Vec3(grad_x, grad_y, grad_z);
 	}
 	
 	def getNormal(pt: Vec3): Vec3 = {
-		return gradient(pt).normalize
+		gradient(pt).normalize
 	}
 	
 	def repeat(len: Vec3, c: Double): SurfaceMarcher = {
@@ -41,7 +41,7 @@ final case class SurfaceMarcher(
 		val q = (v: Vec3) => {
 			stepSize(Vec3(v.x%len.x - len.x/2.0, v.y%len.y - len.y/2.0, v.z%len.z - len.z/2.0))
 		}
-		return SurfaceMarcher(p, q, boundingBox.stretch(c, c, c))
+		SurfaceMarcher(p, q, boundingBox.stretch(c, c, c))
 	}
 	
 	def union(surf: SurfaceMarcher): SurfaceMarcher = {
@@ -49,7 +49,7 @@ final case class SurfaceMarcher(
 			min(equation(v), surf.equation(v));
 		}
 		val bounds = boundingBox.merge(surf.boundingBox);
-		return SurfaceMarcher(func, v => min(stepSize(v), surf.stepSize(v)), bounds);
+		SurfaceMarcher(func, v => min(stepSize(v), surf.stepSize(v)), bounds);
 	}
 	
 	def smoothUnion(surf: SurfaceMarcher, k: Double): SurfaceMarcher = {
@@ -62,7 +62,7 @@ final case class SurfaceMarcher(
 			min(stepSize(v), surf.stepSize(v)) - h*h*k*0.25;
 		}
 		val bounds = boundingBox.merge(surf.boundingBox);
-		return SurfaceMarcher(func1, func2, bounds);
+		SurfaceMarcher(func1, func2, bounds);
 	}
 	
 	def intersect(surf: SurfaceMarcher): SurfaceMarcher = {
@@ -70,7 +70,7 @@ final case class SurfaceMarcher(
 			max(equation(v), surf.equation(v));
 		}
 		val bounds = boundingBox.merge(surf.boundingBox);
-		return SurfaceMarcher(func, v => max(stepSize(v), surf.stepSize(v)), bounds);
+		SurfaceMarcher(func, v => max(stepSize(v), surf.stepSize(v)), bounds);
 	}
 	
 	def smoothIntersect(surf: SurfaceMarcher, k: Double): SurfaceMarcher = {
@@ -83,7 +83,7 @@ final case class SurfaceMarcher(
 			max(stepSize(v), surf.stepSize(v)) - h*h*k*0.25;
 		}
 		val bounds = boundingBox.merge(surf.boundingBox);
-		return SurfaceMarcher(func1, func2, bounds);
+		SurfaceMarcher(func1, func2, bounds);
 	}
 	
 	def subtract(surf: SurfaceMarcher): SurfaceMarcher = {
@@ -91,19 +91,19 @@ final case class SurfaceMarcher(
 			max(equation(v), -surf.equation(v));
 		}
 		val bounds = boundingBox.merge(surf.boundingBox);
-		return SurfaceMarcher(func, v => max(stepSize(v), -surf.stepSize(v)), bounds);
+		SurfaceMarcher(func, v => max(stepSize(v), -surf.stepSize(v)), bounds);
 	}
 	
 	def translate(x: Double, y: Double, z: Double): SurfaceMarcher = {
-		return SurfaceMarcher(v => (equation(v - Vec3(x, y, z))), v => stepSize(v-Vec3(x, y, z)), boundingBox.translate(x, y, z))
+		SurfaceMarcher(v => (equation(v - Vec3(x, y, z))), v => stepSize(v-Vec3(x, y, z)), boundingBox.translate(x, y, z))
 	}
 	
 	def translate(u: Vec3): SurfaceMarcher = {
-		return SurfaceMarcher(v => equation(v - u), v => stepSize(v-u), boundingBox.translate(u.x, u.y, u.z))
+		SurfaceMarcher(v => equation(v - u), v => stepSize(v-u), boundingBox.translate(u.x, u.y, u.z))
 	}
 	
 	def distort(f: Vec3 => Double, p: Double): SurfaceMarcher = {
-		return SurfaceMarcher(v => equation(v) + f(v), v => (stepSize(v) + f(v))/p, boundingBox)
+		SurfaceMarcher(v => equation(v) + f(v), v => (stepSize(v) + f(v))/p, boundingBox)
 	}
 	
 	def rotateX(rad: Double): SurfaceMarcher = {
@@ -115,7 +115,7 @@ final case class SurfaceMarcher(
 		val func = (v: Vec3) => {
 			equation(rotatePoint(v));
 		}
-		return SurfaceMarcher(func, v => stepSize(rotatePoint(v)), boundingBox.rotateWith(rotatePoint));
+		SurfaceMarcher(func, v => stepSize(rotatePoint(v)), boundingBox.rotateWith(rotatePoint));
 	}
 	
 	def rotateY(rad: Double): SurfaceMarcher = {
@@ -127,7 +127,7 @@ final case class SurfaceMarcher(
 		val func = (v: Vec3) => {
 			equation(rotatePoint(v));
 		}
-		return SurfaceMarcher(func, v => stepSize(rotatePoint(v)), boundingBox.rotateWith(rotatePoint));
+		SurfaceMarcher(func, v => stepSize(rotatePoint(v)), boundingBox.rotateWith(rotatePoint));
 	}
 	
 	def rotateZ(rad: Double): SurfaceMarcher = {
@@ -139,21 +139,21 @@ final case class SurfaceMarcher(
 		val func = (v: Vec3) => {
 			equation(rotatePoint(v));
 		}
-		return SurfaceMarcher(func, v => stepSize(rotatePoint(v)), boundingBox.rotateWith(rotatePoint));
+		SurfaceMarcher(func, v => stepSize(rotatePoint(v)), boundingBox.rotateWith(rotatePoint));
 	}
 	
 	def rotate(rad: Vec3): SurfaceMarcher = {
-		return this.rotateX(rad.x).rotateY(rad.y).rotateZ(rad.z);
+		this.rotateX(rad.x).rotateY(rad.y).rotateZ(rad.z);
 	}
 	
 	def rotate(x: Double, y: Double, z: Double): SurfaceMarcher = {
-		return this.rotateX(x).rotateY(y).rotateZ(z);
+		this.rotateX(x).rotateY(y).rotateZ(z);
 	}
 }
 
 object SurfaceMarcher {
 	def Sphere(r: Double): SurfaceMarcher = {
-		return SurfaceMarcher(
+		SurfaceMarcher(
 			(v: Vec3) => {v.magnitude - r},
 			(v: Vec3) => {v.magnitude - r},
 			Bounded(Vec3(-r-2, -r-2, -r-2), 2*r+4, 2*r+4, 2*r+4)
@@ -161,7 +161,7 @@ object SurfaceMarcher {
 	}
 	
 	def Box(width: Double, height: Double, depth: Double): SurfaceMarcher = {
-		return SurfaceMarcher(
+		SurfaceMarcher(
 			(v: Vec3) => {
 				val d = (v).map(x => abs(x)) - Vec3(width/2,height/2,depth/2);
 				val a = d.map(x => max(x, 0.0)).magnitude;
@@ -177,7 +177,7 @@ object SurfaceMarcher {
 	}
 	
 	def Box(b: Vec3): SurfaceMarcher = {
-		return Box(b.x,b.y,b.z)
+		Box(b.x,b.y,b.z)
 	}
 	
 	def Cylinder(r: Double, h: Double): SurfaceMarcher = {
@@ -185,7 +185,7 @@ object SurfaceMarcher {
 			val d = Vec3(Vec3(p.x, p.z).magnitude - r, abs(p.y) - h/2);
 			min(max(d.x,d.y),0.0) + d.map(x => max(x, 0)).magnitude
 		}
-		return SurfaceMarcher(
+		SurfaceMarcher(
 			func,
 			func,
 			Bounded(Vec3(-r-5,-h/2-5,-r-5), 2*r+10, h+10, 2*r+10)
@@ -197,7 +197,7 @@ object SurfaceMarcher {
 			val d = Vec3(Vec3(p.x, p.z).magnitude - r1, p.y);
 			d.magnitude - r2;
 		}
-		return SurfaceMarcher(
+		SurfaceMarcher(
 			func,
 			func,
 			Bounded(Vec3(-r1-2*r2,-r2,-r1-2*r2), 2*(r1+2*r2), r2*2, 2*(r1+2*r2))

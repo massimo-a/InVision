@@ -1,0 +1,33 @@
+[debug] 
+[debug] Initial source changes: 
+[debug] 	removed:Set()
+[debug] 	added: Set()
+[debug] 	modified: Set(C:\Users\18606\Documents\GitHub\TRAC3R\src\main\scala\scene\Scene.scala, C:\Users\18606\Documents\GitHub\TRAC3R\src\main\scala\util\Commands.scala)
+[debug] Invalidated products: Set()
+[debug] External API changes: API Changes: Set()
+[debug] Modified binary dependencies: Set()
+[debug] Initial directly invalidated classes: Set(raytracing.util.Commands, raytracing.scene.SceneObject, raytracing.scene.Renderable, raytracing.scene.Scene, raytracing.scene.NilRenderable, raytracing.scene.Light, raytracing.scene.NilLight, raytracing.util.Commands.SceneSettings, raytracing.scene.BallLight)
+[debug] 
+[debug] Sources indirectly invalidated by:
+[debug] 	product: Set()
+[debug] 	binary dep: Set()
+[debug] 	external source: Set()
+[debug] All initially invalidated classes: Set(raytracing.util.Commands, raytracing.scene.SceneObject, raytracing.scene.Renderable, raytracing.scene.Scene, raytracing.scene.NilRenderable, raytracing.scene.Light, raytracing.scene.NilLight, raytracing.util.Commands.SceneSettings, raytracing.scene.BallLight)
+[debug] All initially invalidated sources:Set(C:\Users\18606\Documents\GitHub\TRAC3R\src\main\scala\scene\Scene.scala, C:\Users\18606\Documents\GitHub\TRAC3R\src\main\scala\util\Commands.scala)
+[info] Compiling 2 Scala sources to C:\Users\18606\Documents\GitHub\TRAC3R\target\scala-2.12\classes ...
+[debug] Getting org.scala-sbt:compiler-bridge_2.12:1.2.5:compile for Scala 2.12.4
+[debug] Getting org.scala-sbt:compiler-bridge_2.12:1.2.5:compile for Scala 2.12.4
+[debug] [zinc] Running cached compiler 76276429 for Scala compiler version 2.12.4
+[debug] [zinc] The Scala compiler is invoked with:
+[debug] 	-bootclasspath
+[debug] 	C:\Users\18606\.ivy2\cache\org.scala-lang\scala-library\jars\scala-library-2.12.4.jar
+[debug] 	-classpath
+[debug] 	C:\Users\18606\Documents\GitHub\TRAC3R\target\scala-2.12\classes
+[debug] Scala compilation took 5.9014615 s
+[info] Done compiling.
+[debug] New invalidations:
+[debug] 	Set()
+[debug] Initial set of included nodes: Set()
+[debug] Previously invalidated, but (transitively) depend on new invalidations:
+[debug] 	Set()
+[debug] All newly invalidated classes after taking into account (previously) recompiled classes:Set()

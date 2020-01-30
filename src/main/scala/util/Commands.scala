@@ -13,7 +13,7 @@ object Commands {
 		var width: Int = 1280
 		var height: Int = 960
 		override def toString(): String = {
-			return s"""
+			s"""
 				|Settings: {
 				|    Samples Per Pixel  : ${spp*spp}
 				|    Screen Width       : $width
@@ -24,19 +24,7 @@ object Commands {
 		}
 	}
 	private def test(): Scene = {
-		
-		val cyl = SurfaceMarcher.Cylinder(100, 600)
-			.subtract(SurfaceMarcher.Sphere(80).translate(0, -200, -100))
-			.subtract(SurfaceMarcher.Sphere(80).translate(0, 0, -100))
-			.subtract(SurfaceMarcher.Sphere(80).translate(0, 200, -100))
-			.translate(200, 300, 1600)
-		
-		val hm = Array.ofDim[Double](1000, 1000)
-		val t = Terrain(hm, 200)
-		
-		var scene = Scene(spp=SceneSettings.spp, width=SceneSettings.width, height=SceneSettings.height)
-		
-		scene++(
+		Scene(spp=SceneSettings.spp, width=SceneSettings.width, height=SceneSettings.height)++(
 			BallLight(r=20,x=640,y=500,z=400)
 		)++(
 			Plane(Vec3(0,0,-1),Vec3(0,0,2000)),
@@ -59,21 +47,13 @@ object Commands {
 			Diffuse(0.25),
 			Vec3(1, 1, 0)
 		)++(
-			SurfaceMarcher.Sphere(100).translate(1160, 300, 800),
-			Transparent(1.0, 0.0),
-			Vec3(1,0,0)
+			SurfaceMarcher.Box(1280,200,1200).translate(640, 100, 800),
+			Diffuse(1.0),
+			Vec3(1,1,1)
 		)++(
-			SurfaceMarcher.Sphere(100).translate(640, 300, 800),
-			Transparent(1.0, 0.0),
-			Vec3(0,1,0)
-		)++(
-			SurfaceMarcher.Sphere(100).translate(120, 300, 800),
-			Transparent(1.0, 0.0),
-			Vec3(1,1,0)
-		)++(
-			cyl,
-			Diffuse(0.0),
-			Vec3(0.75, 0.75, 0.75)
+			SurfaceMarcher.Sphere(100).translate(200, 600, 300),
+			Diffuse(20.0),
+			Vec3(0,0,0)
 		)
 	}
 	private val HELP = """
@@ -90,14 +70,14 @@ object Commands {
 		ImageHandler.saveData(name, scene, timer);
 	}
 	private def getIntInput(default: Int): Int = {
-		return try {
+		try {
 			scala.io.StdIn.readInt
 		} catch {
 			case e: Throwable => default
 		}
 	}
 	private def getStringInput(default: String): String = {
-		return try {
+		try {
 			scala.io.StdIn.readLine
 		} catch {
 			case e: Throwable => default
@@ -126,7 +106,7 @@ object Commands {
 			case _ => println("invalid command")
 		}
 		val nextCommand = scala.io.StdIn.readLine;
-		return evaluate(nextCommand);
+		evaluate(nextCommand);
 	}
 	def evaluate(): Boolean = {
 		println("[0] Set Scene Settings")
@@ -134,6 +114,6 @@ object Commands {
 		println("[q] Quit")
 		println("[h] Help")
 		val command = scala.io.StdIn.readLine;
-		return evaluate(command);
+		evaluate(command);
 	}
 }
