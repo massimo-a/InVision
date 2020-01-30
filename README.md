@@ -1,4 +1,4 @@
-# TRAC3R
+# InVision
 A rendering engine that uses a path tracing algorithm to generate 3D images.
 Shapes can be defined by signed distance functions (SDF), implicit functions, or explicitly as a case class.
 
