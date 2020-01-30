@@ -46,9 +46,3 @@ The general format for any ray casting algorithm is:
     } else return background color
   }
 ```
-## TODO
-    1. Matrix class
-    2. Work on God rays, smoke and water rendering
-    3. Add in scala documention
-    4. Add in the WebSocket to command line
-    5. Improve WebSocket implementation
