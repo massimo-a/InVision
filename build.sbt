@@ -1,4 +1,4 @@
-name := "Trac3r"
+name := "InVision"
 
 version := "0.1"
 

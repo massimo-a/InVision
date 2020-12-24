@@ -31,7 +31,7 @@ final case class SurfaceMarcher(
 	}
 	
 	def getNormal(pt: Vec3): Vec3 = {
-		gradient(pt).normalize
+		gradient(pt).normalize()
 	}
 	
 	def repeat(len: Vec3, c: Double): SurfaceMarcher = {
@@ -164,12 +164,12 @@ object SurfaceMarcher {
 		SurfaceMarcher(
 			(v: Vec3) => {
 				val d = (v).map(x => abs(x)) - Vec3(width/2,height/2,depth/2);
-				val a = d.map(x => max(x, 0.0)).magnitude;
+				val a = d.map(x => max(x, 0.0)).magnitude();
 				a + min(max(d.x, max(d.y, d.z)), 0)
 			},
 			(v: Vec3) => {
 				val d = (v).map(x => abs(x)) - Vec3(width/2,height/2,depth/2);
-				val a = d.map(x => max(x, 0.0)).magnitude;
+				val a = d.map(x => max(x, 0.0)).magnitude();
 				a + min(max(d.x, max(d.y, d.z)), 0)
 			},
 			Bounded(Vec3(-width/2,-height/2,-depth/2), width, height, depth)

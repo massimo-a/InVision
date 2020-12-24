@@ -1,6 +1,7 @@
-package raytracing.geometry;
-import raytracing.util.Vec3;
-import scala.math.{sqrt,abs,max,min,cos,sin};
+package raytracing.geometry
+
+import raytracing.util.Vec3
+import scala.math.{sqrt,abs,max,min,cos,sin}
 
 /** Geometric object that can be intersected by a ray
  *  
@@ -13,25 +14,24 @@ trait Intersectable {
 	 *  
 	 *  @param ray the ray being checked against for intersection
 	 */
-	def intersectDistance(ray: Ray): Double;
-	
+	def intersectDistance(ray: Ray): Double
+
 	/** 
 	 *  @return the 3D point in world space where the ray intersects the object,
 	 *  null when no intersection occurs
-	 *  
 	 *  @param ray the ray being checked against for intersection
 	 */
 	def intersectPoint(ray: Ray): Vec3 = {
-		val d = intersectDistance(ray);
-		if(d == -1) return null;
-		ray.equation(d);
+		val d = intersectDistance(ray)
+		if (d == -1) return null
+		ray.equation(d)
 	}
-	
+
 	/** 
 	 *  @return the normal vector to the object at a specific point
 	 *  @param pt the point on the surface
 	 */
-	def getNormal(pt: Vec3): Vec3;
+	def getNormal(pt: Vec3): Vec3
 }
 
 /** An infinite plane defined by a reference point and a normal vector
@@ -42,7 +42,7 @@ trait Intersectable {
  *  @param point the reference point of the plane
  */
 final case class Plane(normal: Vec3, point: Vec3) extends Intersectable {
-	def getNormal(pt: Vec3): Vec3 = {normal}
+	def getNormal(pt: Vec3): Vec3 = normal
 	def intersectDistance(r: Ray): Double = {
 		val check = r.direction*normal
 		if(abs(check) < 1E-6) return -1
@@ -58,12 +58,12 @@ final case class Plane(normal: Vec3, point: Vec3) extends Intersectable {
  *  @param center the center of the sphere in 3D world space
  */
 final case class Sphere(radius: Double, center: Vec3) extends Intersectable {
-	def getNormal(pt: Vec3): Vec3 = {(pt - center).normalize}
+	def getNormal(pt: Vec3): Vec3 = {(pt - center).normalize()}
 	def intersectDistance(r: Ray): Double = {
 		val b = 2*(r.direction*(r.origin - center))
 		val c = (r.origin - center)*(r.origin - center) - radius*radius
 		val disc = b*b - 4*c
-		if(disc < 0) return -1;
+		if(disc < 0) return -1
 		val t1 = -b/2 - sqrt(disc)
 		val t2 = -b/2 + sqrt(disc)
 		if(t1 < 0 && t2 > 0) {
@@ -83,13 +83,13 @@ final case class Sphere(radius: Double, center: Vec3) extends Intersectable {
  *  @param vertex3 the third vertex of the triangle
  */
 final case class Triangle(vertex1: Vec3, vertex2: Vec3, vertex3: Vec3) extends Intersectable {
-	val normal = ((vertex2 - vertex1) ^ (vertex3  - vertex1)).normalize
-	def getNormal(pt: Vec3): Vec3 = {normal}
+	val normal: Vec3 = ((vertex2 - vertex1) ^ (vertex3 - vertex1)).normalize()
+	def getNormal(pt: Vec3): Vec3 = normal
 	def intersectDistance(r: Ray): Double = {
 		val check = r.direction*normal
 		if(abs(check) < 1E-6) return -1
 		val hitPtOnRay = ((vertex1 - r.origin)*normal)/check
-		val hitPt3D = (r.direction*hitPtOnRay + r.origin)
+		val hitPt3D = r.direction*hitPtOnRay + r.origin
 		val a = (vertex1 - hitPt3D) ^ (vertex2 - hitPt3D)
 		val b = (vertex2 - hitPt3D) ^ (vertex3 - hitPt3D)
 		val c = (vertex3 - hitPt3D) ^ (vertex1 - hitPt3D)
@@ -115,13 +115,13 @@ final case class Triangle(vertex1: Vec3, vertex2: Vec3, vertex3: Vec3) extends I
  *  @param vertex4 the fourth vertex of the quadrilateral
  */
 final case class Square(vertex1: Vec3, vertex2: Vec3, vertex3: Vec3, vertex4: Vec3) extends Intersectable {
-	val normal = ((vertex2 - vertex1) ^ (vertex4  - vertex1)).normalize
-	def getNormal(pt: Vec3): Vec3 = {normal}
+	val normal: Vec3 = ((vertex2 - vertex1) ^ (vertex4 - vertex1)).normalize()
+	def getNormal(pt: Vec3): Vec3 = normal
 	def intersectDistance(r: Ray): Double = {
 		val check = r.direction*normal
 		if(abs(check) < 1E-6) return -1
 		val hitPtOnRay = ((vertex1 - r.origin)*normal)/check
-		val hitPt3D = (r.direction*hitPtOnRay + r.origin)
+		val hitPt3D = r.direction*hitPtOnRay + r.origin
 		val a = (vertex1 - hitPt3D) ^ (vertex2 - hitPt3D)
 		val b = (vertex2 - hitPt3D) ^ (vertex3 - hitPt3D)
 		val c = (vertex3 - hitPt3D) ^ (vertex4 - hitPt3D)
@@ -148,19 +148,19 @@ final case class Square(vertex1: Vec3, vertex2: Vec3, vertex3: Vec3, vertex4: Ve
 final case class Polygon(vertices: Array[Vec3]) extends Intersectable {
 	private val firstVertex = vertices(0)
 	private val lastVertex = vertices(vertices.length - 1)
-	val normal = ((vertices(1) - firstVertex) ^ (lastVertex  - firstVertex)).normalize
-	def getNormal(pt: Vec3): Vec3 = {normal}
+	val normal: Vec3 = ((vertices(1) - firstVertex) ^ (lastVertex - firstVertex)).normalize()
+	def getNormal(pt: Vec3): Vec3 = normal
 	def intersectDistance(r: Ray): Double = {
 		val check = r.direction*normal
 		if(abs(check) < 1E-6) return -1
 		val hitPtOnRay = ((firstVertex - r.origin)*normal)/check
-		val hitPt3D = (r.direction*hitPtOnRay + r.origin)
+		val hitPt3D = r.direction*hitPtOnRay + r.origin
 		
 		for(i <- 0 until vertices.length - 2) {
 			val a = (vertices(i) - hitPt3D) ^ (vertices(i+1) - hitPt3D)
 			val b = (vertices(i+1) - hitPt3D) ^ (vertices(i+2) - hitPt3D)
 			if(a != b) {
-				return -1;
+				return -1
 			}
 		}
 		hitPtOnRay

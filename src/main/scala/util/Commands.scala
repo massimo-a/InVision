@@ -12,7 +12,7 @@ object Commands {
 		var spp: Int = 1
 		var width: Int = 1280
 		var height: Int = 960
-		override def toString(): String = {
+		override def toString: String = {
 			s"""
 				|Settings: {
 				|    Samples Per Pixel  : ${spp*spp}
@@ -61,13 +61,13 @@ object Commands {
 		|               In progress
 		|------------- END HELP MENU -------------
 		""".stripMargin
-	val render = (name: String, scene: Scene) => {
+	val render: (String, Scene) => Unit = (name: String, scene: Scene) => {
 		val timer = new Timer();
-		timer.start;
-		val arr: ParArray[ParArray[Int]] = scene.render();
-		timer.end;
-		ImageHandler.saveImage(scene, arr, name);
-		ImageHandler.saveData(name, scene, timer);
+		timer.start()
+		val arr: ParArray[ParArray[Int]] = scene.render()
+		timer.end()
+		ImageHandler.saveImage(scene, arr, name)
+		ImageHandler.saveData(name, scene, timer)
 	}
 	private def getIntInput(default: Int): Int = {
 		try {
@@ -80,28 +80,25 @@ object Commands {
 		try {
 			scala.io.StdIn.readLine
 		} catch {
-			case e: Throwable => default
+			case _: Throwable => default
 		}
 	}
 	@tailrec private def evaluate(command: String): Boolean = {
 		command match {
 			case "q" => return false;
-			case "0" => {
+			case "0" =>
 				println("Set samples per pixel")
 				SceneSettings.spp = getIntInput(SceneSettings.spp)
 				println("Set screen width")
 				SceneSettings.width = getIntInput(SceneSettings.width)
 				println("Set screen height")
 				SceneSettings.height = getIntInput(SceneSettings.height)
-			}
-			case "c" => {
+			case "c" =>
 				ImageHandler.combine(getStringInput(""), getStringInput(""))
-			}
-			case "1" => {
+			case "1" =>
 				println("Begun rendering")
 				println(SceneSettings)
 				render("test" + SceneSettings.spp, test())
-			}
 			case "h" => println(HELP)
 			case _ => println("invalid command")
 		}

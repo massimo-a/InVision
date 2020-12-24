@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Trac3r.iml" filepath="$PROJECT_DIR$/.idea/modules/Trac3r.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Trac3r-build.iml" filepath="$PROJECT_DIR$/.idea/modules/Trac3r-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/InVision.iml" filepath="$PROJECT_DIR$/.idea/modules/InVision.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/InVision-build.iml" filepath="$PROJECT_DIR$/.idea/modules/InVision-build.iml" />
     </modules>
   </component>
 </project>

@@ -3,8 +3,9 @@
 */
 
 package raytracing.geometry;
-import raytracing.util.Vec3;
-import scala.math.{abs,min,max}
+import raytracing.util.Vec3
+
+import scala.math.{max, min}
 
 trait Bounded {
 	def hit(r: Ray): Boolean
@@ -35,7 +36,7 @@ object Bounded {
 		
 		def hit(r: Ray): Boolean = {
 			val t = intersections(r);
-			(t._2 >= t._1 || (t._2 > 0 ^ t._1 > 0))
+			t._2 >= t._1 || (t._2 > 0 ^ t._1 > 0)
 		}
 		
 		def merge(b: Bounded): Bounded = {
@@ -46,7 +47,7 @@ object Bounded {
 					val diff = _max - _min
 					BoundingBox(_min, Vec3(diff.x, 0, 0), Vec3(0, diff.y, 0), Vec3(0, 0, diff.z))
 				}
-				case n: Bounded => NoBounds
+				case _: Bounded => NoBounds
 			}
 		}
 		
@@ -71,12 +72,12 @@ object Bounded {
 		}
 	}
 	def apply(p: Vec3, width: Double, height: Double, depth: Double): Bounded = {
-		return BoundingBox(p, Vec3(width,0,0),Vec3(0,height,0),Vec3(0,0,depth))
+		BoundingBox(p, Vec3(width,0,0),Vec3(0,height,0),Vec3(0,0,depth))
 	}
 	def apply(min: Vec3, max: Vec3): Bounded = {
-		return BoundingBox(min, Vec3(max.x-min.x,0,0),Vec3(0,max.y-min.y,0),Vec3(0,0,max.z-min.z))
+		BoundingBox(min, Vec3(max.x-min.x,0,0),Vec3(0,max.y-min.y,0),Vec3(0,0,max.z-min.z))
 	}
 	def apply(): Bounded = {
-		return NoBounds
+		NoBounds
 	}
 }

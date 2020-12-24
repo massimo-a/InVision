@@ -15,26 +15,26 @@ final case class Terrain(
 	height: Double,
 	position: Vec3
 ) extends Intersectable {
-	val width = heightmap.length;
-	val depth = heightmap(0).length
-	val boundingBox = Bounded(position, width, height, depth)
+	val width: Int = heightmap.length;
+	val depth: Int = heightmap(0).length
+	val boundingBox: Bounded = Bounded(position, width, height, depth)
 
-	val equation = (vec: Vec3) => {
+	val equation: Vec3 => Double = (vec: Vec3) => {
 		val v = vec - position
-		val i = ((v.x.toInt%width + width)%width).toInt
-		val j = ((v.z.toInt%depth + depth)%depth).toInt
+		val i = (v.x.toInt%width + width)%width
+		val j = (v.z.toInt%depth + depth)%depth
 		v.y - heightmap(i)(j)*height
 	}
 	
 	def gradient(pt: Vec3): Vec3 = {
-		val grad_x = (equation(pt)-equation(pt - Vec3(x=1)));
-		val grad_y = (equation(pt)-equation(pt - Vec3(y=1)));
-		val grad_z = (equation(pt)-equation(pt - Vec3(z=1)));
-		return Vec3(grad_x, grad_y, grad_z);
+		val grad_x = equation(pt)-equation(pt - Vec3(x=1));
+		val grad_y = equation(pt)-equation(pt - Vec3(y=1));
+		val grad_z = equation(pt)-equation(pt - Vec3(z=1));
+		Vec3(grad_x, grad_y, grad_z);
 	}
 	
 	def getNormal(pt: Vec3): Vec3 = {
-		return gradient(pt).normalize;
+		gradient(pt).normalize;
 	}
 	
 	def intersectDistance(r: Ray): Double = {
@@ -47,6 +47,6 @@ final case class Terrain(
 				pt = pt + 2
 			}
 		}
-		return -1
+		-1
 	}
 }

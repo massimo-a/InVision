@@ -24,24 +24,24 @@ class Timer() {
 		endtime = 0;
 	}
 	
-	def getRunTime(): Long = {
-		return (endtime - starttime)/1000.0.toLong;
+	def getRunTime: Long = {
+		(endtime - starttime)/1000.0.toLong;
 	}
-	def getTimeSinceStart(): Long = {
-		return System.currentTimeMillis - starttime;
+	def getTimeSinceStart: Long = {
+		System.currentTimeMillis - starttime;
 	}
-	def getTimeSinceEnd(): Long = {
-		return System.currentTimeMillis - endtime;
+	def getTimeSinceEnd: Long = {
+		System.currentTimeMillis - endtime;
 	}
 	
 	def formatTimeSinceStart(): String = {
-		return formatTime(getTimeSinceStart);
+		formatTime(getTimeSinceStart);
 	}
 	def formatTimeSinceEnd(): String = {
-		return formatTime(getTimeSinceEnd);
+		formatTime(getTimeSinceEnd);
 	}
 	def formatRunTime(): String = {
-		return formatTime(endtime - starttime);
+		formatTime(endtime - starttime);
 	}
 	
 	def formatTime(s: Long): String = {
@@ -53,9 +53,9 @@ class Timer() {
 		val stringMin = if(min >= 10) min.toString else "0" + min.toString;
 		val stringSec = if(sec >= 10) sec.toString else "0" + sec.toString;
 		val stringMilli = if(msec >= 100) msec.toString else if(msec >= 10) "0" + msec.toString else "00" + msec.toString;
-		return stringHour + " : " + stringMin + " : " +  stringSec + "." + stringMilli;
+		stringHour + " : " + stringMin + " : " +  stringSec + "." + stringMilli;
 	}
 	def formatTime(s: Double): String = {
-		return formatTime(s.toLong);
+		formatTime(s.toLong);
 	}
 }

@@ -1,9 +1,10 @@
 package raytracing.scene
-import raytracing.{geometry,util},geometry.{Intersectable,Ray,Sphere},util.{Vec3}
-import scala.math.{abs,pow,min,max,random,Pi,floor,tan}
+import raytracing.geometry.{Intersectable, Ray, Sphere}
+import raytracing.util.Vec3
+
 import scala.collection.immutable.List
-import annotation.tailrec
 import scala.collection.parallel.mutable.ParArray
+import scala.math.{Pi, max, random, tan}
 
 /** 
  *  @author Massimo Angelillo
@@ -14,7 +15,7 @@ trait Renderable {
 	def color: Vec3 => Vec3
 }
 
-final case object NilRenderable extends Renderable {
+case object NilRenderable extends Renderable {
 	def shape: Intersectable = null
 	def material: Material = null
 	def color: Vec3 => Vec3 = null
@@ -22,7 +23,7 @@ final case object NilRenderable extends Renderable {
 
 final case class SceneObject(shape: Intersectable, material: Material, color: Vec3=>Vec3) extends Renderable
 
-final case object SceneObject {
+case object SceneObject {
 	def apply(sh: Intersectable, mat: Material, col: Vec3): SceneObject = {
 		SceneObject(sh, mat, (_: Vec3) => col)
 	}
@@ -38,15 +39,15 @@ trait Light {
 }
 
 final case class BallLight(r: Double, x: Double, y: Double, z: Double) extends Light {
-	def position = Vec3(x, y, z)
-	def shape = Sphere(r, position)
-	def color = Vec3(1, 1, 1)
+	def position: Vec3 = Vec3(x, y, z)
+	def shape: Intersectable = Sphere(r, position)
+	def color: Vec3 = Vec3(1, 1, 1)
 }
 
-final case object NilLight extends Light {
-	def position = Vec3()
-	def shape = null
-	def color = Vec3(1, 1, 1)
+case object NilLight extends Light {
+	def position: Vec3 = Vec3()
+	def shape: Intersectable = null
+	def color: Vec3 = Vec3(1, 1, 1)
 	override def intersectDistance(ray: Ray): Double = {
 		-1.0;
 	}
@@ -64,9 +65,9 @@ final case class Scene(
 	fieldOfView: Double=Pi/8,
 	spp: Int=1
 ) {
-	val forward = (up^right).normalize
-	val cameraPosition = position + right*(width/2) + up*(height/2) - forward*(width/(2*tan(fieldOfView)));
-	val toneMap = (x: Double) => {
+	val forward: Vec3 = (up ^ right).normalize()
+	val cameraPosition: Vec3 = position + right*(width/2) + up*(height/2) - forward*(width/(2*tan(fieldOfView)));
+	val toneMap: Double => Double = (x: Double) => {
 		x/(x+1)
 	}
 	def ++(i: Intersectable, m: Material, col: Vec3=>Vec3): Scene = {
@@ -146,7 +147,7 @@ final case class Scene(
 	}
 	private def inLineOfSight(pt: Vec3, l: Light): Boolean = {
 		val lightP = l.position + Vec3(random*2-1, random*2-1, random*2-1)*getLightSize(l)
-		val lightDir = (l.position - pt).normalize
+		val lightDir = (l.position - pt).normalize()
 		val ray = Ray(pt + lightDir*2, lightP)
 		val objHit = getClosestRenderable(ray)
 		if(objHit._1 == NilRenderable || ~(lightP - pt) < ~(objHit._2 - pt)) return true
@@ -164,12 +165,13 @@ final case class Scene(
 		val newRay = Ray(intersectPt + scatter, intersectPt + scatter*3)
 		val brdf = objHit.material.brdf(-ray.direction, newRay.direction, objHit.shape.getNormal(intersectPt))
 		if(random > brdf*0.9) return col
-		val lightDir = (lights(0).position - intersectPt).normalize
+		val lightDir = (lights.head.position - intersectPt).normalize()
 		val lightRay = Ray(intersectPt + lightDir, intersectPt + lightDir*3)
 		val incoming = trace(newRay)
 		(col + incoming*brdf).map(x => toneMap(x))
 	}
 
+	@scala.annotation.tailrec
 	def sample(shape: Intersectable, ray: Ray): Ray = {
 		val tmax = shape.intersectDistance(ray)
 		val s = -0.01*Math.log(random)
