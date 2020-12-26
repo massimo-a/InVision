@@ -5,7 +5,7 @@
  * solving some algorithm issues, naming it and testing it out!
  */
 
-import raytracing.util._;
+import invision.util._
 
 object Program {
 	//metadata
@@ -19,7 +19,7 @@ object Program {
 	}
 	
 	def main(args: Array[String]): Unit = {
-		p(programName + " booted up, " + version);
+		p(programName + " booted up, " + version)
 		Commands.evaluate()
 		p("=== GOODBYE! ===")
 	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="sbt 1" modules="Trac3r,trac3r_2860" />
+    <profile name="sbt 1" modules="InVision,Trac3r,trac3r_2860" />
   </component>
 </project>

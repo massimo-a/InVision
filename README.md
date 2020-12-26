@@ -36,12 +36,12 @@ You need SBT installed, but simply navigating to the root folder and using sbt r
 
 ## PATH TRACING ALGORITHM
 Path tracing falls under a general umbrella of rendering algorithms known as ray casting.
-It is meant to create a hyperrealistic image based on predefined geometry.
+It is meant to create a hyperrealistic image based on predefined invision.geometry.
 The general format for any ray casting algorithm is:
 ```
   for all pixels in the image {
     shoot ray from camera to pixel (i, j)
-    if it intersects any geometry {
+    if it intersects any invision.geometry {
       do math to get pixel color
     } else return background color
   }
