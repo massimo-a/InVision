@@ -1,6 +1,7 @@
 package invision.scene
 
-import invision.geometry.{Intersectable, Ray}
+import invision.geometry.Ray
+import invision.geometry.intersectable.Intersectable
 import invision.util.Vec3
 import invision.scene.material.Material
 import invision.scene.renderable.{BallLight, Light, NilLight, NilRenderable, Renderable, SceneObject}

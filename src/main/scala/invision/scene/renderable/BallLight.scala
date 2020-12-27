@@ -1,6 +1,7 @@
 package invision.scene.renderable
 
-import invision.geometry.{Intersectable, Sphere}
+import invision.geometry.Sphere
+import invision.geometry.intersectable.{Intersectable, Sphere}
 import invision.util.Vec3
 
 final case class BallLight(r: Double, x: Double, y: Double, z: Double) extends Light {

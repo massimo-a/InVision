@@ -1,6 +1,7 @@
 package invision.scene.renderable
 
-import invision.geometry.{Intersectable, Ray}
+import invision.geometry.Ray
+import invision.geometry.intersectable.Intersectable
 import invision.util.Vec3
 
 case object NilLight extends Light {

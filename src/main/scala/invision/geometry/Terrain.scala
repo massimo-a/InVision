@@ -1,6 +1,8 @@
 package invision.geometry
 
+import invision.geometry.intersectable.Intersectable
 import invision.util.Vec3
+
 import scala.math.abs
 
 /** Terrain

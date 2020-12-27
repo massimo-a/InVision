@@ -320,3 +320,17 @@ run time - 00 : 00 : 06.238
 anti-aliasing - 1
 screen size - (960, 1280)
 primary rays shot per second - 204799.99999996586
+
+date and time - Fri Dec 25 23:54:27 EST 2020
+file name - test1
+run time - 00 : 00 : 04.437
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 307199.99999992317
+
+date and time - Fri Dec 25 23:56:22 EST 2020
+file name - test5
+run time - 00 : 01 : 18.106
+anti-aliasing - 5
+screen size - (960, 1280)
+primary rays shot per second - 393846.1538461488

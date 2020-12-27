@@ -1,6 +1,7 @@
 package invision.util
 
 import invision.geometry._
+import invision.geometry.intersectable.Plane
 import invision.scene._
 import invision.scene.material.{Diffuse, Gloss}
 import invision.scene.renderable.BallLight
