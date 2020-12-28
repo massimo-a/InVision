@@ -12,7 +12,10 @@ case class Parser
  values: Map[String, Option] = Map(),
  errors: List[Error] = List()) {
   def withParsed[T](f: Option => T): List[T] = {
-    values.filter(x => x._2.values.nonEmpty).map(x => f(x._2)).toList
+    values.filter(x => x._2.values match {
+      case Values(_) => true
+      case NilValue => false
+    }).map(x => f(x._2)).toList
   }
 
   def parse(args: List[String]): Parser = {
@@ -44,7 +47,7 @@ case class Parser
           val errs = errors.prepended(Error(s"${args.head} used multiple times", opt))
           parse(args.drop(1 + opt.numberOfArguments), required, errs, accu)
         } else {
-          val accu2 = accu + (opt.name -> opt.copy(values = args.slice(1, opt.numberOfArguments + 1)))
+          val accu2 = accu + (opt.name -> opt.copy(values = Values(args.slice(1, opt.numberOfArguments + 1))))
           val r = if(opt.isRequired) required.prepended(opt) else required
           parse(args.drop(1 + opt.numberOfArguments), r, errors, accu2)
         }

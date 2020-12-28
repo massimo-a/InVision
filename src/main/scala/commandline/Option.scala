@@ -1,5 +1,11 @@
 package commandline
 
+trait CommandLineValues
+
+case object NilValue extends CommandLineValues
+
+case class Values(values: List[String] = List()) extends CommandLineValues
+
 /**
  * Command line option.
  * @author Massimo Angelillo
@@ -14,6 +20,6 @@ case class Option
 (name: String,
  shortName: String,
  helpText: String,
- values: List[String] = List(),
+ values: CommandLineValues = NilValue,
  numberOfArguments: Int = 1,
  isRequired: Boolean = false)

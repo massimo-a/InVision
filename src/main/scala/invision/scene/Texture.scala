@@ -1,7 +1,3 @@
-/*
-** Author:  Massimo Angelillo
-*/
-
 package invision.scene
 
 import java.awt.image.BufferedImage
@@ -13,6 +9,10 @@ import javax.imageio.ImageIO
 
 import scala.math.{Pi, asin, atan2}
 
+/**
+ * Texture for objects.
+ * @param filename filename where the texture is located
+ */
 case class Texture(filename: String) {
 	val picture: BufferedImage = ImageIO.read(new File(filename))
 

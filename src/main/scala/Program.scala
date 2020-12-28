@@ -9,17 +9,33 @@ import java.awt.image.BufferedImage
 import java.io.{File, FileNotFoundException, FileWriter}
 import java.util.Calendar
 
-import commandline.{Option, Parser}
+import commandline.{NilValue, Option, Parser, Values}
 import invision.geometry.intersectable.{Plane, SurfaceMarcher}
 import invision.scene.material.{Diffuse, Gloss}
 import invision.scene.renderable.BallLight
-import invision.scene.{Camera, FastTracer, RayTracer, World}
+import invision.scene.{Camera, FastTracer, PathTracer, World}
 import invision.util._
 import javax.imageio.ImageIO
 
-import scala.math.tan
-
 object Program {
+	private val version = "v0.0.1"
+	private val programName = "InVision"
+
+	private var width = 1280
+	private var height = 960
+	private var spp = 1
+	private var isFast = false
+	private val pictureSaveLocation = "pictures/test pictures/"
+
+	private val parser = Parser(List(
+		Option(name = "--width", shortName = "-w", helpText = "Width of the image to be generated and also the viewport of the camera"),
+		Option(name = "--height", shortName = "-e", helpText = "Height of the image to be generated and also the viewport of the camera"),
+		Option(name = "--spp", shortName = "-s", helpText = "The samples per pixel (squared) to be taken. For example, an spp of 2 means 4 rays will be traced per pixel"),
+		Option(name = "--help", shortName = "-h", helpText = "Print this help screen", numberOfArguments = 0),
+		Option(name = "--fast", shortName = "-f", helpText = "Flag for fast rendering. Fast rendering ignores reflections, refractions and soft shadows"),
+		Option(name = "--version", shortName = "-v", helpText = "Prints version information", numberOfArguments = 0)
+	))
+
 	private def testWorld(): World = {
 		World()++
 			BallLight(r=20,x=640,y=450,z=400)++(
@@ -52,8 +68,6 @@ object Program {
 			Vec3()
 		)
 	}
-
-	private val pictureSaveLocation = "pictures/test pictures/"
 
 	private def logData(name: String, width: Int, height: Int, spp: Int, t: Double) {
 		try {
@@ -90,50 +104,34 @@ object Program {
 		}
 	}
 
-	//metadata
-	private val version = "v0.0.1"
-	private val programName = "InVision"
-
-	private var width = 1280
-	private var height = 960
-	private var spp = 1
-	private var isFast = true
-
-	private val options = List(
-		Option(name = "--width", shortName = "-w", helpText = "Width of the image to be generated and also the viewport of the camera"),
-		Option(name = "--height", shortName = "-e", helpText = "Height of the image to be generated and also the viewport of the camera"),
-		Option(name = "--spp", shortName = "-s", helpText = "The samples per pixel (squared) to be taken. For example, an spp of 2 means 4 rays will be traced per pixel"),
-		Option(name = "--help", shortName = "-h", helpText = "Print this help screen"),
-		Option(name = "--fast", shortName = "-f", helpText = "Flag for fast rendering. Fast rendering ignores reflections, refractions and soft shadows"),
-		Option(name = "--version", shortName = "-v", helpText = "Prints version information")
-	)
-
-	private val parser: Parser = Parser(options)
-
 	def main(args: Array[String]): Unit = {
 		parser.parse(args.toList)
 			.withParsed(x => {
-				x.shortName match {
-					case "-w" =>
-						width = x.values.head.toInt
-					case "-e" =>
-						height = x.values.head.toInt
-					case "-s" =>
-						spp = x.values.head.toInt
-					case "-h" =>
-						println(parser.usage())
-					case "-f" =>
-						isFast = x.values.head.toInt == 1
-					case "-v" =>
-						println(s"$programName Version $version")
+				x.values match {
+					case Values(values) => x.shortName match {
+						case "-w" =>
+							width = values.head.toInt
+						case "-e" =>
+							height = values.head.toInt
+						case "-s" =>
+							spp = values.head.toInt
+						case "-h" =>
+							println (parser.usage () )
+						case "-f" =>
+							isFast = true
+						case "-v" =>
+							println (s"$programName Version $version")
+					}
+					case NilValue =>
 				}
 			})
 
 		val renderer = if(isFast) {
-			FastTracer(testWorld(), camera = Camera(Vec3(width/2.0, height/2.0, -width/(2*tan(Math.PI/8))), Math.PI/8), width=width, height=height, spp=spp)
+			FastTracer(testWorld(), camera = Camera(width, height, Math.PI/8.0), width=width, height=height, spp=spp)
 		} else {
-			RayTracer(testWorld(), camera = Camera(Vec3(width/2.0, height/2.0, -width/(2*tan(Math.PI/8))), Math.PI/8), width=width, height=height, spp=spp)
+			PathTracer(testWorld(), camera = Camera(width, height, Math.PI/8.0), width=width, height=height, spp=spp)
 		}
+
 		val start = System.currentTimeMillis()
 		val arr: Array[Array[Int]] = renderer.render()
 		val end = System.currentTimeMillis()
