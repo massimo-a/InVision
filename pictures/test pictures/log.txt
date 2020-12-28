@@ -1,0 +1,350 @@
+
+date and time - Thu Nov 14 19:11:30 EST 2019
+file name - test10
+run time - 00 : 22 : 57.490
+anti-aliasing - 10
+screen size - (960, 1280)
+primary rays shot per second - 89237.47276688447
+
+date and time - Thu Jan 23 14:46:31 EST 2020
+file name - test1
+run time - 00 : 00 : 07.253
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 175542.85714283207
+
+date and time - Thu Jan 23 17:53:24 EST 2020
+file name - test1
+run time - 00 : 00 : 09.921
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 136533.33333331815
+
+date and time - Thu Jan 23 17:56:40 EST 2020
+file name - test4
+run time - 00 : 01 : 59.884
+anti-aliasing - 4
+screen size - (960, 1280)
+primary rays shot per second - 165216.8067226877
+
+date and time - Tue Jan 28 14:06:10 EST 2020
+file name - test1
+run time - 00 : 00 : 08.510
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 153599.9999999808
+
+date and time - Tue Jan 28 14:11:18 EST 2020
+file name - test2
+run time - 00 : 00 : 32.265
+anti-aliasing - 2
+screen size - (960, 1280)
+primary rays shot per second - 153599.9999999952
+
+date and time - Tue Jan 28 14:13:16 EST 2020
+file name - test2
+run time - 00 : 00 : 32.070
+anti-aliasing - 2
+screen size - (960, 1280)
+primary rays shot per second - 153599.9999999952
+
+date and time - Tue Jan 28 14:16:16 EST 2020
+file name - test2
+run time - 00 : 00 : 46.407
+anti-aliasing - 2
+screen size - (960, 1280)
+primary rays shot per second - 106852.17391304114
+
+date and time - Tue Jan 28 14:19:14 EST 2020
+file name - test1
+run time - 00 : 00 : 11.352
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 111709.09090908075
+
+date and time - Tue Jan 28 14:20:33 EST 2020
+file name - test2
+run time - 00 : 00 : 39.360
+anti-aliasing - 2
+screen size - (960, 1280)
+primary rays shot per second - 126030.76923076599
+
+date and time - Tue Jan 28 14:26:13 EST 2020
+file name - test1
+run time - 00 : 00 : 10.217
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 122879.99999998772
+
+date and time - Tue Jan 28 14:32:27 EST 2020
+file name - test3
+run time - 00 : 01 : 33.660
+anti-aliasing - 3
+screen size - (960, 1280)
+primary rays shot per second - 118916.1290322568
+
+date and time - Tue Jan 28 14:34:24 EST 2020
+file name - test1
+run time - 00 : 00 : 12.878
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 102399.99999999147
+
+date and time - Tue Jan 28 14:36:32 EST 2020
+file name - test1
+run time - 00 : 00 : 12.129
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 102399.99999999147
+
+date and time - Tue Jan 28 14:37:53 EST 2020
+file name - test1
+run time - 00 : 00 : 10.437
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 122879.99999998772
+
+date and time - Tue Jan 28 14:39:43 EST 2020
+file name - test1
+run time - 00 : 00 : 10.669
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 122879.99999998772
+
+date and time - Tue Jan 28 14:41:01 EST 2020
+file name - test1
+run time - 00 : 00 : 10.693
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 122879.99999998772
+
+date and time - Tue Jan 28 14:42:57 EST 2020
+file name - test1
+run time - 00 : 00 : 09.855
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 136533.33333331815
+
+date and time - Tue Jan 28 14:45:10 EST 2020
+file name - test1
+run time - 00 : 00 : 11.092
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 111709.09090908075
+
+date and time - Tue Jan 28 14:47:49 EST 2020
+file name - test1
+run time - 00 : 00 : 10.416
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 122879.99999998772
+
+date and time - Tue Jan 28 14:49:04 EST 2020
+file name - test1
+run time - 00 : 00 : 11.348
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 111709.09090908075
+
+date and time - Wed Jan 29 11:21:10 EST 2020
+file name - test1
+run time - 00 : 00 : 06.804
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 204799.99999996586
+
+date and time - Wed Jan 29 11:35:45 EST 2020
+file name - test10
+run time - 00 : 14 : 01.282
+anti-aliasing - 10
+screen size - (960, 1280)
+primary rays shot per second - 146111.77170035653
+
+date and time - Wed Jan 29 11:57:31 EST 2020
+file name - test10
+run time - 00 : 12 : 36.906
+anti-aliasing - 10
+screen size - (960, 1280)
+primary rays shot per second - 162539.6825396823
+
+date and time - Wed Jan 29 12:46:36 EST 2020
+file name - test1
+run time - 00 : 00 : 07.237
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 175542.85714283207
+
+date and time - Wed Jan 29 12:47:22 EST 2020
+file name - test1
+run time - 00 : 00 : 08.009
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 153599.9999999808
+
+date and time - Wed Jan 29 13:00:50 EST 2020
+file name - test10
+run time - 00 : 13 : 12.304
+anti-aliasing - 10
+screen size - (960, 1280)
+primary rays shot per second - 155151.51515151496
+
+date and time - Mon Nov 16 21:47:12 EST 2020
+file name - test1
+run time - 00 : 00 : 08.740
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 153599.9999999808
+
+date and time - Mon Nov 16 21:51:01 EST 2020
+file name - test5
+run time - 00 : 03 : 05.644
+anti-aliasing - 5
+screen size - (960, 1280)
+primary rays shot per second - 166054.05405405315
+
+date and time - Fri Dec 25 00:13:30 EST 2020
+file name - test1
+run time - 00 : 00 : 06.692
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 204799.99999996586
+
+date and time - Fri Dec 25 00:23:24 EST 2020
+file name - test1
+run time - 00 : 00 : 07.318
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 175542.85714283207
+
+date and time - Fri Dec 25 00:43:00 EST 2020
+file name - test1
+run time - 00 : 00 : 13.328
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 94523.07692306965
+
+date and time - Fri Dec 25 00:47:46 EST 2020
+file name - test1
+run time - 00 : 00 : 05.916
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 245759.99999995084
+
+date and time - Fri Dec 25 00:48:27 EST 2020
+file name - test1
+run time - 00 : 00 : 05.537
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 245759.99999995084
+
+date and time - Fri Dec 25 00:54:31 EST 2020
+file name - test1
+run time - 00 : 00 : 05.609
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 245759.99999995084
+
+date and time - Fri Dec 25 00:59:11 EST 2020
+file name - test1
+run time - 00 : 00 : 02.426
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 614399.9999996928
+
+date and time - Fri Dec 25 00:59:58 EST 2020
+file name - test1
+run time - 00 : 00 : 02.571
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 614399.9999996928
+
+date and time - Fri Dec 25 01:01:59 EST 2020
+file name - test1
+run time - 00 : 00 : 01.896
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 1228799.9999987711
+
+date and time - Fri Dec 25 01:06:13 EST 2020
+file name - test1
+run time - 00 : 00 : 02.524
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 614399.9999996928
+
+date and time - Fri Dec 25 01:09:35 EST 2020
+file name - test1
+run time - 00 : 00 : 01.693
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 1228799.9999987711
+
+date and time - Fri Dec 25 01:10:46 EST 2020
+file name - test1
+run time - 00 : 00 : 05.257
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 245759.99999995084
+
+date and time - Fri Dec 25 01:13:31 EST 2020
+file name - test1
+run time - 00 : 00 : 05.033
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 245759.99999995084
+
+date and time - Fri Dec 25 22:08:00 EST 2020
+file name - test1
+run time - 00 : 00 : 00.986
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 1.2288E18
+
+date and time - Fri Dec 25 22:09:19 EST 2020
+file name - test1
+run time - 00 : 00 : 00.708
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 1.2288E18
+
+date and time - Fri Dec 25 22:15:18 EST 2020
+file name - test1
+run time - 00 : 00 : 05.962
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 245759.99999995084
+
+date and time - Fri Dec 25 23:19:49 EST 2020
+file name - test1
+run time - 00 : 00 : 06.238
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 204799.99999996586
+
+date and time - Fri Dec 25 23:54:27 EST 2020
+file name - test1
+run time - 00 : 00 : 04.437
+anti-aliasing - 1
+screen size - (960, 1280)
+primary rays shot per second - 307199.99999992317
+
+date and time - Fri Dec 25 23:56:22 EST 2020
+file name - test5
+run time - 00 : 01 : 18.106
+anti-aliasing - 5
+screen size - (960, 1280)
+primary rays shot per second - 393846.1538461488
+
+date and time - Mon Dec 28 13:31:34 EST 2020 
+file name - test1 
+run time in seconds - 4.147 
+anti-aliasing - 1 
+screen size - (960, 1280) 
+primary rays shot per second - 296310.5859656869 
+
+date and time - Mon Dec 28 15:42:20 EST 2020 
+file name - test1 
+run time in seconds - 2.557 
+anti-aliasing - 1 
+screen size - (960, 1280) 
+primary rays shot per second - 480563.15995288204 

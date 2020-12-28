@@ -1,6 +1,5 @@
 package invision.scene.renderable
 
-import invision.geometry.Sphere
 import invision.geometry.intersectable.{Intersectable, Sphere}
 import invision.util.Vec3
 

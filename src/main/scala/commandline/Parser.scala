@@ -12,11 +12,7 @@ case class Parser
  values: Map[String, Option] = Map(),
  errors: List[Error] = List()) {
   def withParsed[T](f: Option => T): List[T] = {
-    values.map(x => f(x._2)).toList
-  }
-
-  def withErrors[T](f: Error => T): List[T] = {
-    errors.map(f)
+    values.filter(x => x._2.values.nonEmpty).map(x => f(x._2)).toList
   }
 
   def parse(args: List[String]): Parser = {
