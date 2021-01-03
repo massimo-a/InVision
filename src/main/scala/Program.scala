@@ -7,6 +7,7 @@
 
 import java.awt.image.BufferedImage
 import java.io.{File, FileNotFoundException, FileWriter}
+import java.text.SimpleDateFormat
 import java.util.Calendar
 
 import commandline.{NilValue, Option, Parser, Values}
@@ -25,71 +26,74 @@ object Program {
 	private var height = 960
 	private var spp = 1
 	private var isFast = false
-	private val pictureSaveLocation = "pictures/test pictures/"
+	private var pictureSaveLocation = "pictures\\test pictures\\"
+	private var pictureName = "test"
 
 	private val parser = Parser(List(
 		Option(name = "--width", shortName = "-w", helpText = "Width of the image to be generated and also the viewport of the camera"),
 		Option(name = "--height", shortName = "-e", helpText = "Height of the image to be generated and also the viewport of the camera"),
 		Option(name = "--spp", shortName = "-s", helpText = "The samples per pixel (squared) to be taken. For example, an spp of 2 means 4 rays will be traced per pixel"),
 		Option(name = "--help", shortName = "-h", helpText = "Print this help screen", numberOfArguments = 0),
-		Option(name = "--fast", shortName = "-f", helpText = "Flag for fast rendering. Fast rendering ignores reflections, refractions and soft shadows"),
-		Option(name = "--version", shortName = "-v", helpText = "Prints version information", numberOfArguments = 0)
+		Option(name = "--fast", shortName = "-f", helpText = "Flag for fast rendering. Fast rendering ignores reflections, refractions and soft shadows", numberOfArguments = 0),
+		Option(name = "--version", shortName = "-v", helpText = "Prints version information", numberOfArguments = 0),
+		Option(name = "--save-to", shortName = "-t", helpText = "File location where image will be saved. Defaults to '~\\pictures\\test pictures'"),
+		Option(name = "--save-as", shortName = "-a", helpText = "Name of image file. Defaults to test_[spp value]")
 	))
 
 	private def testWorld(): World = {
 		World()++
-			BallLight(r=20,x=640,y=450,z=400)++(
-			Plane(Vec3(0,0,-1),Vec3(0,0,2000)),
+			BallLight(r=50,x=100,y=880,z=1000,color=Vec3(1,0.9,0.9))++
+			//BallLight(r=50,x=1180,y=880,z=1000,color=Vec3(1,0.9,0.9))++
+			(Plane(Vec3(0,0,-1),Vec3(0,0,2000)),
 			Gloss(2.0),
-			Vec3(1)
-		)++(
-			Plane(Vec3(0,1),Vec3()),
+			Vec3(1))++
+			(Plane(Vec3(0,1),Vec3()),
 			Diffuse(0.5),
-			Vec3(1, 0, 1)
-		)++(
-			Plane(Vec3(1),Vec3()),
+			Vec3(1, 0, 1))++
+			(Plane(Vec3(1),Vec3()),
 			Diffuse(0.5),
-			Vec3(0.5, 0, 1)
-		)++(
-			Plane(Vec3(-1),Vec3(1280)),
+			Vec3(0.5, 0, 1))++
+			(Plane(Vec3(-1),Vec3(1280)),
 			Diffuse(0.5),
-			Vec3(0.2, 0.2, 1)
-		)++(
-			Plane(Vec3(0,-1),Vec3(0,960)),
+			Vec3(0.2, 0.2, 1))++
+			(Plane(Vec3(0,-1),Vec3(0,960)),
 			Diffuse(0.25),
-			Vec3(1, 1)
-		)++(
-			SurfaceMarcher.Box(1280,200,1200).translate(640, 100, 800),
+			Vec3(1, 1))++
+			(SurfaceMarcher.Box(1280,200,1200).translate(640, 100, 800),
 			Diffuse(1.0),
-			Vec3(1,1,1)
-		)++(
-			SurfaceMarcher.Sphere(100).translate(200, 600, 300),
-			Diffuse(20.0),
-			Vec3()
-		)
+			Vec3(1,1,1))++
+			(SurfaceMarcher.Sphere(100).translate(200, 600, 1900),
+			Diffuse(),
+			Vec3(0.5, 1.0, 0.1))
 	}
 
-	private def logData(name: String, width: Int, height: Int, spp: Int, t: Double) {
+	private def logData(t: Double) {
+		val format = new SimpleDateFormat("d_M_y")
+		val correctPath = if (pictureSaveLocation.endsWith("\\")) "" else "\\"
+		val logPath = s"$pictureSaveLocation${correctPath}LOG_${format.format(Calendar.getInstance().getTime)}.log"
+		val log = new File(logPath)
 		try {
-			val pw = new FileWriter(pictureSaveLocation + "log.txt", new File(pictureSaveLocation + "log.txt").exists)
-			pw.write(s"\r\ndate and time - ${Calendar.getInstance().getTime} \r\n")
-			pw.write(s"file name - $name \r\n")
+			if (!log.exists) {
+				log.createNewFile()
+			}
+			val pw = new FileWriter(log, true)
+			pw.write(s"file name - ${pictureName}_$spp \r\n")
 			pw.write(s"run time in seconds - $t \r\n")
 			pw.write(s"anti-aliasing - $spp \r\n")
 			pw.write(s"screen size - ($height, $width) \r\n")
 			try {
-				pw.write(s"primary rays shot per second - ${height*width*spp*spp/(t + 1E-12)} \r\n")
+				pw.write(s"primary rays shot per second - ${height * width * spp * spp / (t + 1E-12)} \r\n")
 			} catch {
 				case _: ArithmeticException =>
 					pw.write("primary rays shot per second - TOO MANY \r\n")
 			}
 			pw.close()
 		} catch {
-			case _: FileNotFoundException => println("could not save data, file path not found")
+			case _: FileNotFoundException => println("Could not save picture, file path not found")
 		}
 	}
 
-	private def saveImage(name: String, width: Int, height: Int, spp: Int, rgbs: Array[Array[Int]]) {
+	private def saveImage(rgbs: Array[Array[Int]]) {
 		val im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
 		for(i <- 0 until width) {
 			for(j <- 0 until height) {
@@ -97,10 +101,11 @@ object Program {
 			}
 		}
 		try {
-			ImageIO.write(im, "png", new File(pictureSaveLocation + name + ".png"))
-			println("Completed: " + name)
+			val correctPath = if (pictureSaveLocation.endsWith("\\") || pictureName.head == '\\') "" else "\\"
+			ImageIO.write(im, "png", new File(s"$pictureSaveLocation$correctPath${pictureName}_$spp.png"))
+			println(s"Completed: $pictureSaveLocation$correctPath${pictureName}_$spp")
 		} catch {
-			case _: FileNotFoundException => println("could not save picture, file path not found")
+			case _: FileNotFoundException => println("Could not save picture, file path not found")
 		}
 	}
 
@@ -116,11 +121,15 @@ object Program {
 						case "-s" =>
 							spp = values.head.toInt
 						case "-h" =>
-							println (parser.usage () )
+							println(parser.usage())
 						case "-f" =>
 							isFast = true
 						case "-v" =>
-							println (s"$programName Version $version")
+							println(s"$programName Version $version")
+						case "-t" =>
+							pictureSaveLocation = values.head.toString
+						case "-a" =>
+							pictureName = values.head.toString
 					}
 					case NilValue =>
 				}
@@ -133,9 +142,11 @@ object Program {
 		}
 
 		val start = System.currentTimeMillis()
+		println("Begun Rendering")
 		val arr: Array[Array[Int]] = renderer.render()
 		val end = System.currentTimeMillis()
-		saveImage("test" + spp, width, height, spp, arr)
-		logData("test" + spp, width, height, spp, (end - start)/1000.0)
+		saveImage(arr)
+		println(s"Completion Time: ${(end - start)/1000.0} seconds")
+		logData((end - start)/1000.0)
 	}
 }

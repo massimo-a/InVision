@@ -16,7 +16,8 @@ final case class PathTracer(world: World, camera: Camera, spp: Int, width: Int, 
     val objHit = closestPoint._1
     val intersectPt = closestPoint._2
     val hitLight = world.getClosestLight(r)
-    if(hitLight._1 != NilLight && (objHit == NilRenderable || ~(hitLight._2 - r.origin) < ~(intersectPt - r.origin))) return hitLight._1.color
+    if(hitLight._1 != NilLight && (objHit == NilRenderable || ~(hitLight._2 - r.origin) < ~(intersectPt - r.origin)))
+      return hitLight._1.color * (hitLight._1.getNormal(hitLight._2) * -r.direction)
     if(objHit == NilRenderable) return Vec3(0.2, 0.2, 0.2)
     val col = world.getColor(objHit, intersectPt, r)
     val scatter = objHit.material.scatter(-r.direction, objHit.shape.getNormal(intersectPt))

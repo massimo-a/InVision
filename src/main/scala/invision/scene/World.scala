@@ -73,7 +73,7 @@ final case class World(renderables: List[Renderable] = List(), lights: List[Ligh
 
   def getLightSize(l: Light): Double = {
     l match {
-      case BallLight(r, _, _, _) => r
+      case BallLight(r, _, _, _, _) => r
       case NilLight => 0.0
     }
   }

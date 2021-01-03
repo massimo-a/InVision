@@ -1,0 +1,3 @@
+package commandline
+
+trait CommandLineValues

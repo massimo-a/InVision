@@ -17,17 +17,6 @@ trait Intersectable {
 	def intersectDistance(ray: Ray): Double
 
 	/** 
-	 *  @return the 3D point in world space where the ray intersects the object,
-	 *  null when no intersection occurs
-	 *  @param ray the ray being checked against for intersection
-	 */
-	def intersectPoint(ray: Ray): Vec3 = {
-		val d = intersectDistance(ray)
-		if (d == -1) return null
-		ray.origin + ray.direction*d
-	}
-
-	/** 
 	 *  @return the normal vector to the object at a specific point
 	 *  @param pt the point on the surface
 	 */

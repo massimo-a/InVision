@@ -1,11 +1,5 @@
 package commandline
 
-trait CommandLineValues
-
-case object NilValue extends CommandLineValues
-
-case class Values(values: List[String] = List()) extends CommandLineValues
-
 /**
  * Command line option.
  * @author Massimo Angelillo
