@@ -42,8 +42,9 @@ object Program {
 
 	private def testWorld(): World = {
 		World()++
-			BallLight(r=50,x=100,y=880,z=1000,color=Vec3(1,0.9,0.9))++
-			//BallLight(r=50,x=1180,y=880,z=1000,color=Vec3(1,0.9,0.9))++
+			BallLight(r=50,x=100,y=880,z=1000,color=Vec3(1,0.2,0.2))++
+			BallLight(r=50,x=1180,y=880,z=1000,color=Vec3(0.2,1.0,0.2))++
+			BallLight(r=50,x=640,y=880,z=1000,color=Vec3(0.2,0.2,1.0))++
 			(Plane(Vec3(0,0,-1),Vec3(0,0,2000)),
 			Gloss(2.0),
 			Vec3(1))++
@@ -82,7 +83,7 @@ object Program {
 			pw.write(s"anti-aliasing - $spp \r\n")
 			pw.write(s"screen size - ($height, $width) \r\n")
 			try {
-				pw.write(s"primary rays shot per second - ${height * width * spp * spp / (t + 1E-12)} \r\n")
+				pw.write(s"primary rays shot per second - ${height * width * spp * spp / t} \r\n")
 			} catch {
 				case _: ArithmeticException =>
 					pw.write("primary rays shot per second - TOO MANY \r\n")
@@ -143,6 +144,7 @@ object Program {
 
 		val start = System.currentTimeMillis()
 		println("Begun Rendering")
+		println(s"Start Time: ${Calendar.getInstance().getTime}")
 		val arr: Array[Array[Int]] = renderer.render()
 		val end = System.currentTimeMillis()
 		saveImage(arr)

@@ -124,10 +124,10 @@ final case class Vec3(x: Double = 0, y: Double = 0, z: Double = 0) {
 }
 
 object Vec3 {
-	/** 
+	/**
+	 *  @param r the length of the vector
 	 *  @param theta the polar angle, angle of the vector with respect to the positive up-axis (often-times z)
 	 *  @param phi the azimuthal angle, angle of the vector with respect to an axis perpendicular to the polar axis (often-times x)
-	 *  @param r the length of the vector
 	 */
 	def create(r: Double, theta: Double, phi: Double): Vec3 = { 
 		val x = r*sin(theta)*sin(phi)

@@ -11,4 +11,6 @@ case object NilLight extends Light {
   override def intersectDistance(ray: Ray): Double = {
     -1.0
   }
+
+  def size: Double = 0
 }
