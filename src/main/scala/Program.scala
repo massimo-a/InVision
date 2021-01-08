@@ -11,8 +11,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 import commandline.{NilValue, Option, Parser, Values}
-import invision.geometry.intersectable.{Plane, SurfaceMarcher}
-import invision.scene.material.{Diffuse, Gloss}
+import invision.geometry.intersectable.{Plane, SurfaceMarcher, Triangle}
+import invision.scene.material.{Diffuse, Gloss, Transparent}
 import invision.scene.renderable.BallLight
 import invision.scene.{Camera, FastTracer, PathTracer, World}
 import invision.util._
@@ -42,30 +42,28 @@ object Program {
 
 	private def testWorld(): World = {
 		World()++
-			BallLight(r=50,x=100,y=880,z=1000,color=Vec3(1,0.2,0.2))++
-			BallLight(r=50,x=1180,y=880,z=1000,color=Vec3(0.2,1.0,0.2))++
-			BallLight(r=50,x=640,y=880,z=1000,color=Vec3(0.2,0.2,1.0))++
+			BallLight(size=25,x=200,y=880,z=500)++
+			(Triangle(vertex1=Vec3(),vertex2=Vec3(1280),vertex3=Vec3(1280,960,2000)),
+				Transparent(2.0, 0.75),
+				Vec3())++
 			(Plane(Vec3(0,0,-1),Vec3(0,0,2000)),
-			Gloss(2.0),
-			Vec3(1))++
+				Diffuse(),
+				Vec3(1))++
 			(Plane(Vec3(0,1),Vec3()),
-			Diffuse(0.5),
-			Vec3(1, 0, 1))++
+				Diffuse(0.5),
+				Vec3(1, 0, 1))++
 			(Plane(Vec3(1),Vec3()),
-			Diffuse(0.5),
-			Vec3(0.5, 0, 1))++
+				Gloss(1.0, 0.4),
+				Vec3(0.9, 0.2, 0.2))++
 			(Plane(Vec3(-1),Vec3(1280)),
-			Diffuse(0.5),
-			Vec3(0.2, 0.2, 1))++
+				Diffuse(0.5),
+				Vec3(0.2, 0.2, 1))++
 			(Plane(Vec3(0,-1),Vec3(0,960)),
-			Diffuse(0.25),
-			Vec3(1, 1))++
-			(SurfaceMarcher.Box(1280,200,1200).translate(640, 100, 800),
-			Diffuse(1.0),
-			Vec3(1,1,1))++
-			(SurfaceMarcher.Sphere(100).translate(200, 600, 1900),
-			Diffuse(),
-			Vec3(0.5, 1.0, 0.1))
+				Diffuse(0.25),
+				Vec3(1, 1))++
+			(SurfaceMarcher.Sphere(100).translate(600, 200, 1900),
+				Diffuse(),
+				Vec3(0.5, 1.0, 0.1))
 	}
 
 	private def logData(t: Double) {
@@ -94,13 +92,7 @@ object Program {
 		}
 	}
 
-	private def saveImage(rgbs: Array[Array[Int]]) {
-		val im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
-		for(i <- 0 until width) {
-			for(j <- 0 until height) {
-				im.setRGB(i, j, rgbs(i)(j))
-			}
-		}
+	private def saveImage(im: BufferedImage) {
 		try {
 			val correctPath = if (pictureSaveLocation.endsWith("\\") || pictureName.head == '\\') "" else "\\"
 			ImageIO.write(im, "png", new File(s"$pictureSaveLocation$correctPath${pictureName}_$spp.png"))
@@ -145,7 +137,7 @@ object Program {
 		val start = System.currentTimeMillis()
 		println("Begun Rendering")
 		println(s"Start Time: ${Calendar.getInstance().getTime}")
-		val arr: Array[Array[Int]] = renderer.render()
+		val arr: BufferedImage = renderer.render()
 		val end = System.currentTimeMillis()
 		saveImage(arr)
 		println(s"Completion Time: ${(end - start)/1000.0} seconds")

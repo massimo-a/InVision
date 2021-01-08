@@ -106,9 +106,7 @@ final case class World(renderables: List[Renderable] = List(), lights: List[Ligh
    */
   def getColor(obj: Renderable, intersectPt: Vec3): Vec3 = {
     obj.color(intersectPt) ** lights.map(light => {
-      val delta = Vec3.create(light.size, random * Pi, random * 2 * Pi)
-      val lightNormal = light.shape.getNormal(intersectPt)
-      val ptOnLight = if (lightNormal*delta < 0) light.position - delta else light.position + delta
+      val ptOnLight = light.samplePointOnLight((intersectPt - light.position).normalize())
       val lightDir = (ptOnLight - intersectPt).normalize()
       if(inLineOfSight(intersectPt, ptOnLight, light)) {
         light.color * max(0, obj.shape.getNormal(intersectPt)*lightDir)

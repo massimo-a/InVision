@@ -12,5 +12,7 @@ case object NilLight extends Light {
     -1.0
   }
 
+  def samplePointOnLight(direction: Vec3): Vec3 = Vec3()
+
   def size: Double = 0
 }

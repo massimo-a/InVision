@@ -13,6 +13,8 @@ trait Light extends Intersectable {
   def color: Vec3
   def size: Double
 
+  def samplePointOnLight(direction: Vec3): Vec3
+
   def intersectDistance(ray: Ray): Double = {
     shape.intersectDistance(ray)
   }

@@ -1,4 +1,6 @@
 package invision.scene
+import java.awt.image.BufferedImage
+
 import invision.geometry.Ray
 import invision.util.Vec3
 
@@ -62,20 +64,18 @@ trait Renderer {
 	 * Creates an image by going through each pixel and getting the pixel color.
 	 * @return A 2D array representing an image.
 	 */
-	def render(): Array[Array[Int]] = {
-		Array.ofDim[Int](width, height)
-			.map(_.map(_ => -1)).zipWithIndex
-			.map(a => {
-				new Array[Int](width).zipWithIndex.map(b => {
-					val t = getPixelColor(a._2, height - b._2)
-					val rgb = (((t.x*255).toInt & 0x0ff) << 16) | (((t.y*255).toInt & 0x0ff) << 8) | ((t.z*255).toInt & 0x0ff)
-					rgb
-				})
-			})
+	def render(): BufferedImage = {
+		val im = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+		for(i <- 0 until width) {
+			for(j <- 0 until height) {
+				val t = getPixelColor(i, height - j)
+				val rgb = (((t.x*255).toInt & 0x0ff) << 16) | (((t.y*255).toInt & 0x0ff) << 8) | ((t.z*255).toInt & 0x0ff)
+				im.setRGB(i, j, rgb)
+			}
+		}
+		im
 	}
 }
-
-
 
 // For sampling a volume for volume rendering (smokey/transparent material)
 //	@scala.annotation.tailrec
@@ -84,11 +84,8 @@ trait Renderer {
 //		val s = -0.01*Math.log(random)
 //		if(s > tmax) {
 //			Ray(ray.origin + ray.direction*(tmax+1), ray.origin + ray.direction*(tmax+2))
-//		}
-//		else {
-//			val theta = random() * Pi
-//			val phi = random() * 2 * Pi
-//			val newDir = Vec3(Math.sin(theta) * Math.cos(phi), Math.sin(theta) * Math.sin(phi), Math.cos(theta))
+//		} else {
+//			val newDir = Vec3.create(1, random() * Pi, random() * 2 * Pi)
 //			val newRay = Ray(ray.origin + ray.direction * s, ray.origin + ray.direction * s + newDir)
 //			sample(shape, newRay)
 //		}
