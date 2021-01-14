@@ -7,7 +7,7 @@ import invision.scene.renderable._
 import invision.util.Vec3
 
 import scala.collection.immutable.List
-import scala.math.{max, random, Pi}
+import scala.math.max
 
 /**
  * Represents a scene with renderable objects and light sources.
@@ -15,6 +15,15 @@ import scala.math.{max, random, Pi}
  * @param lights List of lights in the scene.
  */
 final case class World(renderables: List[Renderable] = List(), lights: List[Light] = List()) {
+  /**
+   * Joins two worlds together.
+   * @param world World being joined.
+   * @return An updated world scene.
+   */
+  def ++(world: World): World = {
+    World(world.renderables.prependedAll(renderables), world.lights.prependedAll(lights))
+  }
+
   /**
    * Adds a scene object to the world.
    * @param i The intersectable object being added.
@@ -44,6 +53,15 @@ final case class World(renderables: List[Renderable] = List(), lights: List[Ligh
    */
   def ++(l: Light): World = {
     World(renderables, l::lights)
+  }
+
+  /**
+   * Adds a scene object to the world.
+   * @param sceneObject The scene object being added.
+   * @return An updated world scene.
+   */
+  def ++(sceneObject: SceneObject): World = {
+    World(sceneObject::renderables, lights)
   }
 
   /**

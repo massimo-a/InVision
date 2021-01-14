@@ -1,65 +1,44 @@
 package parser
 
-final case class Token(value: String, tokenType: Int)
+import scala.util.matching.Regex
 
 case object Tokenizer {
-  val WhiteSpace = 0
-  val Keyword = 1
-  val Number = 2
-  val Operator = 3
-  val SpecialChar = 4
-  val Unknown = 5
-
-  private val letters = "abcdefghijklmnopqrstuvwxyz"
-  private val special = "!@#$%^&()_[]{}\\|,.?;:'\"`~"
-  private val numbers = "0123456789"
-  private val operators = "+-*/=<>"
-  private val whiteSpace = "\t\r\n "
+  val numbers = "0123456789.-"
+  val numberCheck = new Regex("^[-+]?[0-9]\\d*(\\.\\d+)?$")
+  val letters = new Regex("[a-zA-Z]")
+  val operators = "(){}:;,"
 
   @scala.annotation.tailrec
   def tokenize(str: String, curr: Int = 0, accu: List[Token] = List()): List[Token] = {
     if(curr >= str.length) {
       accu.reverse
     } else {
-      val nextWord = if(letters.contains(str(curr).toLower)) {
-        val w = readWhile(x => letters.contains(x.toLower) && x != ' ', str, curr)
-        (w._1, Keyword, w._2)
+      if(str(curr) == '#') {
+        val nextWord = readWhile(x => letters.matches(x), str, curr + 1)
+        tokenize(str: String, nextWord._2, accu.prepended(ObjectToken(nextWord._1.toUpperCase())))
       } else if(numbers.contains(str(curr))) {
-        val w = readWhile(x => numbers.contains(x) && x != ' ', str, curr)
-        (w._1, Number, w._2)
-      } else if(special.contains(str(curr))) {
-        val w = readWhile(x => special.contains(x) && x != ' ', str, curr)
-        (w._1, SpecialChar, w._2)
-      } else if(whiteSpace.contains(str(curr))) {
-        val w = readWhile(x => x == ' ', str, curr)
-        (w._1, WhiteSpace, w._2)
+        val nextWord = readWhile(x => numbers.contains(x), str, curr)
+        if(!numberCheck.matches(nextWord._1)) {
+          throw new Exception(s"Incorrectly formatted number: ${nextWord._1}")
+        }
+        tokenize(str: String, nextWord._2, accu.prepended(NumberToken(nextWord._1)))
+      } else if(letters.matches(str(curr).toString)) {
+        val nextWord = readWhile(x => letters.matches(x), str, curr)
+        tokenize(str: String, nextWord._2, accu.prepended(PropertyToken(nextWord._1.toUpperCase())))
       } else if(operators.contains(str(curr))) {
-        val w = readWhile(x => operators.contains(x), str, curr)
-        (w._1, Operator, w._2)
+        tokenize(str: String, curr + 1, accu.prepended(OperatorToken(str(curr).toString)))
       } else {
-        val w = readWhile(x => x != ' ', str, curr)
-        (w._1, Unknown, w._2)
+        tokenize(str: String, curr + 1, accu)
       }
-      tokenize(str, nextWord._3, accu.prepended(Token(nextWord._1, nextWord._2)))
     }
   }
 
   @scala.annotation.tailrec
-  def readWhile(f: Char => Boolean, str: String, curr: Int = 0, word: String = ""): (String, Int) = {
-    if(curr >= str.length || !f(str(curr))) {
+  private def readWhile(f: String => Boolean, str: String, curr: Int, word: String = ""): (String, Int) = {
+    if(curr >= str.length || !f(str(curr).toString)) {
       (word, curr)
     } else {
       readWhile(f, str, curr + 1, word + str(curr))
     }
-  }
-
-  def parseToScene(): Unit = {
-
-  }
-
-  def main(args: Array[String]): Unit = {
-    println(
-      tokenize("ADD SPHERE 100 300 500 500 COLOR 255 255 255").filter(t => t.tokenType != WhiteSpace)
-    )
   }
 }

@@ -7,7 +7,7 @@ package commandline
  * @param values Map with the option name as the key and the option, with its value, as the value
  * @param errors Any errors that occurred while parsing
  */
-case class Parser
+case class CommandLine
 (options: List[Option],
  values: Map[String, Option] = Map(),
  errors: List[Error] = List()) {
@@ -18,7 +18,7 @@ case class Parser
     }).map(x => f(x._2)).toList
   }
 
-  def parse(args: List[String]): Parser = {
+  def parse(args: List[String]): CommandLine = {
     parse(args, List(), List(), Map())
   }
 
@@ -33,9 +33,9 @@ case class Parser
   }
 
   @scala.annotation.tailrec
-  private def parse(args: List[String], required: List[Option], errors: List[Error], accu: Map[String, Option]): Parser = {
+  private def parse(args: List[String], required: List[Option], errors: List[Error], accu: Map[String, Option]): CommandLine = {
     if(args.isEmpty) {
-      return Parser(options, accu, addMissingOptionErrors(required))
+      return CommandLine(options, accu, addMissingOptionErrors(required))
     }
     val v = options.find(x => x.name == args.head || x.shortName == args.head)
     v match {

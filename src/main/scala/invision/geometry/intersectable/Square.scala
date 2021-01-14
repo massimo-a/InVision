@@ -5,8 +5,8 @@ import invision.util.Vec3
 
 import scala.math.abs
 
-/** A quadrilateral defined by four colinear vertices
- *  The vertices are required to be colinear
+/** A quadrilateral defined by four collinear vertices
+ *  The vertices are required to be collinear
  *
  *  @author Massimo Angelillo
  *  @constructor create a new quadrilateral with the four points given
