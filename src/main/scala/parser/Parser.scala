@@ -1,5 +1,7 @@
 package parser
 
+import parser.tokenizer.{NumberToken, ObjectToken, Token}
+
 case class Parser() {
   def parse(tokens: List[Token]): List[(String, Map[String, List[String]])] = {
     var res = List[(String, Map[String, List[String]])]()

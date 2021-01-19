@@ -13,11 +13,12 @@ import java.util.Calendar
 import commandline.{CommandLine, NilValue, Option, Values}
 import invision.scene.{Camera, FastTracer, PathTracer, World}
 import javax.imageio.ImageIO
-import parser.WorldFactory
+import parser.SceneBuilder
 
 object Program {
 	private val version = "v0.0.1"
 	private val programName = "InVision"
+	private val sceneBuilder = SceneBuilder()
 
 	private var width = 1280
 	private var height = 960
@@ -97,16 +98,16 @@ object Program {
 						case "-a" =>
 							pictureName = values.head.toString
 						case "-c" =>
-							world = WorldFactory().load(values.head.toString)
+							world = sceneBuilder.load(values.head.toString)
 					}
 					case NilValue =>
 				}
 			})
 
 		val renderer = if(isFast) {
-			FastTracer(world, camera = Camera(width, height, Math.PI/6.0), width=width, height=height, spp=spp)
+			FastTracer(world, camera = Camera(width, height, Math.PI/8.0), width=width, height=height, spp=spp)
 		} else {
-			PathTracer(world, camera = Camera(width, height, Math.PI/6.0), width=width, height=height, spp=spp)
+			PathTracer(world, camera = Camera(width, height, Math.PI/8.0), width=width, height=height, spp=spp)
 		}
 
 		val start = System.currentTimeMillis()

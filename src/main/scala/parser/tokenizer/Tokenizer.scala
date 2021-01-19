@@ -1,8 +1,8 @@
-package parser
+package parser.tokenizer
 
 import scala.util.matching.Regex
 
-case object Tokenizer {
+final case class Tokenizer() {
   val numbers = "0123456789.-"
   val numberCheck = new Regex("^[-+]?[0-9]\\d*(\\.\\d+)?$")
   val letters = new Regex("[a-zA-Z]")
