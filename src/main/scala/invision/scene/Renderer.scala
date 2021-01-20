@@ -76,17 +76,3 @@ trait Renderer {
 		im
 	}
 }
-
-// For sampling a volume for volume rendering (smokey/transparent material)
-//	@scala.annotation.tailrec
-//	def sample(shape: Intersectable, ray: Ray): Ray = {
-//		val tmax = shape.intersectDistance(ray)
-//		val s = -0.01*Math.log(random)
-//		if(s > tmax) {
-//			Ray(ray.origin + ray.direction*(tmax+1), ray.origin + ray.direction*(tmax+2))
-//		} else {
-//			val newDir = Vec3.create(1, random() * Pi, random() * 2 * Pi)
-//			val newRay = Ray(ray.origin + ray.direction * s, ray.origin + ray.direction * s + newDir)
-//			sample(shape, newRay)
-//		}
-//	}
