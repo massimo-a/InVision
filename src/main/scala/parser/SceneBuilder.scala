@@ -15,23 +15,18 @@ final case class SceneBuilder() {
   def buildWorld(parsed: List[(String, Map[String, List[String]])], world: World = World()): World = {
     if(parsed.isEmpty) {
       world
-    } else if(parsed.head._1 == "LIGHT") {
-      buildWorld(parsed.drop(1), world ++ buildLight(parsed.head._2))
     } else {
-      buildWorld(parsed.drop(1), world ++ build(parsed.head))
-    }
-  }
-
-  def build(shape: (String, Map[String, List[String]])): SceneObject = {
-    shape._1 match {
-      case "SPHERE" => buildSphere(shape._2)
-      case "PLANE" => buildPlane(shape._2)
-      case "TRIANGLE" => buildTriangle(shape._2)
-      case "QUAD" => buildQuad(shape._2)
-      case "BOX" => buildBox(shape._2)
-      case "TORUS" => buildTorus(shape._2)
-      case "CYLINDER" => buildCylinder(shape._2)
-      case _ => throw new Exception(s"Unknown scene object declaration ${shape._1}")
+      parsed.head._1 match {
+        case "SPHERE" => buildWorld(parsed.drop(1), world ++ buildSphere(parsed.head._2))
+        case "PLANE" => buildWorld(parsed.drop(1), world ++ buildPlane(parsed.head._2))
+        case "TRIANGLE" => buildWorld(parsed.drop(1), world ++ buildTriangle(parsed.head._2))
+        case "QUAD" => buildWorld(parsed.drop(1), world ++ buildQuad(parsed.head._2))
+        case "BOX" => buildWorld(parsed.drop(1), world ++ buildBox(parsed.head._2))
+        case "TORUS" => buildWorld(parsed.drop(1), world ++ buildTorus(parsed.head._2))
+        case "CYLINDER" => buildWorld(parsed.drop(1), world ++ buildCylinder(parsed.head._2))
+        case "LIGHT" => buildWorld(parsed.drop(1), world ++ buildLight(parsed.head._2))
+        case _ => throw new Exception(s"Unknown scene object declaration ${parsed.head._1}")
+      }
     }
   }
 

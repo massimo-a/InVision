@@ -94,11 +94,11 @@ object Program {
 						case "-v" =>
 							println(s"$programName Version $version")
 						case "-t" =>
-							pictureSaveLocation = values.head.toString
+							pictureSaveLocation = values.head
 						case "-a" =>
-							pictureName = values.head.toString
+							pictureName = values.head
 						case "-c" =>
-							world = sceneBuilder.load(values.head.toString)
+							world = sceneBuilder.load(values.head)
 					}
 					case NilValue =>
 				}

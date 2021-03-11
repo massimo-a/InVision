@@ -3,6 +3,9 @@ package invision.geometry
 import invision.geometry.intersectable.Intersectable
 import invision.util.Vec3
 
+import java.io.File
+import javax.imageio.ImageIO
+
 /** Terrain
  *  
  *  @author Massimo Angelillo
@@ -49,5 +52,18 @@ final case class Terrain(
 			}
 		}
 		-1
+	}
+}
+
+case object Terrain {
+	def loadFromFile(filename: String, maxHeight: Double, position: Vec3 = Vec3()): Terrain = {
+		val img = ImageIO.read(new File(filename))
+		val arr2d = Array.ofDim[Double](img.getWidth, img.getHeight)
+		for (x <- 0 until img.getWidth) {
+			for (y <- 0 until img.getHeight) {
+				arr2d(x)(y) = img.getRGB(x, y) / 0xffffff.toDouble
+			}
+		}
+		Terrain(arr2d, maxHeight, position)
 	}
 }

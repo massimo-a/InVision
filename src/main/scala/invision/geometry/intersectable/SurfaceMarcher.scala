@@ -7,6 +7,12 @@ import scala.math._
 
 /** 
  *  @author Massimo Angelillo
+ *  @param equation The surface distance function. This function returns a positive number if the current 3D
+ *                  point lies outside the surface, a negative number if the current 3D point lies inside the
+ *                  surface and zero if the 3D point is on the surface. In the case of a perfect SDF the value
+ *                  returned is equivalent to the distance to the surface.
+ *  @param stepSize The distance the point increments along the ray.
+ *  @param boundingBox The bounding box of the surface.
  */
 final case class SurfaceMarcher(
 	equation: Vec3 => Double,

@@ -119,7 +119,7 @@ final case class Vec3(x: Double = 0, y: Double = 0, z: Double = 0) {
 	 *  perpendicular to the input vector
 	 */
 	def rej(v: Vec3): Vec3 = {
-		this- proj(v)
+		this - proj(v)
 	}
 }
 
